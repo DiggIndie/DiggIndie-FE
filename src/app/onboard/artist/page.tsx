@@ -7,7 +7,7 @@ export default function OnboardArtistPage() {
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header />
-      <div className="flex-1 overflow-auto m-5">
+      <div className="flex-1 overflow-auto m-5 gap-5 flex flex-col">
         <TitleSection
           title={
             <>
