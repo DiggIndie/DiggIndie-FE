@@ -9,7 +9,7 @@ export default function HomeHeader() {
 
 
   return (
-    <div className="w-[375px] h-[100px] flex flex-col items-center font-bold">
+    <div className="w-[375px] h-[100px] flex flex-col items-center font-bold bg-black">
       <div className="h-[48px] flex flex-col items-center font-bold">
         임시
       </div>

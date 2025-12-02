@@ -5,9 +5,9 @@ import more from "../../assets/icons/more.svg"
 
 export default function TodayArtistRec() {
   return (
-    <div className="w-[375px] h-[286px] flex flex-col bg-black mt-[40px]">
+    <div className="w-[375px] h-[257px] flex flex-col bg-black mt-[40px]">
       <div className={"flex mx-[20px] mb-[12px]"}>
-        <span className="font-semibold mr-[4px]">
+        <span className=" font-semibold mr-[4px]">
           리스너님을 위한 추천 아티스트
         </span>
         <Image src={more} alt="more" width={24} height={24}/>
