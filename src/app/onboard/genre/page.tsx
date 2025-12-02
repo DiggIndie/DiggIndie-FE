@@ -1,11 +1,27 @@
+import Button from '@/components/onBoard/Button';
 import Header from '@/components/onBoard/Header';
+import TitleSection from '@/components/onBoard/TitleSection';
 
 export default function onBoardGenrePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Header />
-
-      <div className="text-center">onboardGenre page입니다.</div>
+    <div className="bg-black text-white flex flex-col h-screen">
+      <Header href="/onboard/artist" />
+      <div className="flex-1 overflow-auto m-5 gap-5 flex flex-col">
+        <TitleSection
+          title={
+            <>
+              좋아하는 장르나
+              <br /> 키워드를 알려주세요
+            </>
+          }
+          min="최소 2개"
+        />
+      </div>
+      <div className="mx-5 mb-5">
+        <Button href="/onboard/end" bgColor="bg-red">
+          선택완료
+        </Button>
+      </div>
     </div>
   );
 }
