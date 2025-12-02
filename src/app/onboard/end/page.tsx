@@ -1,12 +1,14 @@
 import Button from '@/components/onBoard/Button';
 import TitleSection from '@/components/onBoard/TitleSection';
 import Header from '@/components/onBoard/Header';
+import ProgressBar from '@/components/onBoard/ProgressBar';
 
 export default function OnBoardEndPage() {
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header href="/onboard/genre" />
       <div className="flex-1 overflow-auto m-5 gap-5 flex flex-col">
+        <ProgressBar current={3} total={3} />
         <TitleSection
           titleClassName="w-full flex flex-col gap-2"
           minClassName="text-gray-300 text-base font-normal leading-[var(--line-height-text)] tracking-[var(--letter-spacing-text)]"

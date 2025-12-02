@@ -2,6 +2,7 @@ import Header from '@/components/onBoard/Header';
 import Button from '@/components/onBoard/Button';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
+import ProgressBar from '@/components/onBoard/ProgressBar';
 import ArtistList from '@/components/onBoard/ArtistList';
 //import { useState } from 'react';
 
@@ -12,6 +13,8 @@ export default function OnboardArtistPage() {
     <div className="bg-black text-white flex flex-col h-screen">
       <Header />
       <div className="flex-1 overflow-auto m-5 gap-5 flex flex-col">
+        <ProgressBar current={1} total={3} />
+
         <TitleSection
           title={
             <>
