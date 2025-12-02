@@ -9,7 +9,9 @@ interface ButtonProps {
 export default function Button({ bgColor = 'bg-red-500', href, children }: ButtonProps) {
   return (
     <Link href={href}>
-      <button className={`bg-red p-4 h-13 w-full font-semibold ${bgColor}`}>{children}</button>
+      <button className={`bg-red p-4 h-13 w-full font-semibold cursor-pointer ${bgColor}`}>
+        {children}
+      </button>
     </Link>
   );
 }

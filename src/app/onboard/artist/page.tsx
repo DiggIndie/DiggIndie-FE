@@ -2,8 +2,12 @@ import Header from '@/components/onBoard/Header';
 import Button from '@/components/onBoard/Button';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
+import ArtistList from '@/components/onBoard/ArtistList';
+//import { useState } from 'react';
 
 export default function OnboardArtistPage() {
+  // const [selectedArtists, setSelectedArtists] = useState<number[]>([]);
+
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header />
@@ -18,16 +22,8 @@ export default function OnboardArtistPage() {
           min="최소 2개"
         />
         <SearchSection />
-        <div>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
-          <p className="font-bold">dddddd</p>
+        <div className="overflow-y-scroll scroll-hidden">
+          <ArtistList />
         </div>
       </div>
       <div className="mx-5 mb-5">

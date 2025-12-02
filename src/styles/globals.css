@@ -27,3 +27,6 @@ body {
   color: var(--foreground);
   font-family: 'Pretendard', sans-serif;
 }
+::-webkit-scrollbar {
+  display: none;
+}
