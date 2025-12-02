@@ -26,7 +26,7 @@ export default function PersonalConcertRecCard({ concert }: Props) {
         <ImageTile
           src={concert.imageUrl}
           alt={concert.title}
-          variant="rect"
+          variant="concertRec"
           className={"rounded-t-[4px]"}
           gradient={"bg-gradient-to-t from-black/80 via-black/30 to-transparent"}
         />

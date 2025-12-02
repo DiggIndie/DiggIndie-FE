@@ -5,18 +5,19 @@ import clsx from "clsx";
 type ImageTileProps = {
   src: string;
   alt: string;
-  variant?: "square" | "smallSquare" | "rect";
+  variant?: "todayArtistRec" | "artistRec" | "concertRec" | "indieStory";
   className?: string;
   gradient?: string;
 };
 
 const variantClasses = {
-  square: "w-[184px] h-[184px]",
-  smallSquare: "w-[160px] h-[160px]",
-  rect: "w-[160px] h-[226px]",
+  todayArtistRec: "w-[184px] h-[184px]",
+  artistRec: "w-[160px] h-[160px]",
+  concertRec: "w-[160px] h-[226px]",
+  indieStory: "w-[162px] h-[202px]"
 };
 
-export function ImageTile({ src, alt, variant = "square", className, gradient}: ImageTileProps) {
+export function ImageTile({ src, alt, variant = "todayArtistRec", className, gradient}: ImageTileProps) {
   return (
     <div className={clsx("flex flex-col relative")}>
       <div className={clsx("", variantClasses[variant])}>

@@ -4,6 +4,7 @@ import LoginBanner from "../components/home/LoginBanner";
 import PersonalArtistRec from "../components/home/PersonalArtistRec";
 import Calendar from "../components/home/Calendar";
 import PersonalConcertRec from "../components/home/PersonalConcertRec";
+import IndieStoryRec from "../components/home/IndieStoryRec";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
           <PersonalArtistRec />
           <Calendar />
           <PersonalConcertRec />
+          <IndieStoryRec />
         </main>
       </div>
     </div>

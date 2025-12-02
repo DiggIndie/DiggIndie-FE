@@ -17,7 +17,7 @@ export default function PersonalArtistRecCard({ artist }: Props) {
         <ImageTile
           src={artist.imageUrl}
           alt={artist.name}
-          variant="smallSquare"
+          variant="artistRec"
           className={"rounded-t-[4px]"}
           gradient={"bg-gradient-to-t from-black/80 via-black/30 to-transparent"}
         />
