@@ -12,7 +12,7 @@ export default function OnboardArtistPage() {
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header />
-      <div className="flex-1 overflow-auto m-5 gap-5 flex flex-col">
+      <div className="flex-1 overflow-y-auto m-5 gap-5 flex flex-col">
         <ProgressBar current={1} total={3} />
 
         <TitleSection
@@ -29,7 +29,7 @@ export default function OnboardArtistPage() {
           <ArtistList />
         </div>
       </div>
-      <div className="mx-5 mb-5">
+      <div className="p-5 bg-transparent">
         <Button href="/onboard/genre" bgColor="bg-red">
           선택완료
         </Button>

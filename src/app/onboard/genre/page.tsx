@@ -21,7 +21,7 @@ export default function onBoardGenrePage() {
         />
         <GenreList />
       </div>
-      <div className="mx-5 mb-5">
+      <div className="p-5 bg-transparent">
         <Button href="/onboard/end" bgColor="bg-red">
           선택완료
         </Button>

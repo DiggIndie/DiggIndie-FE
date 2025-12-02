@@ -6,12 +6,13 @@ interface ButtonProps {
   children: React.ReactNode; // 버튼 텍스트
 }
 
-export default function Button({ bgColor = 'bg-red-500', href, children }: ButtonProps) {
+export default function Button({ bgColor, href, children }: ButtonProps) {
   return (
-    <Link href={href}>
-      <button className={`bg-red p-4 h-13 w-full font-semibold cursor-pointer ${bgColor}`}>
-        {children}
-      </button>
+    <Link
+      href={href}
+      className={`block p-4 h-13 w-full font-semibold cursor-pointer text-center ${bgColor}`}
+    >
+      {children}
     </Link>
   );
 }

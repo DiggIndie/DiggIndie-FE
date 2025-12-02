@@ -21,7 +21,7 @@ export default function OnBoardEndPage() {
           min="취향은 언제든지 다시 선택할 수 있어요"
         />
       </div>
-      <div className="mx-5 mb-5">
+      <div className="p-5 bg-transparent">
         <Button href="/onboard/end" bgColor="bg-red">
           완료
         </Button>
