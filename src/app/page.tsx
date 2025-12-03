@@ -11,7 +11,7 @@ export default function Home() {
         <Link href="onboard/artist">온보딩 페이지로 이동</Link>
         <div onClick={() => setIsSideTabOpen(true)}>사이드탭 보이기</div>
       </div>
-      {isSideTabOpen && <SideTab />}
+      {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>
   );
 }

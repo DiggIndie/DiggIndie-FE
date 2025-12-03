@@ -22,9 +22,7 @@ export default function OnBoardEndPage() {
         />
       </div>
       <div className="p-5 bg-transparent">
-        <Button href="/onboard/end" bgColor="bg-red">
-          완료
-        </Button>
+        <Button href="/">완료</Button>
       </div>
     </div>
   );
