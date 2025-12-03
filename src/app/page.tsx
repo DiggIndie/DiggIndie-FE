@@ -1,3 +1,5 @@
+'use client'
+
 import HomeHeader from "../components/home/HomeHeader";
 import TodayArtistRec from "../components/home/TodayArtistRec";
 import LoginBanner from "../components/home/LoginBanner";
@@ -6,7 +8,11 @@ import Calendar from "../components/home/Calendar";
 import PersonalConcertRec from "../components/home/PersonalConcertRec";
 import IndieStoryRec from "../components/home/IndieStoryRec";
 
+import { useState } from 'react';
+
 export default function Home() {
+  const [isLoggedIn, setLoggedIn] = useState(true);
+
   return (
     <div className="flex justify-center items-centerbg-zinc-50 font-sans dark:bg-black">
       <div className="flex flex-col">
@@ -15,10 +21,10 @@ export default function Home() {
         </div>
         <main className="overflow-y-auto scrollbar flex flex-col justify-center items-center">
           <TodayArtistRec />
-          <LoginBanner />
-          <PersonalArtistRec />
+          <LoginBanner isLoggedIn={() => setLoggedIn(false)} />
+          <PersonalArtistRec isLoggedIn={isLoggedIn} />
           <Calendar />
-          <PersonalConcertRec />
+          <PersonalConcertRec isLoggedIn={isLoggedIn}/>
           <IndieStoryRec />
         </main>
       </div>

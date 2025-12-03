@@ -4,7 +4,11 @@ import more from "../../assets/icons/more.svg"
 import { mockConcerts } from '@/mocks/mockConcerts';
 import { daysUntilConcert } from '@/components/home/PersonalConcertRecCard';
 
-export default function TodayArtistRec() {
+type Props = {
+  isLoggedIn: boolean;
+};
+
+export default function TodayArtistRec({ isLoggedIn }: Props) {
   return (
     <div className="w-[375px] h-[266px] flex flex-col mt-[40px]">
       <div className={"flex mx-[20px] mb-[12px]"}>
@@ -13,7 +17,7 @@ export default function TodayArtistRec() {
         </span>
         <Image src={more} alt="more" width={24} height={24}/>
       </div>
-      <div className="flex overflow-x-auto">
+      <div className={`flex overflow-x-auto ${isLoggedIn ? "blur-sm" : "blur-none"}`}>
         <div className="flex gap-[16px] w-max">
           {mockConcerts
             .filter((concert) => daysUntilConcert(concert.date) >= 1)

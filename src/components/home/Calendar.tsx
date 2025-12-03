@@ -65,18 +65,18 @@ export default function Calendar() {
       </div>
 
 
-      <div className="flex flex-col w-[335px] h-[212px] gap-[12px] mt-[16px]">
+      <div className="flex flex-col w-[335px] h-[212px] gap-[12px] mt-[16px] mx-[20px]">
           {todayConcerts.length !== 0 ? (
             todayConcerts.map((concert) => (
-              <div key={concert.id} className="flex flex-col w[335px] h-[100px] font-semibold bg-[#413D3D] rounded-[4px]">
+              <div key={concert.id} className="flex flex-col w[335px] h-[100px] font-semibold bg-[#1F1D1D] rounded-[4px]">
                 <span className={"mx-[12px] mt-[13px] text-[18px]"}>
                   {concert.time}
                 </span>
-                <div className={"flex mx-[12px] mt-[2px] gap-[4px] font-medium"}>
+                <div className={"flex mx-[12px] mt-[2px] gap-[4px] font-normal"}>
                   <Image src={ticket} alt={"ticket"} />
                   {concert.title}
                 </div>
-                <div className={"ml-[36px] text-gray-500 font-medium"}>
+                <div className={"ml-[36px] text-[#8C8888] font-normal"}>
                   {concert.location}
                 </div>
               </div>
