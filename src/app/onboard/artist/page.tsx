@@ -1,14 +1,31 @@
+'use client';
 import Header from '@/components/onBoard/Header';
 import Button from '@/components/onBoard/Button';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
 import ProgressBar from '@/components/onBoard/ProgressBar';
 import ArtistList from '@/components/onBoard/ArtistList';
-//import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+interface Artist {
+  id: number;
+  name: string;
+  image: string | null;
+}
 export default function OnboardArtistPage() {
-  // const [selectedArtists, setSelectedArtists] = useState<number[]>([]);
-
+  const [artists, setArtists] = useState<Artist[]>([]);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  useEffect(() => {
+    fetch('/data/artists.json')
+      .then((res) => res.json())
+      .then((data) => setArtists(data));
+  }, []);
+  /*장르 선택 함수  */
+  const toggleSelect = (id: number) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
+    );
+  };
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header />
@@ -25,12 +42,21 @@ export default function OnboardArtistPage() {
           min="최소 2개"
         />
         <SearchSection />
-        <div className="overflow-y-scroll scroll-hidden">
-          <ArtistList />
+        <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4">
+          {artists.map((artist) => {
+            return (
+              <ArtistList
+                key={artist.id}
+                artist={artist}
+                isSelected={selectedIds.includes(artist.id)}
+                toggleSelect={toggleSelect}
+              />
+            );
+          })}
         </div>
       </div>
       <div className="p-5 bg-transparent">
-        <Button href="/onboard/genre" bgColor="bg-red">
+        <Button href="/onboard/genre" disabled={selectedIds.length < 2}>
           선택완료
         </Button>
       </div>
