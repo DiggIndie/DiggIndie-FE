@@ -4,7 +4,7 @@ import Button from '@/components/onBoard/Button';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
 import ProgressBar from '@/components/onBoard/ProgressBar';
-import ArtistList from '@/components/onBoard/ArtistList';
+import ArtisItem from '@/components/onBoard/ArtistItem';
 import NoResult from '@/components/onBoard/NoResult';
 import { useEffect, useState } from 'react';
 
@@ -23,6 +23,7 @@ export default function OnboardArtistPage() {
       .then((res) => res.json())
       .then((data) => setArtists(data));
   }, []);
+
   /*장르 선택 함수  */
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) =>
@@ -34,7 +35,7 @@ export default function OnboardArtistPage() {
     artist.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <div className="bg-black text-white flex flex-col h-screen">
+    <div className="text-white flex flex-col h-screen">
       <Header />
       <div className="flex-1 overflow-y-auto m-5 gap-5 flex flex-col">
         <ProgressBar current={1} total={3} />
@@ -52,7 +53,7 @@ export default function OnboardArtistPage() {
         <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4">
           {filteredArtists.length > 0 ? (
             filteredArtists.map((artist) => (
-              <ArtistList
+              <ArtisItem
                 key={artist.id}
                 artist={artist}
                 isSelected={selectedIds.includes(artist.id)}

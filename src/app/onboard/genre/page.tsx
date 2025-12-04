@@ -1,10 +1,32 @@
+'use client';
 import Button from '@/components/onBoard/Button';
-import GenreList from '@/components/onBoard/GenreList';
+import GenreItem from '@/components/onBoard/GenreItem';
 import Header from '@/components/onBoard/Header';
 import ProgressBar from '@/components/onBoard/ProgressBar';
 import TitleSection from '@/components/onBoard/TitleSection';
+import { useEffect, useState } from 'react';
 
-export default function onBoardGenrePage() {
+interface Genre {
+  id: number;
+  name: string;
+}
+export default function OnBoardGenrePage() {
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
+
+  /*장르 더미데이터 불러오기  */
+  useEffect(() => {
+    fetch('/data/genres.json')
+      .then((res) => res.json())
+      .then((data) => setGenres(data));
+  }, []);
+
+  /*장르 선택 함수  */
+  const toggleSelect = (id: number) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
+    );
+  };
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header href="/onboard/artist" />
@@ -19,10 +41,21 @@ export default function onBoardGenrePage() {
           }
           min="최소 2개"
         />
-        <GenreList />
+        <div className="flex flex-wrap gap-4">
+          {genres.map((item) => (
+            <GenreItem
+              key={item.id}
+              genre={item}
+              isSelected={selectedIds.includes(item.id)}
+              toggleSelect={toggleSelect}
+            />
+          ))}
+        </div>
       </div>
       <div className="p-5 bg-transparent">
-        <Button href="/onboard/end">선택완료</Button>
+        <Button href="/onboard/end" disabled={selectedIds.length < 2}>
+          선택완료
+        </Button>
       </div>
     </div>
   );

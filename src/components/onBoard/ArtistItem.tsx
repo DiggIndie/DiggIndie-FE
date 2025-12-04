@@ -6,16 +6,16 @@ interface Artist {
   image: string | null;
 }
 
-interface ArtistListProps {
+interface ArtistItemProps {
   artist: Artist;
   isSelected: boolean;
   toggleSelect: (id: number) => void;
 }
-export default function ArtistList({ artist, isSelected, toggleSelect }: ArtistListProps) {
+export default function ArtistItem({ artist, isSelected, toggleSelect }: ArtistItemProps) {
   return (
     <div
       key={artist.id}
-      className={`relative w-full aspect-[102/104] border rounded-sm ${
+      className={`cursor-pointer relative w-full aspect-[102/104] border rounded-sm ${
         isSelected ? 'border-red custom-box-shadow' : 'border-gray-700'
       }`}
       onClick={() => {
