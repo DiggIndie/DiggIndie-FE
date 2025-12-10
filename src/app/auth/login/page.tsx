@@ -12,8 +12,12 @@ export default function LoginPage() {
     <div className="text-white flex flex-col h-screen items-center px-5">
       <Image src={diggindie} alt="diggindie icon" width={235} className="mt-40" />
       <section className="flex flex-col gap-3 mt-10">
-        <InputSection placeholder="아이디를 입력해주세요." />
-        <InputSection placeholder="비밀번호를 입력해주세요." type="password" />
+        <InputSection placeholder="아이디를 입력해주세요." width="w-[335px] h-[52px]" />
+        <InputSection
+          placeholder="비밀번호를 입력해주세요."
+          width="w-[335px] h-[52px]"
+          type="password"
+        />
         <Button href="/">로그인</Button>
       </section>
       <div className="mt-5">
