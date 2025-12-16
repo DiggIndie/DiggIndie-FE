@@ -13,7 +13,9 @@ import { useState } from 'react';
 const idSchema = z
   .string()
   .min(4, '아이디는 4자 이상이어야 합니다')
-  .max(12, '아이디는 12자 이하여야 합니다');
+  .max(12, '아이디는 12자 이하여야 합니다')
+  .regex(/^[a-zA-Z0-9]+$/, '아이디는 영문과 숫자만 사용할 수 있습니다');
+
 const passwordSchema = z
   .string()
   .min(6, '비밀번호는 6자 이상이어야 합니다')
@@ -58,7 +60,6 @@ export default function LoginPage() {
         id: fieldErrors.id?.[0],
         password: fieldErrors.password?.[0],
       });
-      alert('입력한 id와 password 내용을 다시 확인해주세요.');
       return;
     }
     router.push('/');
@@ -84,7 +85,7 @@ export default function LoginPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
         {errors.password && <p className="text-red-400 text-xs">{errors.password}</p>}
-        <Button onclick={handleLogin}>로그인</Button>
+        <Button onClick={handleLogin}>로그인</Button>
       </section>
       <div className="mt-5">
         <span
