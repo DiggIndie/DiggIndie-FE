@@ -12,11 +12,11 @@ export default function ConcertDetailPage() {
   const concert = concertData.concerts.find((c) => c.concertId === concertId);
 
   if (!concert) {
-    return <p>콘서트를 찾을 수 없습니다.</p>;
+    return <p className="text-white">콘서트를 찾을 수 없습니다.</p>;
   }
   return (
     <div className="text-white flex flex-col min-h-screen bg-black">
-      <DetailImgSection concert={concert} />
+      <DetailImgSection content={concert} />
       <ConcertContentSection concert={concert} />
       <LineupSection concert={concert} />
       <ConcertStorySection concert={concert} />

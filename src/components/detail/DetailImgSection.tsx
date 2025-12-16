@@ -3,13 +3,13 @@ import concertData from '@/mocks/mockConcertDetail.json';
 import share from '@/assets/common/share.svg';
 
 interface DetailImgSectionProps {
-  concert: (typeof concertData.concerts)[number];
+  content: (typeof concertData.concerts)[number];
 }
-export default function DetailImgSection({ concert }: DetailImgSectionProps) {
+export default function DetailImgSection({ content }: DetailImgSectionProps) {
   return (
     <section className="relative">
       <Image
-        src={concert.mainImage}
+        src={content.mainImage}
         alt="Artist Image"
         width={376}
         height={531}
