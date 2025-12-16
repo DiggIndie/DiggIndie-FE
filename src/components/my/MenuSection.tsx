@@ -11,7 +11,9 @@ export default function MenuSection({ title, hasBorder = false }: MenuSectionPro
         hasBorder ? 'border-b border-gray-600' : ''
       }`}
     >
-      <span className="font-semibold text-xl">{title}</span>
+      <span className={`${hasBorder ? 'font-normal' : 'font-semibold'} text-xl text-white`}>
+        {title}
+      </span>
       <Image src={arrow} alt="arrow right" width={24} height={24} />
     </div>
   );
