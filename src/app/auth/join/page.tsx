@@ -6,51 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { z } from 'zod';
-
-const idSchema = z
-  .string()
-  .min(4, '아이디는 4자 이상이어야 합니다')
-  .max(12, '아이디는 12자 이하여야 합니다')
-  .regex(/^[a-zA-Z0-9]+$/, '아이디는 영문과 숫자만 사용할 수 있습니다');
-
-const passwordSchema = z
-  .string()
-  .min(6, '비밀번호는 6자 이상이어야 합니다')
-  .max(20, '비밀번호는 20자 이하여야 합니다')
-  .refine(
-    (pw) => {
-      const hasLetter = /[a-zA-Z]/.test(pw);
-      const hasNumber = /[0-9]/.test(pw);
-      const hasSpecial = /[^a-zA-Z0-9]/.test(pw);
-
-      const count = Number(hasLetter) + Number(hasNumber) + Number(hasSpecial);
-
-      return count >= 2;
-    },
-    {
-      message: '비밀번호는 영문, 숫자, 특수문자 중 2가지 이상을 조합해야 합니다',
-    }
-  );
-const emailLocalSchema = z
-  .string()
-  .min(1, '올바른 이메일 형식이 아닙니다')
-  .refine((v) => !v.includes('@'), {
-    message: '@는 입력하지 마세요',
-  });
-const emailDomain = z.string().min(1, '이메일 도메인을 선택해주세요');
-export const joinSchema = z
-  .object({
-    id: idSchema,
-    password: passwordSchema,
-    confirmPassword: z.string(),
-    emailLocal: emailLocalSchema,
-    emailDomain: emailDomain,
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: '비밀번호가 일치하지 않습니다',
-    path: ['confirmPassword'],
-  });
+import { joinSchema } from '@/lib/auth';
 
 export default function JoinPage() {
   const router = useRouter();
