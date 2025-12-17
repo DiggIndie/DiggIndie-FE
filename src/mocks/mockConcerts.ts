@@ -1,3 +1,4 @@
+
 import type { Concert } from "@/types/concerts";
 
 export const mockConcerts: Concert[] = [
