@@ -8,7 +8,7 @@ type Props = {
   artists: Artist[];
 };
 
-export default function MyArtistGrid({ artists }: Props) {
+export default function ArtistGrid({ artists }: Props) {
   const leftColumn = useMemo(
     () => artists.filter((_, idx) => idx % 2 === 0),
     [artists]

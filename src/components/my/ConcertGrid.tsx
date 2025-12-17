@@ -8,7 +8,7 @@ type Props = {
   concerts: Concert[];
 };
 
-export default function MyConcertsGrid({ concerts }: Props) {
+export default function ConcertGrid({ concerts }: Props) {
   const leftColumn = useMemo(
     () => concerts.filter((_, idx) => idx % 2 === 0),
     [concerts]
