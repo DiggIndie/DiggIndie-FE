@@ -1,8 +1,5 @@
-export type FreeArticles = {
+import type { ArticleBase } from "@/types/articleBase";
+
+export type FreeArticles = ArticleBase & {
   id: string;
-  thumbnail: string;
-  title: string;
-  content: string;
-  written: number;     // n분 전
-  view: number;        // 조회수
 };
