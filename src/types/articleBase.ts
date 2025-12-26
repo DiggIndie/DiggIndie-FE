@@ -1,6 +1,5 @@
 export type ArticleBase = {
   id: string;
-  thumbnail: string;
   images: string[];
   title: string;
   content: string;

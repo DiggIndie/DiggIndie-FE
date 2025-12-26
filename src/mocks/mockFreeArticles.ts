@@ -4,7 +4,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-1",
     authorId: "user-2",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -20,7 +19,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-2",
     authorId: "user-2",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -36,7 +34,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-3",
     authorId: "user-2",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -52,7 +49,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-4",
     authorId: "user-2",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -68,7 +64,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-5",
     authorId: "user-2",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -84,7 +79,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-6",
     authorId: "user-1",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -100,7 +94,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-7",
     authorId: "user-1",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -116,7 +109,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-8",
     authorId: "user-1",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
@@ -132,7 +124,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-9",
     authorId: "user-1",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 홍대 지나가다가 완전 우연히 은하수 통로 버스킹을 봤는데… 진짜 분위기 장난 아니었어요. 처음엔 그냥 지나가려다가 첫 곡 기타 인트로 듣자마자 발이 멈춰짐. 드림팝 특유의 흐릿하고 몽환적인 느낌이 그대로 살아 있어서, 거리 한복판인데도 갑자기 영화 속 장면 들어온 것 같았어요.",
     written: 12,
@@ -148,7 +139,6 @@ export const mockFreeArticles: FreeArticles[] = [
   {
     id: "free-10",
     authorId: "user-1",
-    thumbnail: "/mocks/mockArticleThumbnail.png",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,
