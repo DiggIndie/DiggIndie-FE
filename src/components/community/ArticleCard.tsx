@@ -8,7 +8,7 @@ type Props = {
 
 export default function ArticleCard({ article }: Props) {
   return (
-    <div className="h-[96px] flex items-center border-b-[1px] border-gray-900 py-[12px] px-[20px] justify-between">
+    <div className="w-[375px] h-[96px] flex items-center border-b-[1px] border-gray-900 py-[12px] px-[20px] justify-between">
       <div className="flex flex-col min-w-0 pr-[24px]">
         <p className="text-white text-[16px] h-[27px] font-medium truncate">
           {article.title}
@@ -26,7 +26,7 @@ export default function ArticleCard({ article }: Props) {
 
       <div className="relative w-[70px] h-[70px] flex-shrink-0 rounded-[4px] overflow-hidden bg-gray-400">
         <Image
-          src={article.thumbnail}
+          src={article.images[0]}
           alt={article.title}
           fill
           sizes="70px"

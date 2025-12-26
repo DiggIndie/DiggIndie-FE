@@ -8,7 +8,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function CommunityHeader() {
-
   const pathname = usePathname();
 
   const isFree = pathname.startsWith("/community/free");
@@ -28,45 +27,46 @@ export default function CommunityHeader() {
         </div>
       </div>
 
-      <div className="flex justify-center h-[42px] text-[16px] gap-[24px] mr-auto ml-[20px]">
-        <Link
-          href="/community/free"
-          className={`relative w-[70px] font-medium cursor-pointer ${
-            isFree ? "text-white" : "text-gray-600"
-          }`}
-        >
-          자유게시판
-          <span className="absolute left-0 right-0 bottom-0 h-[1px] bg-gray-800" />
-          {isFree && (
-            <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
-          )}
-        </Link>
+      <div className="relative w-[375px] h-[42px]">
+        <span className="absolute left-0 right-0 bottom-0 h-[1px] bg-gray-800" />
 
-        <Link
-          href="/community/info"
-          className={`relative w-[68px] font-medium cursor-pointer ${
-            isInfo ? "text-white" : "text-gray-600"
-          }`}
-        >
-          정보 공유
-          <span className="absolute left-0 right-0 bottom-0 h-[1px] bg-gray-800" />
-          {isInfo && (
-            <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
-          )}
-        </Link>
+        <div className="flex h-[42px] text-[16px] gap-[24px] mr-auto ml-[20px]">
+          <Link
+            href="/community/free"
+            className={`relative w-[70px] font-medium cursor-pointer ${
+              isFree ? "text-white" : "text-gray-600"
+            }`}
+          >
+            자유게시판
+            {isFree && (
+              <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
+            )}
+          </Link>
 
-        <Link
-          href="/community/trade"
-          className={`relative w-[68px] font-medium cursor-pointer ${
-            isTrade ? "text-white" : "text-gray-600"
-          }`}
-        >
-          거래/양도
-          <span className="absolute left-0 right-0 bottom-0 h-[1px] bg-gray-800" />
-          {isTrade && (
-            <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
-          )}
-        </Link>
+          <Link
+            href="/community/info"
+            className={`relative w-[68px] font-medium cursor-pointer ${
+              isInfo ? "text-white" : "text-gray-600"
+            }`}
+          >
+            정보 공유
+            {isInfo && (
+              <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
+            )}
+          </Link>
+
+          <Link
+            href="/community/trade"
+            className={`relative w-[68px] font-medium cursor-pointer ${
+              isTrade ? "text-white" : "text-gray-600"
+            }`}
+          >
+            거래/양도
+            {isTrade && (
+              <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
+            )}
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export default function CommunityInfoPage() {
           <CommunityHeader />
         </div>
         <main className="overflow-y-auto scrollbar flex flex-col justify-center items-center bg-black">
-          <ArticleList articles={mockInfoArticles} />
+          <ArticleList articles={mockInfoArticles} basePath={"/community/info"} />
         </main>
       </div>
     </div>

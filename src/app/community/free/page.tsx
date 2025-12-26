@@ -14,7 +14,7 @@ export default function CommunityFreePage() {
           <CommunityHeader />
         </div>
         <main className="overflow-y-auto scrollbar flex flex-col justify-center items-center bg-black">
-          <ArticleList articles={mockFreeArticles} />
+          <ArticleList articles={mockFreeArticles} basePath={"/community/free"} />
         </main>
       </div>
     </div>

@@ -1,20 +1,29 @@
-"use client";
+// ArticleList.tsx
+import Link from "next/link";
+import ArticleCard from "./ArticleCard";
+import type { ArticleBase } from "@/types/articleBase";
 
-import type { FreeArticles } from "@/types/freeArticles";
-import ArticleCard from "@/components/community/ArticleCard";
-
-type Props = {
-  articles: FreeArticles[];
+type ArticleWithId = ArticleBase & {
+  id: string;
 };
 
-export default function ArticleList({ articles }: Props) {
+type Props = {
+  articles: ArticleWithId[];
+  basePath: string; // "/community/free" | "/community/info"
+};
+
+export default function ArticleList({ articles, basePath }: Props) {
   return (
-    <div className="w-full min-h-screen bg-black">
-      <div className="flex flex-col mt-[16px]">
-        {articles.map((article) => (
-          <ArticleCard key={article.id} article={article} />
-        ))}
-      </div>
+    <div className="flex flex-col">
+      {articles.map((article) => (
+        <Link
+          key={article.id}
+          href={`${basePath}/${article.id}`}
+          className="block"
+        >
+          <ArticleCard article={article} />
+        </Link>
+      ))}
     </div>
   );
 }
