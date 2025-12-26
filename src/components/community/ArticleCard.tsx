@@ -5,7 +5,7 @@ type Props = {
   article: FreeArticles;
 };
 
-export default function FreeArticleCard({ article }: Props) {
+export default function ArticleCard({ article }: Props) {
   return (
     <div className="h-[96px] flex items-center border-b-[1px] border-gray-800
     py-[12px] px-[20px] justify-between">
@@ -28,12 +28,12 @@ export default function FreeArticleCard({ article }: Props) {
       </div>
 
       {/* thumbnail */}
-      <div className="relative w-[72px] h-[72px] flex-shrink-0 rounded-[8px] overflow-hidden bg-[#D9D9D9]">
+      <div className="relative w-[70px] h-[70px] flex-shrink-0 rounded-[4px] overflow-hidden bg-gray-400">
         <Image
           src={article.thumbnail}
           alt={article.title}
           fill
-          sizes="72px"
+          sizes="70px"
           className="object-cover"
           priority={false}
         />

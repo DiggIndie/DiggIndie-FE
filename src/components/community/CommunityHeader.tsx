@@ -65,7 +65,6 @@ export default function CommunityHeader() {
             <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-white" />
           )}
         </span>
-        <span className="absolute left-0 right-0 -bottom-[1px] h-[2px] bg-gray-200" />
       </div>
     </div>
   );
