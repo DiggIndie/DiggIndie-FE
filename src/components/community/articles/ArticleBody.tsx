@@ -22,13 +22,8 @@ export default function ArticleBody({ article }: Props) {
         {article.images.length > 0 && (
           <div className="flex gap-[12px] overflow-x-auto">
             {article.images.map((src, idx) => (
-              <div key={`${src}-${idx}`} className="relative w-[200px] h-[200px] flex-none rounded-[4px] overflow-hidden bg-[#2A2A2A]">
-                <Image
-                  src={src}
-                  alt={`article-image-${idx + 1}`}
-                  fill
-                  sizes="200px"
-                  className="object-cover"
+              <div key={`${src}-${idx}`} className="relative w-[200px] h-[200px] flex-none rounded-[4px] overflow-hidden">
+                <Image src={src} alt={`article-image-${idx + 1}`} width={200} height={200} className="fill object-cover"
                 />
               </div>
             ))}
