@@ -1,3 +1,4 @@
+
 'use client'
 
 import AuthFindHeader from "@/components/auth/AuthFindHeader";
@@ -17,4 +18,4 @@ export default function FindIDPage() {
       </div>
     </div>
   );
-}
+=
