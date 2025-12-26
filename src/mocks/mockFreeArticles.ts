@@ -18,7 +18,7 @@ export const mockFreeArticles: FreeArticles[] = [
   },
   {
     id: "free-2",
-    authorId: "user-2",
+    authorId: "user-1",
     title: "홍대에 BlueVinyls 라이브",
     content: "어제 공연 진짜 미쳤어요...드럼사운드가 너무 웅장하고",
     written: 12,

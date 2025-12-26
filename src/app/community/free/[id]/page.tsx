@@ -13,7 +13,7 @@ type Props = {
 
 export default async function FreeArticleDetailPage({ params }: Props) {
   const { id } = await params;
-
+  //게시글과 글쓴이 매핑
   const article = mockFreeArticles.find((a) => a.id === id);
   if (!article) return notFound();
 

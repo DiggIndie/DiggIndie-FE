@@ -14,7 +14,7 @@ export default function ArticleBody({ article }: Props) {
         <div className={"h-[28px] font-semibold text-[20px] mb-[8px]"}>
           {article.title}
         </div>
-        <div className={"h-[100px] text-[14px] text-gray-300 font-regular mb-[20px]"}>
+        <div className={"h-[100px] text-[14px] text-gray-300 font-regular mb-[20px] pr-[20px]"}>
           {article.content}
         </div>
 
