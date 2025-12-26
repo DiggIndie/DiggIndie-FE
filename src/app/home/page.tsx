@@ -11,16 +11,16 @@ import ResetPreference from '@/components/home/ResetPreference';
 
 import { useState } from 'react';
 
-export default function Home() {
+export default function HomePage() {
   const [isLoggedIn, setLoggedIn] = useState(true);
 
   return (
-    <div className="flex justify-center items-centerbg-zinc-50 font-sans dark:bg-black">
+    <div className="text-white flex flex-col h-screen bg-black">
       <div className="flex flex-col">
         <div className={"sticky top-0 z-5"}>
           <HomeHeader />
         </div>
-        <main className="overflow-y-auto scrollbar flex flex-col justify-center items-center">
+        <main className="overflow-y-auto scrollbar flex flex-col justify-center items-center bg-black">
           <TodayArtistRec />
           <LoginBanner isLoggedIn={() => setLoggedIn(false)} />
           <PersonalArtistRec isLoggedIn={isLoggedIn} />
