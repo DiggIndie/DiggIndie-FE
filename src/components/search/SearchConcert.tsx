@@ -9,6 +9,7 @@ import { daysUntilConcert } from "@/components/home/PersonalConcertRecCard";
 import ConcertGrid from "@/components/my/ConcertGrid";
 import searchBtn from '@/assets/icons/artistSearch.svg';
 import searchBack from '@/assets/icons/searchBack.svg';
+import searchGrayBtn from "@/assets/icons/searchGray.svg"
 
 type SortKey = "updated" | "korean";
 
@@ -63,12 +64,12 @@ export default function SearchConcert() {
       <div className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white 
       ${query ? "w-[307px] ml-[28px] mr-[12px]" : "w-[335px] "}`}>
 
-        <Image src={searchBtn} alt="Search" className={query ? "absolute right-[8px]" : ""} />
+        <Image src={query ? searchGrayBtn : searchBtn} alt="Search" className={ "absolute right-[8px] mt-[2px]" } />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="검색어를 입력하세요"
-          className={`ml-[12px] placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent`}
+          className={`placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent`}
         />
       </div>
 
