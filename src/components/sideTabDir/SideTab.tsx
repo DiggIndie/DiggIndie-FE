@@ -1,9 +1,9 @@
 import homeIcon from '@/assets/sidTab/Home 2.svg';
-import concertIcon from '@/assets/sidTab/Calendar.svg';
-import artistIcon from '@/assets/sidTab/Voice 3.svg';
+import concertIcon from '@/assets/common/Calendar.svg';
+import artistIcon from '@/assets/common/Voice 3.svg';
 import communityIcon from '@/assets/sidTab/Chat 2.svg';
 import indieIcon from '@/assets/sidTab/Document.svg';
-import myIcon from '@/assets/sidTab/Profile.svg';
+import myIcon from '@/assets/common/Profile.svg';
 import xIcon from '@/assets/sidTab/Star 8.svg';
 import loginIcon from '@/assets/sidTab/Login.svg';
 import logoutIcon from '@/assets/sidTab/Logout.svg';

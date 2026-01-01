@@ -11,7 +11,7 @@ export default function PersonalArtistRecCard({ artist }: Props) {
   const keyOne = artist.keyWords ? artist.keyWords[0] : '';
   const keyTwo = artist.keyWords ? artist.keyWords[1] : '';
   return (
-    <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px]">
+    <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px] shrink-0">
       <div className={'relative flex flex-col'}>
         <ImageTile
           src={artist.imageUrl}
