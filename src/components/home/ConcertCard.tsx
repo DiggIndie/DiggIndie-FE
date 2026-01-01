@@ -15,7 +15,7 @@ export function daysUntilConcert(targetDate: string): number {
   return Math.ceil(diff / oneDay);
 }
 
-export default function PersonalConcertRecCard({ concert }: Props) {
+export default function ConcertCard({ concert }: Props) {
   const dDay = daysUntilConcert(concert.date);
 
   return (

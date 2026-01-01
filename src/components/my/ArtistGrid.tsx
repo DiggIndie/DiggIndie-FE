@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import PersonalArtistRecCard from "@/components/home/PersonalArtistRecCard";
+import ArtistCard from "@/components/home/ArtistCard";
 import type { Artist } from "@/types/artists";
 
 type Props = {
@@ -22,13 +22,13 @@ export default function ArtistGrid({ artists }: Props) {
     <div className="flex justify-center gap-[15px] mt-[16px]">
       <div className="flex flex-col gap-[16px]">
         {leftColumn.map((artist) => (
-          <PersonalArtistRecCard key={artist.id} artist={artist} />
+          <ArtistCard key={artist.id} artist={artist} />
         ))}
       </div>
 
       <div className="flex flex-col gap-[16px]">
         {rightColumn.map((artist) => (
-          <PersonalArtistRecCard key={artist.id} artist={artist} />
+          <ArtistCard key={artist.id} artist={artist} />
         ))}
       </div>
     </div>

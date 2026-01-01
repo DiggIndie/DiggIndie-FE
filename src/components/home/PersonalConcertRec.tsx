@@ -1,8 +1,8 @@
-import PersonalConcertRecCard from '@/components/home/PersonalConcertRecCard';;
+import ConcertCard from '@/components/home/ConcertCard';;
 import Image from "next/image";
 import more from "../../assets/icons/more.svg"
 import { mockConcerts } from '@/mocks/mockConcerts';
-import { daysUntilConcert } from '@/components/home/PersonalConcertRecCard';
+import { daysUntilConcert } from '@/components/home/ConcertCard';
 
 type Props = {
   isLoggedIn: boolean;
@@ -23,7 +23,7 @@ export default function PersonalConcertRec({ isLoggedIn }: Props) {
             .filter((concert) => daysUntilConcert(concert.date) >= 1)
             .sort((a, b) => daysUntilConcert(a.date) - daysUntilConcert(b.date))
             .map((concert) => (
-              <PersonalConcertRecCard key={concert.id} concert={concert} />
+              <ConcertCard key={concert.id} concert={concert} />
             ))}
         </div>
       </div>

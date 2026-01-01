@@ -8,7 +8,7 @@ type Props = {
   artist: Artist;
 };
 
-export default function PersonalArtistRecCard({ artist }: Props) {
+export default function ArtistCard({ artist }: Props) {
   const keyOne = artist.keyWords ? artist.keyWords[0] : ''
   const keyTwo = artist.keyWords ? artist.keyWords[1] : ''
   return (
