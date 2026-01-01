@@ -24,7 +24,7 @@ export default function SideTab({ onClose }: SideTabProps) {
   };
   const router = useRouter();
   return (
-    <section className="bg-black flex flex-col h-screen w-[307px] gap-5">
+    <section className="bg-black flex flex-col h-screen w-[307px] gap-5 absolute top-0 z-50 right-0">
       <div className="px-8 py-3 cursor-pointer mt-7" onClick={onClose}>
         <Image src={xIcon} alt="닫기" />
       </div>
@@ -50,13 +50,17 @@ export default function SideTab({ onClose }: SideTabProps) {
           <span className="text-white">인디스토리</span>
         </div>
         <div
-          className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
+          className={`px-8 py-3 flex gap-3 items-center ${
+            isLoggedIn ? 'cursor-pointer hover:bg-gray-800' : 'cursor-not-allowed'
+          }`}
           onClick={() => {
+            if (!isLoggedIn) return;
             router.push('/my');
+            onClose();
           }}
         >
-          <Image src={myIcon} alt="마이페이지" />
-          <span className="text-white">마이페이지</span>
+          <Image src={myIcon} alt="마이페이지" className={`${isLoggedIn ? '' : 'opacity-40'}`} />
+          <span className={`${isLoggedIn ? 'text-white' : 'text-gray-700'}`}>마이페이지</span>
         </div>
         <hr className="border-t border-gray-700 my-6" />
 
