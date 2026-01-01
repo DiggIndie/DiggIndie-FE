@@ -4,7 +4,7 @@ import HomeHeader from "@/components/home/HomeHeader";
 import TodayArtistRec from "@/components/home/TodayArtistRec";
 import LoginBanner from "@/components/home/LoginBanner";
 import PersonalArtistRec from "@/components/home/PersonalArtistRec";
-import Calendar from "@/components/home/Calendar";
+import HomeCalendar from "@/components/home/HomeCalendar";
 import PersonalConcertRec from "@/components/home/PersonalConcertRec";
 import IndieStoryRec from "@/components/home/IndieStoryRec";
 import ResetPreference from '@/components/home/ResetPreference';
@@ -15,7 +15,7 @@ export default function HomePage() {
   const [isLoggedIn, setLoggedIn] = useState(true);
 
   return (
-    <div className="text-white flex flex-col h-screen bg-black">
+    <div className="texta-white flex flex-col h-screen bg-black">
       <div className="flex flex-col">
         <div className={"sticky top-0 z-5"}>
           <HomeHeader />
@@ -25,7 +25,7 @@ export default function HomePage() {
           <LoginBanner isLoggedIn={() => setLoggedIn(false)} />
           <PersonalArtistRec isLoggedIn={isLoggedIn} />
           <ResetPreference isLoggedIn={isLoggedIn}/>
-          <Calendar />
+          <HomeCalendar />
           <PersonalConcertRec isLoggedIn={isLoggedIn}/>
           <IndieStoryRec />
         </main>

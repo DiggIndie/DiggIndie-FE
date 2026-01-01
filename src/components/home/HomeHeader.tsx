@@ -1,7 +1,7 @@
 import Image from "next/image";
-import logo from "../../assets/icons/logo.svg"
-import search from "../../assets/icons/search.svg"
-import hamburger from "../../assets/icons/hamburger.svg"
+import logo from "@/assets/icons/logo.svg"
+import search from "@/assets/icons/search.svg"
+import hamburger from "@/assets/icons/hamburger.svg"
 
 import Link from "next/link";
 
