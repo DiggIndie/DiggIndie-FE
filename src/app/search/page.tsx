@@ -21,38 +21,38 @@ export default function HomeSearch() {
         <Image src={back} alt="이전으로" />
         <SearchSection searchTerm={searchTerm} onChange={setSearchTerm} />
       </div>
-      <span className="font-medium text-sm text-gray-400 px-5 py-5">검색결과 000개</span>
-      <section className="mx-5 mb-9">
-        <div className="flex gap-1 mb-4">
+      <span className="block font-medium text-sm text-gray-400 px-5 py-5">검색결과 000개</span>
+      <section className="mb-9">
+        <div className="flex gap-1 mb-4 px-5">
           <Image src={mikeIcon} alt="마이크" />
           <span className="text-xl font-semibold text-white">아티스트</span>
           <span className="font-medium text-sm text-white px-2 py-1 ml-2">000개</span>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
           {mockArtists.map((artist) => (
             <PersonalArtistRecCard key={artist.id} artist={artist} />
           ))}
         </div>
       </section>
-      <section className="mx-5 mb-9">
-        <div className="flex gap-1 mb-4">
+      <section className="mb-9">
+        <div className="flex gap-1 mb-4 px-5">
           <Image src={calendarIcon} alt="달력" />
           <span className="text-xl font-semibold text-white">공연</span>
           <span className="font-medium text-sm text-white px-2 py-1 ml-2">000개</span>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
           {mockConcerts.map((concert) => (
             <PersonalConcertRecCard key={concert.id} concert={concert} />
           ))}
         </div>
       </section>
-      <section className="mx-5 pb-9 ">
-        <div className="flex gap-1 mb-4">
+      <section className="pb-9">
+        <div className="flex gap-1 mb-4 px-5">
           <Image src={documentIcon} alt="문서" />
           <span className="text-xl font-semibold text-white">인디 스토리</span>
           <span className="font-medium text-sm text-white px-2 py-1 ml-2">000개</span>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
           {mockIndieStory.map((indieStory) => (
             <IndieStoryRecard key={indieStory.id} indieStory={indieStory} />
           ))}
