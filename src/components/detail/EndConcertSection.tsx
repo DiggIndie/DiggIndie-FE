@@ -14,7 +14,7 @@ export default function EndedConcertSection({ artist }: EndedConcertSectionProps
             src={concert.concertImage}
             alt={concert.concertName}
             fill
-            className="relative object-cover"
+            className="relative object-cover rounded-sm"
           />
           <div className="absolute inset-0 bg-black/70"></div>
           <span className="absolute inset-0 flex items-center justify-center text-base font-medium text-white">

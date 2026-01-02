@@ -5,7 +5,7 @@ interface ScheduledConcertSectionProps {
 }
 export default function ScheduledConcertSection({ artist }: ScheduledConcertSectionProps) {
   return (
-    <section className="px-5">
+    <section className="px-5 mb-9">
       <span className="font-semibold text-xl mb-3">진행 예정 공연</span>
       <div className="mt-3">
         {artist.scheduledConcert.map((concert) => (
@@ -15,7 +15,7 @@ export default function ScheduledConcertSection({ artist }: ScheduledConcertSect
                 src={concert.concertImage}
                 alt={concert.concertName}
                 fill
-                className="relative object-cover"
+                className="relative object-cover rounded-sm"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-black/80"></div>
               <div className="absolute bottom-2 left-2 right-2 text-white flex flex-col">

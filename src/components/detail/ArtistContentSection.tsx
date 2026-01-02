@@ -2,6 +2,7 @@ import Image from 'next/image';
 import play from '@/assets/common/play.svg';
 import voice from '@/assets/common/Voice 3.svg';
 import profile from '@/assets/common/Profile.svg';
+import albumIcon from '@/assets/detail/music.svg';
 import BookmarkIcon from '@/components/detail/BookmarkIcon';
 import artistData from '@/mocks/mockArtistDetail.json';
 import { useState } from 'react';
@@ -15,7 +16,7 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
     setIsScrapped((prev) => !prev);
   };
   return (
-    <section className="px-5 pt-5">
+    <section className="px-5 pt-5 border-b-4 border-gray-850 mb-6">
       <div className="flex flex-col gap-1 pb-3 border-b border-gray-850">
         <p className="flex justify-between items-center gap-6">
           <span className="font-semibold text-xl">{artist.artistName}</span>
@@ -35,25 +36,7 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
           ))}
         </div>
       </div>
-      <div className="flex flex-col gap-3">
-        <div className="py-3 flex gap-2 items-start border-b border-gray-850">
-          <Image src={play} alt="play" width={24} height={24} />
-          <div className="flex flex-col">
-            <span className="font-medium text-base">{artist.mainMusic.title}</span>
-            <span className="font-normal text-sm text-gray-500">
-              {artist.mainMusic.description}
-            </span>
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 pb-3 border-b border-gray-850">
-          <p className="flex gap-2">
-            <Image src={voice} alt="voice" width={24} height={24} />
-            <span>{artist.artistName}</span>
-          </p>
-          <p className="font-medium text-sm text-gray-500">{artist.description}</p>
-        </div>
-      </div>
-      <div className="my-6 flex flex-col gap-2">
+      <div className="flex py-3 flex-col gap-2 border-b border-gray-850">
         <p className="flex gap-2">
           <Image src={profile} alt="profile" width={24} height={24} />
           <span>멤버</span>
@@ -65,6 +48,41 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
             </span>
           ))}
         </p>
+      </div>
+      <div className="flex flex-col gap-3">
+        <div className="py-3 flex flex-col gap-2 items-start border-b border-gray-850">
+          <div className="flex gap-2">
+            <Image src={play} alt="play" width={24} height={24} />
+            <span className="font-medium text-base">{artist.mainMusic.title}</span>
+          </div>
+          <span className="font-normal text-sm text-gray-500">{artist.mainMusic.description}</span>
+        </div>
+        <div className="flex flex-col gap-2 pb-3 border-b border-gray-850">
+          <p className="flex gap-2">
+            <Image src={voice} alt="voice" width={24} height={24} />
+            <span>{artist.artistName}</span>
+          </p>
+          <p className="font-medium text-sm text-gray-500">{artist.description}</p>
+        </div>
+        <div className="flex flex-col gap-2 pb-3">
+          <p className="flex gap-2">
+            <Image src={albumIcon} alt="album" width={24} height={24} />
+            <span>앨범</span>
+          </p>
+          {artist.albums.map((album) => (
+            <section key={album.albumId} className="flex flex-col">
+              <Image
+                src={album.albumImage}
+                alt="앨범이미지"
+                width={92}
+                height={92}
+                className="mb-1"
+              />
+              <span className="font-medium text-sm text-gray-500">{album.title}</span>
+              <span className="font-medium text-sm text-gray-500">{album.year}</span>
+            </section>
+          ))}
+        </div>
       </div>
     </section>
   );
