@@ -37,8 +37,8 @@ export default function OnboardArtistPage() {
   return (
     <div className="text-white flex flex-col h-screen">
       <Header />
-      <div className="flex-1 overflow-auto gap-5 flex flex-col">
-        <div className="px-5">
+      <div className="flex-1 overflow-auto flex flex-col">
+        <div className="px-5 pb-5">
           <ProgressBar current={1} total={3} />
         </div>
         <TitleSection
@@ -48,12 +48,12 @@ export default function OnboardArtistPage() {
               <br /> 아티스트를 알려주세요
             </>
           }
-          min="최소 2개"
+          min="최소 2"
         />
-        <div className="px-5">
+        <div className="px-5 pt-5">
           <SearchSection searchTerm={searchTerm} onChange={setSearchTerm} onSubmit={() => {}} />
         </div>
-        <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5">
+        <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
           {filteredArtists.length > 0 ? (
             filteredArtists.map((artist) => (
               <ArtisItem
