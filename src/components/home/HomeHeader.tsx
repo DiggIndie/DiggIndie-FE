@@ -3,10 +3,12 @@ import logo from '../../assets/common/logo.svg';
 import search from '../../assets/common/search.svg';
 import hamburger from '../../assets/common/hamburger.svg';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 type Props = {
   onHamburgerClick: () => void;
 };
 export default function HomeHeader({ onHamburgerClick }: Props) {
+  const router = useRouter();
   return (
     <>
       <div className="w-[375px] h-[100px] flex flex-col items-center font-bold bg-black">
@@ -19,6 +21,7 @@ export default function HomeHeader({ onHamburgerClick }: Props) {
               width={24}
               height={24}
               className="ml-[185.49px] mr-[8px]"
+              onClick={() => router.push('/search')}
             />
           </Link>
           <Image
