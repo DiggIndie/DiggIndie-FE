@@ -30,7 +30,7 @@ export default function OnBoardGenrePage() {
   return (
     <div className="bg-black text-white flex flex-col h-screen">
       <Header href="/onboard/artist" />
-      <div className="flex-1 overflow-auto m-5 gap-5 flex flex-col">
+      <div className="flex-1 overflow-auto p-5 gap-5 flex flex-col">
         <ProgressBar current={2} total={3} />
         <TitleSection
           title={
