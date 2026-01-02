@@ -25,7 +25,7 @@ export default function MyPage() {
           </HorizontalSwipeList>
         </div>
         <div onClick={() => router.push('/my/artist')}>
-          <MenuSection title="스크랩한 공연" />
+          <MenuSection title="스크랩한 아티스트" />
           <HorizontalSwipeList>
             {mockArtists.map((artist) => (
               <PersonalArtistRecCard key={artist.id} artist={artist} />
