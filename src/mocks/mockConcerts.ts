@@ -81,4 +81,34 @@ export const mockConcerts: Concert[] = [
     imageUrl: "/mocks/mockConcertImage2.png",
     description: "이러이러한 공연이다"
   },
+  {
+    id: "concert-9",
+    title: "콘서트9",
+    artists: "밴드명밴드명",
+    date: "2026-01-02",
+    time: "오후 8:00",
+    location: "홍대 무브홀",
+    imageUrl: "/mocks/mockConcertImage2.png",
+    description: "이러이러한 공연이다"
+  },
+  {
+    id: "concert-10",
+    title: "콘서트10",
+    artists: "밴드명밴드명",
+    date: "2026-01-03",
+    time: "오후 8:00",
+    location: "홍대 무브홀",
+    imageUrl: "/mocks/mockConcertImage2.png",
+    description: "이러이러한 공연이다"
+  },
+  {
+    id: "concert-11",
+    title: "콘서트11",
+    artists: "밴드명밴드명",
+    date: "2026-01-03",
+    time: "오후 8:00",
+    location: "홍대 무브홀",
+    imageUrl: "/mocks/mockConcertImage2.png",
+    description: "이러이러한 공연이다"
+  },
 ];

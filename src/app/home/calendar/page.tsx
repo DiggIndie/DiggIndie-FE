@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import CalendarHeader from "@/components/home/calendar/CalendarHeader";
 import Calendar from "@/components/home/calendar/Calendar";
 import ConcertGrid from "@/components/my/ConcertGrid";
@@ -9,27 +9,40 @@ import { mockConcerts } from "@/mocks/mockConcerts";
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  const concertsByDate = useMemo(() => {
-    if (!selectedDate) return [];
-    return mockConcerts.filter(
-      (concert) => concert.date === selectedDate
-    );
+  const concertsToShow = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const base = !selectedDate
+      ? mockConcerts
+      : mockConcerts.filter((c) => c.date === selectedDate);
+
+    return [...base].sort((a, b) => {
+      const aDate = new Date(a.date);
+      const bDate = new Date(b.date);
+
+      const aPast = aDate < today;
+      const bPast = bDate < today;
+
+      //종료된 공연 아래로
+      if (aPast !== bPast) return aPast ? 1 : -1;
+
+      if (!aPast) return bDate.getTime() - aDate.getTime();
+      return aDate.getTime() - bDate.getTime();
+    });
   }, [selectedDate]);
 
+
+
   return (
-    <div className="flex flex-col items-center min-h-screen bg-black text-white">
+    <div className="text-white flex flex-col items-center min-h-screen bg-black">
       <CalendarHeader />
+      <Calendar selectedDate={selectedDate} onSelectDate={setSelectedDate} />
 
-      <Calendar
-        selectedDate={selectedDate}
-        onSelectDate={setSelectedDate}
-      />
+      <div className="w-full flex justify-start">
+        <ConcertGrid concerts={concertsToShow} />
+      </div>
 
-      {selectedDate && (
-        <div className="w-full mt-[24px]">
-          <ConcertGrid concerts={concertsByDate} />
-        </div>
-      )}
     </div>
   );
 }
