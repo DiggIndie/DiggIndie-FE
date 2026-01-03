@@ -38,7 +38,7 @@ export default function LoginPage() {
     console.log('로그인 성공', result.data);
   };
   return (
-    <div className="text-white flex flex-col h-screen items-center">
+    <div className="text-white flex flex-col h-screen items-center relative">
       <MyHeader title="로그인" />
       <Image src={diggindie} alt="diggindie icon" width={235} className="mt-40" />
       <section className="flex flex-col gap-3 mt-10">

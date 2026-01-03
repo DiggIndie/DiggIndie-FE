@@ -10,14 +10,14 @@ export default function MyHeader({ title }: props) {
   const router = useRouter();
 
   return (
-    <div className="w-full flex items-center px-5 py-3 justify-between">
+    <div className="w-full flex items-center px-5 py-3 justify-between bg-transparent absolute top-0 z-50">
       <Image
         src={backIcon}
         alt="이전"
         width={24}
         height={24}
         onClick={() => router.back()}
-        className="cursor-pointer"
+        className="cursor-pointer aboslute left-5"
       />
       <span className="mx-auto text-base font-semibold">{title}</span>
     </div>
