@@ -28,7 +28,7 @@ export default function CalendarHeader({ onToggleCalendar, isCalendarOpen, }: Pr
 
   return (
     <div className="flex w-[375px] h-[56px] items-center gap-[88px] bg-black py-[17px]">
-      <button onClick={() => router.back()} className="ml-[20px]">
+      <button onClick={() => router.back()} className="ml-[20px] cursor-pointer">
         <Image src={backBtn} alt="back" width={24} height={24} />
       </button>
 

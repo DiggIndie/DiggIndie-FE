@@ -10,6 +10,7 @@ import prevBtn from "@/assets/icons/prev.svg"
 import prevDisabledBtn from "@/assets/icons/prevDisabled.svg"
 import nextDisabledBtn from "@/assets/icons/nextDisabled.svg"
 import nextGrayBtn from "@/assets/icons/nextGray.svg"
+import Link from 'next/link';
 
 
 export default function HomeCalendar() {
@@ -76,9 +77,9 @@ export default function HomeCalendar() {
             );
           })}
         </div>
-        <button
-          disabled={isNextWeek}
+        <button disabled={isNextWeek}
           onClick={() => setWeekOffset((prev) => Math.min(1, prev + 1))}
+          className={"cursor-pointer"}
         >
           <Image src={!isNextWeek ? nextBtn : nextDisabledBtn} alt="nextBtn" />
         </button>
@@ -89,9 +90,9 @@ export default function HomeCalendar() {
 
       {/*캘린더 더보기버튼*/}
       <div className={"flex text-[14px] font-medium text-gray-500 mt-[12px]"}>
-        <span className={"ml-auto"}>
+        <Link href={"/home/calendar"} className={"ml-auto"}>
         더보기
-        </span>
+        </Link>
         <Image src={nextGrayBtn} alt={"more"} className={"mr-[20px]"}/>
       </div>
 

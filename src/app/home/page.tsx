@@ -26,13 +26,12 @@ export default function HomePage() {
           <HomeHeader onHamburgerClick={() => setIsSideTabOpen(true)} />
         </div>
         <main className="overflow-y-auto scrollbar flex flex-col justify-center items-center bg-black">
-          <TodayArtistRec />
+          <IndieStoryRec />
           <LoginBanner isLoggedIn={() => setLoggedIn(false)} />
-          <PersonalArtistRec isLoggedIn={isLoggedIn} />
           <ResetPreference isLoggedIn={isLoggedIn} />
           <Calendar />
+          <PersonalArtistRec isLoggedIn={isLoggedIn} />
           <PersonalConcertRec isLoggedIn={isLoggedIn} />
-          <IndieStoryRec />
         </main>
       </div>
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}

@@ -90,6 +90,7 @@ export default function SimpleCalendar({ selectedDate, onSelectDate }: CalendarP
           onClick={() => {
             setCurrent(new Date(year, month - 1, 1));
           }}
+          className={"cursor-pointer"}
         >
           <Image src={prevBtn} alt="prev" width={24} height={24} />
         </button>
@@ -102,6 +103,7 @@ export default function SimpleCalendar({ selectedDate, onSelectDate }: CalendarP
           onClick={() => {
             setCurrent(new Date(year, month + 1, 1));
           }}
+          className={"cursor-pointer"}
         >
           <Image src={nextBtn} alt="next" width={24} height={24} />
         </button>
