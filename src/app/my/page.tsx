@@ -1,14 +1,49 @@
 'use client';
+import PersonalArtistRecCard from '@/components/home/PersonalArtistRecCard';
+import PersonalConcertRecCard from '@/components/home/PersonalConcertRecCard';
+import HorizontalSwipeList from '@/components/my/HorizontalSwipeList';
+import MenuSection from '@/components/my/MenuSection';
+import MyPageHeader from '@/components/my/MyPageHeader';
+import ProfileSection from '@/components/my/ProfileSection';
+import { mockArtists } from '@/mocks/mockArtists';
+import { mockConcerts } from '@/mocks/mockConcerts';
 import { useRouter } from 'next/navigation';
 
 export default function MyPage() {
   const router = useRouter();
   return (
-    <div className="text-white flex flex-col h-screen">
-      <h1>임시 마이페이지 입니다</h1>
-      <div className="px-5 py-3" onClick={() => router.push('/auth/login')}>
-        로그인 하고 디긴디하기
+    <div className="text-white flex flex-col h-screen bg-black">
+      <MyPageHeader />
+      <div className="flex flex-col">
+        <ProfileSection />
+        <div onClick={() => router.push('/my/concert')}>
+          <MenuSection title="스크랩한 공연" />
+          <HorizontalSwipeList>
+            {mockConcerts.map((concert) => (
+              <PersonalConcertRecCard key={concert.id} concert={concert} />
+            ))}
+          </HorizontalSwipeList>
+        </div>
+        <div onClick={() => router.push('/my/artist')}>
+          <MenuSection title="스크랩한 아티스트" />
+          <HorizontalSwipeList>
+            {mockArtists.map((artist) => (
+              <PersonalArtistRecCard key={artist.id} artist={artist} />
+            ))}
+          </HorizontalSwipeList>
+        </div>
       </div>
+      <div className="flex flex-col gap-3 bg-black">
+        <MenuSection title="스크랩한 게시물" hasBorder={true} />
+        <MenuSection title="스크랩한 인디스토리" hasBorder={true} />
+        <MenuSection title="연동된 소셜계정" hasBorder={true} />
+      </div>
+      <p className="flex justify-center items-center gap-2 pt-37 p-5 text-center bg-black ">
+        <span className="text-sm font-normal text-gray-500 border-r border-gray-500 px-3 cursor-pointer">
+          로그아웃
+        </span>
+        <span className="text-sm font-normal text-gray-500 px-3 cursor-pointer">회원탈퇴</span>
+      </p>
     </div>
   );
 }
