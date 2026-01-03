@@ -30,7 +30,7 @@ export default function SimpleCalendar({ selectedDate, onSelectDate }: CalendarP
   const [current, setCurrent] = useState(new Date());
 
   const year = current.getFullYear();
-  const month = current.getMonth(); // 0-based
+  const month = current.getMonth();
 
   // 월요일 시작
   const firstDowSun0 = new Date(year, month, 1).getDay();
@@ -79,8 +79,9 @@ export default function SimpleCalendar({ selectedDate, onSelectDate }: CalendarP
   return (
     <div
       className={
-        "flex flex-col items-center justify-center w-[335px] h-[284px] bg-gray-900 " +
-        "border-gray-800 border-[1px]"
+        "flex flex-col items-center w-[335px] bg-gray-900 " +
+        "border-gray-800 border-[1px] " +
+        "py-[16px]" // 위아래 패딩으로 안정적으로
       }
     >
       {/* header */}
@@ -88,8 +89,6 @@ export default function SimpleCalendar({ selectedDate, onSelectDate }: CalendarP
         <button
           onClick={() => {
             setCurrent(new Date(year, month - 1, 1));
-            // 선택은 페이지가 들고 있으니 여기서 null로 만들고 싶으면 페이지에서 처리
-            // 필요하면: onSelectDate("") 같은건 비추. 그냥 그대로 둠.
           }}
         >
           <Image src={prevBtn} alt="prev" width={24} height={24} />

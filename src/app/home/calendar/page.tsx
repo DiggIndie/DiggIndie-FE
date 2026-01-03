@@ -8,6 +8,7 @@ import { mockConcerts } from "@/mocks/mockConcerts";
 
 export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [showCalendar, setShowCalendar] = useState(true);
 
   const concertsToShow = useMemo(() => {
     const today = new Date();
@@ -24,25 +25,24 @@ export default function CalendarPage() {
       const aPast = aDate < today;
       const bPast = bDate < today;
 
-      //종료된 공연 아래로
       if (aPast !== bPast) return aPast ? 1 : -1;
-
       if (!aPast) return bDate.getTime() - aDate.getTime();
       return aDate.getTime() - bDate.getTime();
     });
   }, [selectedDate]);
 
-
-
   return (
     <div className="text-white flex flex-col items-center min-h-screen bg-black">
-      <CalendarHeader />
-      <Calendar selectedDate={selectedDate} onSelectDate={setSelectedDate} />
-
+      <CalendarHeader isCalendarOpen={showCalendar} onToggleCalendar={() => setShowCalendar((prev) => !prev)} />
+      {showCalendar && (
+        <Calendar
+          selectedDate={selectedDate}
+          onSelectDate={setSelectedDate}
+        />
+      )}
       <div className="w-full flex justify-start">
         <ConcertGrid concerts={concertsToShow} />
       </div>
-
     </div>
   );
 }
