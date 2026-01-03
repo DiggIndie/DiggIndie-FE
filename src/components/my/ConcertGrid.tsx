@@ -19,7 +19,7 @@ export default function ConcertGrid({ concerts }: Props) {
   );
 
   return (
-    <div className="flex justify-start gap-[16px] mt-[16px] ml-[20px]">
+    <div className="flex justify-start gap-[16px] mt-[16px]">
       <div className="flex flex-col gap-[20px]">
         {leftColumn.map((concert) => (
           <PersonalConcertRecCard key={concert.id} concert={concert} />

@@ -40,7 +40,7 @@ export default function CalendarPage() {
           onSelectDate={setSelectedDate}
         />
       )}
-      <div className="w-full flex justify-start">
+      <div className="w-full flex justify-start ml-[40px]">
         <ConcertGrid concerts={concertsToShow} />
       </div>
     </div>
