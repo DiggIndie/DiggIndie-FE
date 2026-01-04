@@ -1,0 +1,126 @@
+'use client';
+import InputSection from '@/components/auth/InputSection';
+import Button from '@/components/common/Button';
+import xButton from '@/assets/auth/xButton.svg';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { joinSchema } from '@/lib/auth';
+
+export default function JoinPage() {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    id: '',
+    password: '',
+    confirmPassword: '',
+    emailLocal: '',
+    emailDomain: '',
+  });
+  const [errors, setErrors] = useState<{
+    id?: string;
+    password?: string;
+    confirmPassword?: string;
+    emailLocal?: string;
+    emailDomain?: string;
+  }>({});
+
+  const handleJoin = () => {
+    const result = joinSchema.safeParse(form);
+
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors({
+        id: fieldErrors.id?.[0],
+        password: fieldErrors.password?.[0],
+        confirmPassword: fieldErrors.confirmPassword?.[0],
+        emailLocal: fieldErrors.emailLocal?.[0],
+        emailDomain: fieldErrors.emailDomain?.[0],
+      });
+      return;
+    }
+    router.push('/auth/agree');
+    // 여기서 API 요청 보내기
+    console.log('회원가입 성공', result.data);
+  };
+  return (
+    <div className="text-white flex flex-col h-screen items-center gap-6">
+      <section className="flex px-5 py-3 w-full justify-between">
+        <Link href="/auth/login">
+          <Image src={xButton} alt="xButton" width={20} />
+        </Link>
+        <span className="text-base font-semibold text-white pr-35">회원가입</span>
+      </section>
+      <section className="flex flex-col gap-2">
+        <span className="text-xs font-medium text-gray-300 px-1 mb-2">아이디</span>
+        <div className="flex gap-2">
+          <InputSection
+            placeholder="아이디"
+            width="w-[228px] h-[46px]"
+            value={form.id}
+            onChange={(e) => setForm({ ...form, id: e.target.value })}
+          />
+          <button className="bg-main-red-4 px-4 py-3 rounded-sm text-white text-base font-semibold border-main-red-1 border">
+            중복확인
+          </button>
+        </div>
+        {errors.id && <p className="text-red-400 text-xs px-3">{errors.id}</p>}
+        <span className="text-xs font-medium text-gray-300 px-3">4~12이내</span>
+      </section>
+      <section className="flex flex-col gap-2">
+        <span className="text-xs font-medium text-gray-300 mb-2">비밀번호</span>
+        <div className="flex flex-col gap-3">
+          <InputSection
+            placeholder="비밀번호"
+            type="password"
+            width="w-[335px] h-[46px]"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+          {errors.password && <p className="text-red-400 text-xs px-3">{errors.password}</p>}
+
+          <InputSection
+            placeholder="비밀번호 확인"
+            type="password"
+            width="w-[335px] h-[46px]"
+            value={form.confirmPassword}
+            onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+          />
+        </div>
+        {errors.confirmPassword && (
+          <p className="text-red-400 text-xs px-3">{errors.confirmPassword}</p>
+        )}
+        <span className="text-xs font-medium text-gray-500 px-3">
+          6~20자/ 영문, 숫자, 특수문자 중 2가지 이상 조합
+        </span>
+      </section>
+      <section className="flex flex-col gap-4">
+        <span className="text-xs font-medium  text-gray-300">이메일</span>
+        <div className="flex gap-3 justify-center items-center">
+          <InputSection
+            placeholder="이메일"
+            width="w-[150px] h-[46px]"
+            value={form.emailLocal}
+            onChange={(e) => setForm({ ...form, emailLocal: e.target.value })}
+          />
+          <span className="font-semibold text-xl text-gray-600">@</span>
+          <select
+            className="w-[130px] h-[46px] bg-black border border-gray-600 rounded px-2 text-sm text-gray-300"
+            value={form.emailDomain}
+            onChange={(e) => setForm({ ...form, emailDomain: e.target.value })}
+          >
+            <option value="">선택</option>
+            <option value="@gmail.com">gmail.com</option>
+            <option value="@naver.com">naver.com</option>
+            <option value="@kakao.com">kakao.com</option>
+          </select>
+        </div>
+        {errors.emailLocal && <p className="text-red-400 text-xs px-3">{errors.emailLocal}</p>}
+        {errors.emailDomain && <p className="text-red-400 text-xs px-3">{errors.emailDomain}</p>}
+      </section>
+      <div className="w-[375px] px-5 absolute bottom-5">
+        <Button onClick={handleJoin}>가입하기</Button>
+      </div>
+    </div>
+  );
+}
