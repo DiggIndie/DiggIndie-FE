@@ -22,4 +22,4 @@ jobs:
 
           git remote add fork https://x-access-token:${{ secrets.PERSONAL_REPO_TOKEN }}@github.com/sungahChooo/DiggIndie-FE.git
 
-          git push fork dev --force
+          git push fork main --force
