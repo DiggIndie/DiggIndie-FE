@@ -1,9 +1,9 @@
-name: Sync to Personal Repo
+name: Sync fork to personal repo
 
 on:
   push:
     branches:
-      - dev   # 필요하면 main도 추가
+      - dev   # 배포 기준 브랜치
 
 jobs:
   sync:
@@ -15,11 +15,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Push to personal repo
+      - name: Push to personal fork
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
-          git remote add personal https://x-access-token:${{ secrets.PERSONAL_REPO_TOKEN }}@github.com/sungahChooo/DiggIndie-FE.git
+          git remote add fork https://x-access-token:${{ secrets.FORK_SYNC_TOKEN }}@github.com/sungahChooo/DiggIndie-FE.git
 
-          git push personal dev --force
+          git push fork dev --force
