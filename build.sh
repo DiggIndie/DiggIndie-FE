@@ -1,5 +1,5 @@
 #!/bin/sh
 cd ../
 mkdir output
-cp -R ./your-repository-name/* ./output
+cp -R ./DiggIndie-FE/* ./output
 cp -R ./output ./DiggIndie-FE/
