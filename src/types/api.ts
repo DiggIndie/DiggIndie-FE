@@ -4,12 +4,3 @@ export interface ApiResponse<T> {
   message: string;
   payload: T;
 }
-interface SignupResponse {
-  isSuccess: boolean;
-  payload: {
-    accessToken: string;
-    userId: string;
-    isNew: boolean;
-  };
-  message: string;
-}

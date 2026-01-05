@@ -34,9 +34,18 @@ export const authApi = {
 
     return body;
   },
-  logout: () =>
-    fetchClient('/auth/logout', {
+  async logout() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/logout`, {
       method: 'POST',
-      auth: true,
-    }),
+      credentials: 'include', // refreshToken 쿠키 삭제용
+    });
+
+    const body = await res.json();
+
+    if (!res.ok || !body.isSuccess) {
+      throw new Error('로그아웃 실패');
+    }
+
+    return body;
+  },
 };

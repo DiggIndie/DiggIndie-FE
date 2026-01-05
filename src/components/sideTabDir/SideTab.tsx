@@ -8,21 +8,27 @@ import xIcon from '@/assets/sidTab/Star 8.svg';
 import loginIcon from '@/assets/sidTab/Login.svg';
 import logoutIcon from '@/assets/sidTab/Logout.svg';
 import Image from 'next/image';
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { authService } from '@/services/authService';
+import { useAuthStore } from '@/stores/authStore';
 
 interface SideTabProps {
   onClose: () => void;
 }
 export default function SideTab({ onClose }: SideTabProps) {
-  // 임시 로그인 상태 (초기값: 로그아웃 상태)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleClick = () => {
-    router.push(isLoggedIn ? '/' : '/auth/login');
-    // 임시로 로그인/로그아웃 토글
-    setIsLoggedIn((prev) => !prev);
-  };
   const router = useRouter();
+  const { isAuthed } = useAuthStore();
+
+  const handleLoginClick = () => {
+    router.push('/auth/login');
+    onClose();
+  };
+
+  const handleLogout = async () => {
+    await authService.logout();
+    onClose();
+  };
+
   return (
     <section className="bg-black flex flex-col h-screen w-[307px] gap-5 absolute top-0 z-50 right-0">
       <div className="px-8 py-3 cursor-pointer mt-7" onClick={onClose}>
@@ -60,28 +66,27 @@ export default function SideTab({ onClose }: SideTabProps) {
         </div>
         <div
           className={`px-8 py-3 flex gap-3 items-center ${
-            isLoggedIn ? 'cursor-pointer hover:bg-gray-800' : 'cursor-not-allowed'
+            isAuthed ? 'cursor-pointer hover:bg-gray-800' : 'cursor-not-allowed'
           }`}
           onClick={() => {
-            if (!isLoggedIn) return;
+            if (!isAuthed) return;
             router.push('/my');
             onClose();
           }}
         >
-          <Image src={myIcon} alt="마이페이지" className={`${isLoggedIn ? '' : 'opacity-40'}`} />
-          <span className={`${isLoggedIn ? 'text-white' : 'text-gray-700'}`}>마이페이지</span>
+          <Image src={myIcon} alt="마이페이지" className={`${isAuthed ? '' : 'opacity-40'}`} />
+          <span className={`${isAuthed ? 'text-white' : 'text-gray-700'}`}>마이페이지</span>
         </div>
         <hr className="border-t border-gray-700 my-6" />
 
         <div
           className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
-          onClick={handleClick}
+          onClick={isAuthed ? handleLogout : handleLoginClick}
         >
-          <Image
-            src={isLoggedIn ? logoutIcon : loginIcon}
-            alt={isLoggedIn ? '로그아웃' : '로그인'}
-          />
-          <span className="text-white">{isLoggedIn ? '로그아웃' : '로그인'}</span>
+          <Image src={isAuthed ? logoutIcon : loginIcon} alt={isAuthed ? '로그아웃' : '로그인'} />
+          <span className="text-white" onClick={() => handleLogout}>
+            {isAuthed ? '로그아웃' : '로그인'}
+          </span>
         </div>
       </div>
     </section>
