@@ -60,14 +60,6 @@ export default function JoinPage() {
     router.push('/auth/agree');
   };
 
-  useEffect(() => {
-    if (isIdChecked) {
-      setIsIdChecked(false);
-      setIsIdValid(false);
-      setErrors((prev) => ({ ...prev, id: undefined }));
-    }
-  }, [form.id]);
-
   //id 중복 체크 api 호출 함수
   const handleCheckId = async () => {
     if (!form.id) {
@@ -108,6 +100,8 @@ export default function JoinPage() {
             width="w-[228px] h-[46px]"
             value={form.id}
             onChange={(e) => {
+              setIsIdChecked(false);
+              setIsIdValid(false);
               setForm({ ...form, id: e.target.value });
             }}
           />
