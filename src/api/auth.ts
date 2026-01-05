@@ -1,5 +1,3 @@
-import { fetchClient } from './client';
-
 export const authApi = {
   async signup(data: { userId: string; email: string; password: string }) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/signup`, {
@@ -44,6 +42,22 @@ export const authApi = {
 
     if (!res.ok || !body.isSuccess) {
       throw new Error('로그아웃 실패');
+    }
+
+    return body;
+  },
+  async checkId(userId: string) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/auth/exists?userId=${encodeURIComponent(userId)}`,
+      {
+        method: 'GET',
+      }
+    );
+
+    const body = await res.json();
+
+    if (!res.ok || !body.isSuccess) {
+      throw new Error('아이디 중복체크 실패');
     }
 
     return body;

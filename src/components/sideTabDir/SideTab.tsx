@@ -27,6 +27,7 @@ export default function SideTab({ onClose }: SideTabProps) {
   const handleLogout = async () => {
     await authService.logout();
     onClose();
+    router.push('/');
   };
 
   return (

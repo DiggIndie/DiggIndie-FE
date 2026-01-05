@@ -43,8 +43,21 @@ export const authService = {
     } catch (err) {
       console.error('logout 실패', err);
 
-      // 🔥 서버 실패해도 프론트 상태는 정리 (UX 안정화)
+      //서버 실패해도 프론트 상태는 정리 (UX 안정화)
       useAuthStore.getState().logout();
+    }
+  },
+
+  async checkId(userId: string) {
+    try {
+      if (!userId) return null;
+
+      const result = await authApi.checkId(userId);
+
+      console.log('아이디 중복 체크 성공');
+      return result.payload.isAvailable;
+    } catch (err) {
+      console.log('아이디 중복 체크 실패', err);
     }
   },
 };

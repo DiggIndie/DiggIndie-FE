@@ -5,12 +5,15 @@ import xButton from '@/assets/auth/xButton.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { joinSchema } from '@/lib/auth';
 import { authService } from '@/services/authService';
 
 export default function JoinPage() {
   const router = useRouter();
+  const [isIdChecked, setIsIdChecked] = useState(false);
+  const [isIdValid, setIsIdValid] = useState(false);
+
   const [form, setForm] = useState({
     id: '',
     password: '',
@@ -27,6 +30,7 @@ export default function JoinPage() {
   }>({});
 
   const handleJoin = async () => {
+    // 1️⃣ Zod 검증
     const result = joinSchema.safeParse(form);
 
     if (!result.success) {
@@ -40,11 +44,54 @@ export default function JoinPage() {
       });
       return;
     }
-    // API 요청 보내기
+
+    // 2️⃣ 아이디 중복 확인 여부 검사
+    if (!isIdChecked || !isIdValid) {
+      setErrors((prev) => ({
+        ...prev,
+        id: '아이디 중복 확인을 해주세요.',
+      }));
+      return;
+    }
+
+    // 3️⃣ 회원가입
     await authService.signup(form.id, form.password, form.emailLocal, form.emailDomain);
-    console.log('회원가입 성공', result.data);
+
     router.push('/auth/agree');
   };
+
+  useEffect(() => {
+    if (isIdChecked) {
+      setIsIdChecked(false);
+      setIsIdValid(false);
+      setErrors((prev) => ({ ...prev, id: undefined }));
+    }
+  }, [form.id]);
+
+  //id 중복 체크 api 호출 함수
+  const handleCheckId = async () => {
+    if (!form.id) {
+      setErrors((prev) => ({ ...prev, id: '아이디를 입력해주세요.' }));
+      return;
+    }
+
+    try {
+      const isAvailable = await authService.checkId(form.id);
+
+      setIsIdChecked(true);
+
+      if (isAvailable) {
+        setIsIdValid(true);
+        setErrors((prev) => ({ ...prev, id: '사용 가능한 아이디입니다.' }));
+      } else {
+        setIsIdValid(false);
+        setErrors((prev) => ({ ...prev, id: '이미 사용 중인 아이디입니다.' }));
+      }
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, id: '서버 통신 중 오류가 발생했습니다.' }));
+    }
+  };
+
   return (
     <div className="text-white flex flex-col h-screen items-center gap-6">
       <section className="flex px-5 py-3 w-full justify-between">
@@ -60,9 +107,14 @@ export default function JoinPage() {
             placeholder="아이디"
             width="w-[228px] h-[46px]"
             value={form.id}
-            onChange={(e) => setForm({ ...form, id: e.target.value })}
+            onChange={(e) => {
+              setForm({ ...form, id: e.target.value });
+            }}
           />
-          <button className="bg-main-red-4 px-4 py-3 rounded-sm text-white text-base font-semibold border-main-red-1 border">
+          <button
+            className="bg-main-red-4 px-4 py-3 rounded-sm text-white text-base font-semibold border-main-red-1 border"
+            onClick={handleCheckId}
+          >
             중복확인
           </button>
         </div>
