@@ -13,12 +13,13 @@ import documentIcon from '@/assets/sidTab/Document.svg';
 import { mockIndieStory } from '@/mocks/mockIndieStory';
 import IndieStoryRecard from '@/components/home/IndieStoryRecCard';
 import SearchCardSkeleton from '@/components/search/SearchCardSkeleton';
+import { useRouter } from 'next/navigation';
 
 export default function HomeSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [debouncedTerm, setDebouncedTerm] = useState('');
-
+  const router = useRouter();
   //디바운스 처리
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -48,7 +49,12 @@ export default function HomeSearch() {
   return (
     <div className="min-h-screen w-full bg-black">
       <div className="px-5 py-3 w-full flex gap-1">
-        <Image src={back} alt="이전으로" />
+        <Image
+          src={back}
+          alt="이전으로"
+          onClick={() => router.push('/')}
+          className="cursor-pointer"
+        />
         <SearchSection
           searchTerm={searchTerm}
           onChange={setSearchTerm}

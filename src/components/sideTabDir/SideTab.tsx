@@ -29,15 +29,24 @@ export default function SideTab({ onClose }: SideTabProps) {
         <Image src={xIcon} alt="닫기" />
       </div>
       <div className="flex flex-col ">
-        <div className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800">
+        <div
+          className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
+          onClick={() => router.push('/')}
+        >
           <Image src={homeIcon} alt="홈" />
           <span className="text-white">홈</span>
         </div>
-        <div className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800">
+        <div
+          className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
+          onClick={() => router.push('/concert')}
+        >
           <Image src={concertIcon} alt="공연" />
           <span className="text-white">공연</span>
         </div>
-        <div className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800">
+        <div
+          className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
+          onClick={() => router.push('/artist')}
+        >
           <Image src={artistIcon} alt="아티스트" />
           <span className="text-white">아티스트</span>
         </div>
