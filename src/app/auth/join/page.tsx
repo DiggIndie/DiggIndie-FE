@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { joinSchema } from '@/lib/auth';
+import { authService } from '@/services/authService';
 
 export default function JoinPage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function JoinPage() {
     emailDomain?: string;
   }>({});
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
     const result = joinSchema.safeParse(form);
 
     if (!result.success) {
@@ -39,9 +40,10 @@ export default function JoinPage() {
       });
       return;
     }
-    router.push('/auth/agree');
-    // 여기서 API 요청 보내기
+    // API 요청 보내기
+    await authService.signup(form.id, form.password, form.emailLocal, form.emailDomain);
     console.log('회원가입 성공', result.data);
+    router.push('/auth/agree');
   };
   return (
     <div className="text-white flex flex-col h-screen items-center gap-6">

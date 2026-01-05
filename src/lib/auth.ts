@@ -3,6 +3,8 @@ import { z } from 'zod';
 로그인은 최소 검증만
 id: 4~12자, 영문과 숫자만
 pw: 6~20자, 영문,숫자, 특수문자 중 2가지 이상 조합
+e-mail local: @입력 x
+e-mail domain: 선택 필요
 
 */
 export const loginSchema = z.object({
