@@ -18,12 +18,22 @@ export const authApi = {
     return res.json();
   },
 
-  login: (body: { loginId: string; password: string }) =>
-    fetchClient('/auth/login', {
+  async login(data: { userId: string; password: string }) {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`, {
       method: 'POST',
-      body: JSON.stringify(body),
-    }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(data),
+    });
+    const body = await res.json();
+    if (!res.ok || !body.isSuccess) {
+      throw new Error('로그인 실패');
+    }
 
+    return body;
+  },
   logout: () =>
     fetchClient('/auth/logout', {
       method: 'POST',
