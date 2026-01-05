@@ -4,6 +4,8 @@ import GenreItem from '@/components/onBoard/GenreItem';
 import Header from '@/components/onBoard/Header';
 import ProgressBar from '@/components/onBoard/ProgressBar';
 import TitleSection from '@/components/onBoard/TitleSection';
+import { onBoardKeywordService } from '@/services/onBoardKeyword.service';
+import { Keyword } from '@/types/api';
 import { useEffect, useState } from 'react';
 
 interface Genre {
@@ -11,6 +13,7 @@ interface Genre {
   name: string;
 }
 export default function OnBoardGenrePage() {
+  const [keywords, setKeywords] = useState<Keyword[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
 
@@ -19,6 +22,20 @@ export default function OnBoardGenrePage() {
     fetch('/data/genres.json')
       .then((res) => res.json())
       .then((data) => setGenres(data));
+  }, []);
+
+  // 키워드 조회
+  useEffect(() => {
+    const fetchKeywords = async () => {
+      try {
+        const data = await onBoardKeywordService.getKeywords();
+        setKeywords(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchKeywords();
   }, []);
 
   /*장르 선택 함수  */
@@ -44,11 +61,11 @@ export default function OnBoardGenrePage() {
           min="최소 2개"
         />
         <div className="flex flex-wrap gap-4 px-5">
-          {genres.map((item) => (
+          {keywords.map((item) => (
             <GenreItem
               key={item.id}
-              genre={item}
-              isSelected={selectedIds.includes(item.id)}
+              genre={{ id: item.keywordId, name: item.keyword }}
+              isSelected={selectedIds.includes(item.keywordId)}
               toggleSelect={toggleSelect}
             />
           ))}

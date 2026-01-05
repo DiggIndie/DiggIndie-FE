@@ -5,7 +5,7 @@ import xButton from '@/assets/auth/xButton.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { joinSchema } from '@/lib/auth';
 import { authService } from '@/services/authService';
 
@@ -30,7 +30,7 @@ export default function JoinPage() {
   }>({});
 
   const handleJoin = async () => {
-    // 1️⃣ Zod 검증
+    // 1️.Zod 검증
     const result = joinSchema.safeParse(form);
 
     if (!result.success) {
@@ -45,7 +45,7 @@ export default function JoinPage() {
       return;
     }
 
-    // 2️⃣ 아이디 중복 확인 여부 검사
+    // 2️. 아이디 중복 확인 여부 검사
     if (!isIdChecked || !isIdValid) {
       setErrors((prev) => ({
         ...prev,
@@ -54,7 +54,7 @@ export default function JoinPage() {
       return;
     }
 
-    // 3️⃣ 회원가입
+    // 3️. 회원가입
     await authService.signup(form.id, form.password, form.emailLocal, form.emailDomain);
 
     router.push('/auth/agree');
