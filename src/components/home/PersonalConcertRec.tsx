@@ -1,4 +1,4 @@
-import ConcertCard from '@/components/home/ConcertCard';
+import ConcertCard from '@/components/home/HomeConcertCard';
 import Image from 'next/image';
 import more from '@/assets/common/more.svg';
 import { mockConcerts } from '@/mocks/mockConcerts';
@@ -18,7 +18,7 @@ export default function PersonalConcertRec({ isLoggedIn }: Props) {
         <Image src={more} alt="more" width={24} height={24} />
       </div>
       <div className={`flex overflow-x-auto ml-[20px] ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
-        <div className="flex gap-[16px] w-max">
+        <div className="flex gap-4 w-max">
           {mockConcerts
             .filter((concert) => daysUntilConcert(concert.date) >= 1)
             .sort((a, b) => daysUntilConcert(a.date) - daysUntilConcert(b.date))

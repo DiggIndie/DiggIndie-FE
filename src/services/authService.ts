@@ -7,11 +7,15 @@ export const authService = {
     try {
       const res = await authApi.signup({ userId: id, email, password });
       console.log('[signup] 응답 성공', res.payload);
-
+      if (!res || !res.payload) {
+        throw new Error('서버 응답에 데이터가 없습니다.');
+      }
       //자동 로그인
       const { accessToken, userId } = res.payload;
-      useAuthStore.getState().login(accessToken, userId);
-
+      if (accessToken) {
+        useAuthStore.getState().login(accessToken, userId);
+        console.log('[signup] 자동 로그인 성공');
+      }
       return res;
     } catch (err) {
       console.error('[signup] 실패', err);
@@ -55,6 +59,22 @@ export const authService = {
       return result.payload.isAvailable;
     } catch (err) {
       console.log('아이디 중복 체크 실패', err);
+    }
+  },
+
+  async refreshAccessToken() {
+    try {
+      const res = await authApi.reissue();
+      const { accessToken, userId } = res.payload;
+
+      // 재발급 받은 새 토큰을 스토어에 업데이트
+      useAuthStore.getState().login(accessToken, userId);
+      return accessToken;
+    } catch (err) {
+      console.log('access token 재발급 실패', err);
+      // Refresh Token까지 만료된 상황
+      useAuthStore.getState().logout();
+      throw err;
     }
   },
 };

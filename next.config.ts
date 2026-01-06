@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -9,8 +8,17 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.pixabay.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 's3.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        pathname: '/**',
+      },
     ],
-    domains: ['picsum.photos'],
   },
 };
 

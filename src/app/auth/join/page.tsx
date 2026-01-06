@@ -80,6 +80,7 @@ export default function JoinPage() {
         setErrors((prev) => ({ ...prev, id: '이미 사용 중인 아이디입니다.' }));
       }
     } catch (error) {
+      console.log('로그인 중복 검사 오류', error);
       setErrors((prev) => ({ ...prev, id: '서버 통신 중 오류가 발생했습니다.' }));
     }
   };

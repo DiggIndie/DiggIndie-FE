@@ -5,7 +5,7 @@ import SearchHeader from '@/components/search/SearchHeader';
 import SideTab from '@/components/sideTabDir/SideTab';
 import { useState } from 'react';
 
-export default function MyArtistPage() {
+export default function ConcertPage() {
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
 
   return (
