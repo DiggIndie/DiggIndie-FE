@@ -154,11 +154,13 @@ export default function JoinPage() {
           />
           <span className="font-semibold text-xl text-gray-600">@</span>
           <select
-            className="w-[130px] h-[46px] bg-black border border-gray-600 rounded px-2 text-sm text-gray-300"
+            className="w-[130px] h-[46px] border border-gray-700 rounded-sm px-4 py-3 text-sm text-gray-600 bg-gray-900 text-base"
             value={form.emailDomain}
             onChange={(e) => setForm({ ...form, emailDomain: e.target.value })}
           >
-            <option value="">선택</option>
+            <option value="" className="text-base">
+              선택
+            </option>
             <option value="@gmail.com">gmail.com</option>
             <option value="@naver.com">naver.com</option>
             <option value="@kakao.com">kakao.com</option>
