@@ -28,7 +28,7 @@ export default function ConcertDetailPage() {
       <ConcertContentSection concert={concert} />
       <LineupSection concert={concert} />
       <ConcertStorySection concert={concert} />
-      <div className="p-5">
+      <div className="px-5 pb-5 fixed bottom-0 w-[376px]">
         <LinkButton href="#">예매하러가기</LinkButton>
       </div>
     </div>
