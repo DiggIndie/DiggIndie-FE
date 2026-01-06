@@ -1,22 +1,18 @@
 import { env } from "@/lib/env";
 
-//generic type T로 응답 받기
 export async function apiFetch<T>(
   path: string,
   options: {
     query?: Record<string, string | number | boolean | null | undefined>;
+    useDevAuth?: boolean;
   } & RequestInit = {}
 ): Promise<T> {
-  const { query, ...init } = options;
+  const { query, useDevAuth, ...init } = options;
 
-  if (!env.BASE_URL) {
-    throw new Error("NEXT_PUBLIC_BASE_URL not set");
-  }
+  if (!env.BASE_URL) throw new Error("NEXT_PUBLIC_BASE_URL not set");
 
-  //url 만들기
   const url = new URL(path, env.BASE_URL);
 
-  //query 있을 시 url에 붙이기
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v === null || v === undefined) return;
@@ -24,12 +20,17 @@ export async function apiFetch<T>(
     });
   }
 
+  const headers = new Headers(init.headers);
+  headers.set("Content-Type", "application/json");
+
+  if (useDevAuth) {
+    const token = process.env.NEXT_PUBLIC_DEV_ACCESS_TOKEN;
+    if (token) headers.set("Authorization", `Bearer ${token}`);
+  }
+
   const res = await fetch(url.toString(), {
     ...init,
-    headers: {
-      "Content-Type": "application/json",
-      ...(init.headers ?? {}),
-    },
+    headers,
     cache: "no-store",
   });
 
