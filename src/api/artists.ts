@@ -1,8 +1,8 @@
 import { apiFetch } from "@/api/client";
-import type { ArtistsResponse } from "@/types/artists";
+import type { OnboardArtistsResponse } from "@/types/artists";
 
 export function fetchArtists(params: { page: number; size: number; query?: string }) {
-  return apiFetch<ArtistsResponse>("/artists", {
+  return apiFetch<OnboardArtistsResponse>("/artists", {
     method: "GET",
     query: {
       page: params.page,

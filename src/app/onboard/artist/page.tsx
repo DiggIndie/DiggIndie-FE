@@ -55,11 +55,13 @@ export default function OnboardArtistPage() {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]));
   };
 
+  //선택 완료 후 온보딩/장르로 넘어가기 전 저장
   const handleSaveAndGo = async () => {
     if (selectedIds.length < 2) return;
     if (isSaving) return;
 
     setIsSaving(true);
+
     try {
       await saveSelectedArtists(selectedIds);
       router.push('/onboard/genre');

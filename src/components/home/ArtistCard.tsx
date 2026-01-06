@@ -1,4 +1,4 @@
-import { Artist } from "@/types/artists";
+import { Artist } from "@/types/mocks/mockArtists";
 import { ImageTile } from "@/components/home/ImageTile";
 import Image from "next/image";
 import playBtn from "@/assets/common/play.svg"

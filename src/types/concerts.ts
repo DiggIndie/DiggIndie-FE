@@ -1,11 +1,25 @@
-export type Concert = {
-  id: string;
-  title: string;
-  artists: string;
-  date: string;
-  dDay: string;
-  time: string;
-  location: string;
-  imageUrl: string;
-  description: string;
+export type PageInfo = {
+  page: number;
+  size: number;
+  hasNext: boolean;
+  totalElements: number;
+  totalPages: number;
+};
+
+export type ConcertItem = {
+  concertId: number;
+  concertName: string;
+  startsAt: string;
+  concertHall: string;
+};
+
+export type GetConcertsResponse = {
+  statusCode: number;
+  message: string;
+  pageInfo: PageInfo;
+  payload: {
+    concerts: ConcertItem[];
+    pageInfo: PageInfo;
+  };
+  isSuccess: boolean;
 };

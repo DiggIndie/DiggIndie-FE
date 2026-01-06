@@ -12,7 +12,7 @@ export interface PageInfo {
   totalPages: number;
 }
 
-export interface ArtistsResponse {
+export interface OnboardArtistsResponse {
   statusCode: number;
   message: string;
   pageInfo: PageInfo;
