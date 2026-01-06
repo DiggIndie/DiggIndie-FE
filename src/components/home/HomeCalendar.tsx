@@ -130,7 +130,7 @@ export default function HomeCalendar() {
           ))
         ) : (
           <div className="w-[335px] h-[44px] border-[1px] border-[#413D3D]
-          bg-[#1F1D1D] text-[#8C8888] text-[14px] pt-[10px] px-[12px]"
+          bg-[#1F1D1D] text-[#8C8888] text-[14px] pt-[10px] px-[12px] rounded-sm"
           >
             금일 예정된 공연은 없습니다
           </div>
