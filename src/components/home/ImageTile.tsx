@@ -11,11 +11,12 @@ type ImageTileProps = {
   gradient?: string;
 };
 
+
 const variantSize: Record<Variant, { w: number; h: number; wrap: string }> = {
   todayArtistRec: { w: 184, h: 184, wrap: "w-[184px] h-[184px]" },
   artistRec: { w: 160, h: 160, wrap: "w-[160px] h-[160px]" },
   concertRec: { w: 160, h: 226, wrap: "w-[160px] h-[226px]" },
-  indieStory: { w: 162, h: 202, wrap: "w-[162px] h-[202px]" }, // <- 너 원래 "w-[162 px]" 띄어쓰기 버그 있었음
+  indieStory: { w: 162, h: 202, wrap: "w-[162px] h-[202px]" },
 };
 
 export function ImageTile({ src, alt, variant = "todayArtistRec", className, gradient, }: ImageTileProps) {
