@@ -1,14 +1,18 @@
-import { KeywordResponse } from '@/types/api';
+import { Keyword, KeywordResponse } from '@/types/api';
+import { fetchClient } from './client';
 
 export const onBoardApi = {
   async getOnboardingKeywords(): Promise<KeywordResponse> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/keywords`, {
+    return await fetchClient<Keyword[]>('/keywords', {
       method: 'GET',
+      auth: true,
     });
-    const body = await res.json();
-    if (!res.ok || !body.isSuccess) {
-      throw new Error(body.message || '키워드 조회 실패');
-    }
-    return body;
+  },
+  async saveOnboardKeywords(keywordIds: number[]) {
+    return await fetchClient('/my/keywords', {
+      method: 'POST',
+      auth: true,
+      body: JSON.stringify({ keywordIds }),
+    });
   },
 };

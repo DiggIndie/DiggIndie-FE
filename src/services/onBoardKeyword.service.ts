@@ -10,4 +10,11 @@ export const onBoardKeywordService = {
       return []; // 에러 시 빈 배열 반환
     }
   },
+  async saveSelectedKeywords(keywordIds: number[]) {
+    try {
+      await onBoardApi.saveOnboardKeywords(keywordIds);
+    } catch (err) {
+      console.error('키워드 저장 중 에러:', err);
+    }
+  },
 };
