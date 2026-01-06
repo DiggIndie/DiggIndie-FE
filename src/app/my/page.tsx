@@ -1,6 +1,6 @@
 'use client';
 import PersonalArtistRecCard from '@/components/home/ArtistCard';
-import PersonalConcertRecCard from '@/components/home/ConcertCard';
+import ConcertCard from '@/components/home/HomeConcertCard';
 import HorizontalSwipeList from '@/components/my/HorizontalSwipeList';
 import MenuSection from '@/components/my/MenuSection';
 import MyPageHeader from '@/components/my/MyPageHeader';
@@ -25,7 +25,7 @@ export default function MyPage() {
           <MenuSection title="스크랩한 공연" />
           <HorizontalSwipeList>
             {mockConcerts.map((concert) => (
-              <PersonalConcertRecCard key={concert.id} concert={concert} />
+              <ConcertCard key={concert.id} concert={concert} />
             ))}
           </HorizontalSwipeList>
         </div>
