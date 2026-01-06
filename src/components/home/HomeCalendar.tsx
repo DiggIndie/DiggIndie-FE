@@ -104,7 +104,7 @@ export default function HomeCalendar() {
         <Link href={"/calendar"} className={"ml-auto"}>
           더보기
         </Link>
-        <Image src={nextGrayBtn} alt={"more"} className={"mr-[20px]"} />
+        <Image src={nextGrayBtn} alt={"more"} className={"mr-[20px]"} width={20} height={20}/>
       </div>
 
       <div className="flex flex-col w-[334px] min-h-[56px] max-h-[224px]
@@ -122,7 +122,7 @@ export default function HomeCalendar() {
             >
               <span className={"mx-[12px] mt-[13px] text-[18px]"}>{concert.time}</span>
               <div className={"flex mx-[12px] mt-[2px] gap-[4px] font-normal"}>
-                <Image src={ticket} alt={"ticket"} />
+                <Image src={ticket} alt={"ticket"} width={20} height={20}/>
                 {concert.title}
               </div>
               <div className={"ml-[36px] text-[#8C8888] font-normal"}>{concert.location}</div>
