@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'DiggIndie',
   description: '인디밴드 디깅 올인원 플랫폼, DiggIndie',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
