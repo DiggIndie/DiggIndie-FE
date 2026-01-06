@@ -19,7 +19,7 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
       <div className={`flex overflow-x-auto ml-[20px] ${isLoggedIn ? "blur-sm" : "blur-none"}`}>
         <div className="flex gap-[16px] w-max">
           {mockArtists.map((artist) => (
-            <ArtistCard key={artist.bandId} artist={artist} />
+            <ArtistCard key={artist.name} artist={artist} />
           ))}
         </div>
       </div>

@@ -8,7 +8,7 @@ import searchBack from "@/assets/icons/searchBack.svg";
 import searchGrayBtn from "@/assets/icons/searchGray.svg"
 
 import { mockArtists } from "@/mocks/mockArtists";
-import MyArtistGrid from "@/components/my/ArtistGrid";
+import ArtistGrid from "@/components/my/ArtistGrid";
 
 type SortKey = "updated" | "korean";
 
@@ -126,7 +126,7 @@ export default function MyArtistsWithSearch() {
         )}
       </div>
 
-      <MyArtistGrid artists={filteredSortedArtists} />
+      <ArtistGrid artists={filteredSortedArtists} />
     </section>
   );
 }

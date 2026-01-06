@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import ArtistCard from "@/components/home/ArtistCard";
-import type { Artist } from "@/types/artists";
+import type { Artist } from "@/types/mocks/mockArtists";
 
 type Props = {
   artists: Artist[];

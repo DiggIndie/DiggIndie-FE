@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import PersonalConcertRecCard from "@/components/home/ConcertCard";
-import type { Concert } from "@/types/concerts";
+import type { Concert } from "@/types/mocks/mockConcerts";
 
 type Props = {
   concerts: Concert[];

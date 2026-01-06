@@ -10,7 +10,7 @@ export default function TodayArtistRec() {
       <div className="flex overflow-x-auto">
         <div className="flex gap-[16px] w-max">
           {mockArtists.map((artist) => (
-            <TodayArtistRecCard key={artist.bandId} artist={artist} />
+            <TodayArtistRecCard key={artist.name} artist={artist} />
           ))}
         </div>
       </div>
