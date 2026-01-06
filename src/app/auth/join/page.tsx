@@ -106,7 +106,7 @@ export default function JoinPage() {
             }}
           />
           <button
-            className="bg-main-red-4 px-4 py-3 rounded-sm text-white text-base font-semibold border-main-red-1 border"
+            className="bg-main-red-4 px-4 py-3 rounded-sm text-white text-base font-semibold border-main-red-1 border cursor-pointer"
             onClick={handleCheckId}
           >
             중복확인

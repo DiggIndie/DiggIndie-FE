@@ -36,13 +36,10 @@ export const authService = {
     try {
       await authApi.logout();
 
-      // 클라이언트 상태 초기화
-      useAuthStore.getState().logout();
-
       console.log('logout 성공');
     } catch (err) {
       console.error('logout 실패', err);
-
+    } finally {
       //서버 실패해도 프론트 상태는 정리 (UX 안정화)
       useAuthStore.getState().logout();
     }
