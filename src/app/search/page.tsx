@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { mockConcerts } from '@/mocks/mockConcerts';
 import { mockArtists } from '@/mocks/mockArtists';
 import back from '@/assets/icons/Arrow-Left.svg';
-import PersonalArtistRecCard from '@/components/home/ArtistCard';
+import PersonalArtistRecCard from '@/components/home/MockArtistCard';
 import PersonalConcertRecCard from '@/components/home/ConcertCard';
 import mikeIcon from '@/assets/common/Voice 3.svg';
 import calendarIcon from '@/assets/common/Calendar.svg';
