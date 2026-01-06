@@ -2,13 +2,16 @@ import type { Artist } from "@/types/artists";
 import { ImageTile } from "@/components/home/ImageTile";
 import Image from "next/image";
 import playBtn from "@/assets/common/play.svg";
+import artistDefault from "@/assets/detail/artist_default.svg";
+
+
 
 type Props = {
   artist: Artist;
 };
 
 export default function ArtistCard({ artist }: Props) {
-  const img = artist.imageUrl ?? "/mocks/mockArtistImage.png"; //null 대비
+  const img = artist.imageUrl ?? artistDefault; //null 대비
 
   return (
     <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px]">

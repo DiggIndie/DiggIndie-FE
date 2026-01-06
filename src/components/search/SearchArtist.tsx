@@ -8,6 +8,7 @@ import searchBack from "@/assets/icons/searchBack.svg";
 import searchGrayBtn from "@/assets/icons/searchGray.svg";
 
 import ArtistGrid from "@/components/my/ArtistGrid";
+import SearchCardSkeleton from "@/components/search/SearchCardSkeleton";
 import { useArtistSearch } from "@/hooks/useArtistSearch";
 
 type SortKey = "updated" | "korean";
@@ -15,6 +16,10 @@ type SortKey = "updated" | "korean";
 export default function MyArtistsWithSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  // debounce, loading
+  const [debouncedTerm, setDebouncedTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     artists,
@@ -25,14 +30,24 @@ export default function MyArtistsWithSearch() {
     sortKey,
     setSortKey,
     loadFirstPage,
-  } = useArtistSearch(90); //한번에 모두 로드인지 페이지별로 n개인지 회의 후 수정
+  } = useArtistSearch(90);
 
-  // 최초 1회 로드
+  /* 최초 1회 로드 */
   useEffect(() => {
-    loadFirstPage(undefined);
+    const init = async () => {
+      setIsLoading(true);
+      try {
+        await loadFirstPage(undefined);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    init();
   }, []);
 
-  // 바깥 클릭 시 드롭다운 닫기
+
+  /* 바깥 클릭 시 드롭다운 닫기 */
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
       if (!dropdownRef.current) return;
@@ -42,16 +57,50 @@ export default function MyArtistsWithSearch() {
     return () => document.removeEventListener("mousedown", onDown);
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedTerm(searchTerm);
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      setIsLoading(true);
+
+      if (debouncedTerm === "") {
+        await onClearSearch();
+      } else {
+        await onChangeSearch(debouncedTerm);
+        await onSubmitSearch();
+      }
+
+      if (!cancelled) setIsLoading(false);
+    };
+
+    run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [debouncedTerm]);
+
   const label = sortKey === "updated" ? "업데이트순" : "가나다순";
 
   return (
     <section className="relative w-full flex flex-col px-[20px] mt-[12px]">
-      {/* 검색 초기화(뒤로 버튼) */}
+      {/* 검색 초기화 */}
       <Image
         src={searchBack}
         alt="back"
-        className={"absolute left-[20px] mt-[10px] cursor-pointer"}
-        onClick={onClearSearch}
+        className="absolute left-[20px] mt-[10px] cursor-pointer"
+        onClick={() => {
+          setIsLoading(true);
+          onClearSearch().finally(() => setIsLoading(false));
+        }}
       />
 
       {/* 검색 input */}
@@ -62,16 +111,18 @@ export default function MyArtistsWithSearch() {
         <Image
           src={searchTerm ? searchGrayBtn : searchBtn}
           alt="Search"
-          className={"absolute right-[8px] mt-[2px]"}
+          className="absolute right-[8px] mt-[2px]"
         />
         <input
           value={searchTerm}
           onChange={(e) => onChangeSearch(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") onSubmitSearch();
+            if (e.key === "Enter") {
+              setDebouncedTerm(searchTerm); // 엔터는 즉시
+            }
           }}
           placeholder="검색어를 입력하세요"
-          className={`placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full`}
+          className="placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full"
         />
       </div>
 
@@ -91,7 +142,8 @@ export default function MyArtistsWithSearch() {
         </button>
 
         {isOpen && (
-          <div className="absolute left-0 mt-[8px] w-[100px] h-[108px] rounded-[4px]
+          <div
+            className="absolute left-0 mt-[8px] w-[100px] h-[108px] rounded-[4px]
                        border border-[#736F6F] flex flex-col items-center
                        py-[8px] gap-[4px] bg-black shadow-lg z-50"
           >
@@ -102,7 +154,9 @@ export default function MyArtistsWithSearch() {
                 setIsOpen(false);
               }}
               className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] ${
-                sortKey === "updated" ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
+                sortKey === "updated"
+                  ? "bg-[#332F2F] text-white"
+                  : "text-[#8C8888]"
               }`}
             >
               <span className="ml-[8px] mt-[3px]">업데이트순</span>
@@ -115,20 +169,24 @@ export default function MyArtistsWithSearch() {
                 setIsOpen(false);
               }}
               className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] ${
-                sortKey === "korean" ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
+                sortKey === "korean"
+                  ? "bg-[#332F2F] text-white"
+                  : "text-[#8C8888]"
               }`}
             >
               <span className="ml-[8px] mt-[3px]">가나다순</span>
             </button>
 
             <div className="flex w-[84px] h-[28px] rounded-[4px] text-[14px]">
-              <span className="ml-[8px] mt-[3px] text-[#8C8888]">스크랩순</span>
+              <span className="ml-[8px] mt-[3px] text-[#8C8888]">
+                스크랩순
+              </span>
             </div>
           </div>
         )}
       </div>
 
-      <ArtistGrid artists={artists} />
+      {isLoading ? <SearchCardSkeleton /> : <ArtistGrid artists={artists} />}
     </section>
   );
 }
