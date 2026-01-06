@@ -29,11 +29,11 @@ export default function ArtistCard({ artist }: Props) {
       <div className="flex flex-col w-[160px] h-[57px] mx-[8px]">
         <div className="flex items-center w-[144px] h-[20px] mt-[8px]">
           <Image src={playBtn} alt={"Play"} />
-          <span className={"ml-[3px] text-[14px] font-normal text-[#8C8888]"}>
+          <span className={"ml-[3px] text-[14px] text-white font-normal text-[#8C8888]"}>
             대표곡 정보 없음
           </span>
         </div>
-        <div className={"h-[21px] text-[#736F6F] font-medium text-[12px]"}>
+        <div className={"h-[21px] text-[#736F6F] text-white font-medium text-[12px]"}>
           {/* #키워드 placeholder */}
         </div>
       </div>
