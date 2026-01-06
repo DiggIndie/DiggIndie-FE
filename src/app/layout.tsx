@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'DiggIndie',
   description: '인디밴드 디깅 올인원 플랫폼, DiggIndie',
+  manifest: '/manifest.webmanifest',
+  themeColor: '#000000',
 };
+
 
 export default function RootLayout({
   children,
