@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 
 export default function HomeSearch() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [debouncedTerm, setDebouncedTerm] = useState('');
   const router = useRouter();
   //디바운스 처리
