@@ -1,4 +1,4 @@
-import type { Concert } from '@/types/concerts';
+import type { Concert } from "@/types/mocks/mockConcerts";
 
 export const mockConcerts: Concert[] = [
   {

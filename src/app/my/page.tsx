@@ -1,6 +1,6 @@
 'use client';
-import PersonalArtistRecCard from '@/components/home/ArtistCard';
-import ConcertCard from '@/components/home/HomeConcertCard';
+import PersonalArtistRecCard from '@/components/home/MockArtistCard';
+import PersonalConcertRecCard from '@/components/home/ConcertCard';
 import HorizontalSwipeList from '@/components/my/HorizontalSwipeList';
 import MenuSection from '@/components/my/MenuSection';
 import MyPageHeader from '@/components/my/MyPageHeader';

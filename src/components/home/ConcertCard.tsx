@@ -1,6 +1,8 @@
-import { ConcertListItem } from '@/types/concerts';
-import { ImageTile } from '@/components/home/ImageTile';
+
+import { Concert } from "@/types/mocks/mockConcerts";
+import { ImageTile } from "@/components/home/ImageTile";
 import { useRouter } from 'next/navigation';
+
 
 type Props = {
   concert: ConcertListItem;

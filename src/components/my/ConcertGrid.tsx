@@ -1,8 +1,8 @@
 'use client';
 
-import { useMemo } from 'react';
-import PersonalConcertRecCard from '@/components/home/ConcertCard';
-import type { ConcertListItem } from '@/types/concerts';
+import { useMemo } from "react";
+import PersonalConcertRecCard from "@/components/home/ConcertCard";
+import type { Concert } from "@/types/mocks/mockConcerts";
 
 type Props = {
   concerts: ConcertListItem[];
