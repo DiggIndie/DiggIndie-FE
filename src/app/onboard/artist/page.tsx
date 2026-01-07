@@ -17,15 +17,11 @@ import { useArtistSearch } from '@/hooks/useArtistSearch';
 
 export default function OnboardArtistPage() {
   const router = useRouter();
-
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const [isSaving, setIsSaving] = useState(false);
-
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const {
     artists,
-    pageInfo,
     searchTerm,
     onChangeSearch,
     onSubmitSearch,
@@ -52,40 +48,20 @@ export default function OnboardArtistPage() {
   }, [loadNextPage]);
 
   const toggleSelect = (id: number) => {
-    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]));
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
+    );
   };
 
-  //선택 완료 후 온보딩/장르로 넘어가기 전 저장
-  const handleSaveAndGo = async () => {
+  const handleComplete = async () => {
     if (selectedIds.length < 2) return;
-    if (isSaving) return;
-
-    setIsSaving(true);
 
     try {
       await saveSelectedArtists(selectedIds);
-      router.push('/onboard/genre');
-    } catch (e) {
-      console.error(e);
-      alert(e instanceof Error ? e.message : '저장 실패');
-    } finally {
-      setIsSaving(false);
+      router.push('/onboard/end');
+    } catch (err) {
+      console.log('키워드 저장에 실패했습니다. 다시 시도해주세요.', err);
     }
-  };
-
-  const interceptLinkClickCapture = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (selectedIds.length < 2 || isSaving) {
-      e.preventDefault();
-      return;
-    }
-
-    const target = e.target as HTMLElement;
-    const anchor = target.closest('a');
-    if (!anchor) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-    void handleSaveAndGo();
   };
 
   return (
@@ -134,8 +110,12 @@ export default function OnboardArtistPage() {
         </div>
       </div>
 
-      <div className="px-5 pb-5" onClickCapture={interceptLinkClickCapture}>
-        <LinkButton href="/onboard/genre" disabled={selectedIds.length < 2 || isSaving}>
+      <div className="px-5 pb-5">
+        <LinkButton
+          href="/onboard/genre"
+          disabled={selectedIds.length < 2}
+          onClick={handleComplete}
+        >
           선택완료
         </LinkButton>
       </div>

@@ -1,4 +1,4 @@
-import { apiFetch } from "@/api/client";
+import { apiFetch, fetchClient } from '@/api/client';
 
 type BasicResponse = {
   statusCode: number;
@@ -8,9 +8,9 @@ type BasicResponse = {
 };
 
 export function postOnboardArtist(bands: number[]) {
-  return apiFetch<BasicResponse>("/artists/preferences", {
-    method: "POST",
-    useDevAuth: true,
+  return fetchClient('/artists/preferences', {
+    method: 'POST',
+    auth: true,
     body: JSON.stringify({ bands }),
   });
 }
