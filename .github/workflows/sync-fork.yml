@@ -1,25 +1,34 @@
-name: Sync fork to personal repo
+name: Deploy
 
 on:
   push:
-    branches:
-      - main   # 배포 기준 브랜치
+    branches: ['main']
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
-
+    container: pandoc/latex
     steps:
-      - name: Checkout org repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v2
+
+      - name: Install mustache (to update the date)
+        run: apk add ruby && gem install mustache
+
+      - name: creates output
+        run: sh ./build.sh
+
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.PERSONAL_REPO_TOKEN }}
         with:
-          fetch-depth: 0
+          source-directory: 'output'
+          destination-github-username: sungahChooo
+          destination-repository-name: DiggIndie-FE
+          user-email: ${{ secrets.EMAIL }}
+          commit-message: ${{ github.event.commits[0].message }}
+          target-branch: main
 
-      - name: Push to personal fork
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-
-          git remote add fork https://x-access-token:${{ secrets.PERSONAL_REPO_TOKEN }}@github.com/sungahChooo/DiggIndie-FE.git
-
-          git push fork main --force
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY
