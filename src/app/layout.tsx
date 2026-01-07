@@ -19,7 +19,10 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  manifest: '/manifest.webmanifest',
+  themeColor: '#000000',
 };
+
 
 export default function RootLayout({
   children,
