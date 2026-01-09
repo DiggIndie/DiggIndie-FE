@@ -113,7 +113,7 @@ export default function HomeCalendar() {
 
       {/*캘린더 더보기버튼*/}
       <div className={'flex text-[14px] font-medium text-gray-500 mt-[12px]'}>
-        <Link href={'/calendar'} className={'ml-auto'}>
+        <Link href={{ pathname: '/calendar', query: { date: "all" } }} className="ml-auto">
           더보기
         </Link>
         <Image src={nextGrayBtn} alt={'more'} className={'mr-[20px]'} width={20} height={20} />

@@ -14,6 +14,10 @@ export default function CalendarPage() {
 
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showCalendar, setShowCalendar] = useState(true);
+  useEffect(() => {
+    if (selectedDate === 'all') setShowCalendar(false);
+  }, [selectedDate]);
+
 
   // 최초 진입/쿼리 변경 시 선택 날짜 세팅
   useEffect(() => {
@@ -24,7 +28,10 @@ export default function CalendarPage() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const base = !selectedDate ? mockConcerts : mockConcerts.filter((c) => c.date === selectedDate);
+    const base =
+      !selectedDate || selectedDate === 'all'
+        ? mockConcerts
+        : mockConcerts.filter((c) => c.date === selectedDate);
 
     return [...base].sort((a, b) => {
       const aDate = new Date(a.date);
@@ -36,8 +43,10 @@ export default function CalendarPage() {
       if (aPast !== bPast) return aPast ? 1 : -1;
       if (!aPast) return bDate.getTime() - aDate.getTime();
       return aDate.getTime() - bDate.getTime();
+
     });
   }, [selectedDate]);
+
 
   return (
     <div className="text-white flex flex-col items-center min-h-screen bg-black">
