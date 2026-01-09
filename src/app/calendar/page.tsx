@@ -1,14 +1,24 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+
 import CalendarHeader from '@/components/home/calendar/CalendarHeader';
 import Calendar from '@/components/home/calendar/Calendar';
 import ConcertGrid from '@/components/my/ConcertGrid';
 import { mockConcerts } from '@/mocks/mockConcerts';
 
 export default function CalendarPage() {
+  const searchParams = useSearchParams();
+  const dateParam = searchParams.get('date'); // "YYYY-MM-DD" or null
+
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showCalendar, setShowCalendar] = useState(true);
+
+  // 최초 진입/쿼리 변경 시 선택 날짜 세팅
+  useEffect(() => {
+    if (dateParam) setSelectedDate(dateParam);
+  }, [dateParam]);
 
   const concertsToShow = useMemo(() => {
     const today = new Date();
@@ -35,7 +45,14 @@ export default function CalendarPage() {
         isCalendarOpen={showCalendar}
         onToggleCalendar={() => setShowCalendar((prev) => !prev)}
       />
-      {showCalendar && <Calendar selectedDate={selectedDate} onSelectDate={setSelectedDate} />}
+
+      {showCalendar && (
+        <Calendar
+          selectedDate={selectedDate}
+          onSelectDate={setSelectedDate}
+        />
+      )}
+
       <div className="w-full flex justify-start ml-10">
         <ConcertGrid concerts={concertsToShow} />
       </div>

@@ -55,7 +55,13 @@ export default function HomeCalendar() {
 
   return (
     <div className="flex flex-col justify-center mt-10 bg-black">
-      <div className={'mx-[20px] text-[20px] font-semibold'}>공연 위클리 캘린더</div>
+      <div className={"flex mx-[20px]"}>
+        <div className={'text-[20px] font-semibold'}>공연 위클리 캘린더</div>
+        <Link
+          href={{ pathname: '/calendar', query: { date: selectedDate } }} className="ml-auto">
+          <Image src={nextBtn} alt="next" width={24} height={24} />
+        </Link>
+      </div>
 
       <div className={'mx-5 mt-3 mb-4 text-4 font-medium text-gray-500'}>{yearMonth}</div>
 
