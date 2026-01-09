@@ -57,7 +57,7 @@ export default function HomeCalendar() {
     <div className="flex flex-col justify-center mt-10 bg-black">
       <div className={'mx-[20px] text-[20px] font-semibold'}>공연 위클리 캘린더</div>
 
-      <div className={'mx-5 mt-3 mb-4 text-5 font-medium text-[#E4E4E4]'}>{yearMonth}</div>
+      <div className={'mx-5 mt-3 mb-4 text-4 font-medium text-gray-500'}>{yearMonth}</div>
 
       <div className={'flex justify-between w-[340px] mx-[17.5px]'}>
         <button
