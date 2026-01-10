@@ -23,7 +23,7 @@ export default function HomeCalendar() {
   const initialIndex = today === 0 ? 6 : today - 1; // 월요일: 0 기준으로 보정
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 
-  // weekOffset 변경 시 선택 요일을 자연스럽게 조정 (원치 않으면 제거 가능)
+  // weekOffset 변경 시 선택 요일을 조정
   useEffect(() => {
     if (weekOffset === 0) setSelectedIndex(initialIndex); // 이번 주: 오늘
     if (weekOffset === 1) setSelectedIndex(0); // 다음 주: 월요일

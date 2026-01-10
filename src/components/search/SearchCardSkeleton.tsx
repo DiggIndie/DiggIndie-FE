@@ -1,6 +1,6 @@
 export default function ArtistGridSkeleton() {
-  const leftCount = 4;
-  const rightCount = 4;
+  const leftCount = 3;
+  const rightCount = 3;
 
   return (
     <div className="flex justify-start gap-[15px] mt-[16px] animate-pulse">
