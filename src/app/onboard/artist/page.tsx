@@ -79,7 +79,7 @@ export default function OnboardArtistPage() {
               <br /> 아티스트를 알려주세요
             </>
           }
-          min="최소 2"
+          min="최소 2팀"
         />
 
         <div className="px-5 pt-5">
@@ -91,23 +91,21 @@ export default function OnboardArtistPage() {
           />
         </div>
 
-        <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
-          {artists.length > 0 ? (
-            <>
-              {artists.map((artist: Artist) => (
-                <ArtisItem
-                  key={artist.bandId}
-                  artist={artist}
-                  isSelected={selectedIds.includes(artist.bandId)}
-                  toggleSelect={toggleSelect}
-                />
-              ))}
-              <div ref={sentinelRef} className="col-span-3 h-1" />
-            </>
-          ) : (
-            <NoResult />
-          )}
-        </div>
+        {artists.length > 0 ? (
+          <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
+            {artists.map((artist: Artist) => (
+              <ArtisItem
+                key={artist.bandId}
+                artist={artist}
+                isSelected={selectedIds.includes(artist.bandId)}
+                toggleSelect={toggleSelect}
+              />
+            ))}
+            <div ref={sentinelRef} className="col-span-3 h-1" />
+          </div>
+        ) : (
+          <NoResult />
+        )}
       </div>
 
       <div className="px-5 pb-5">

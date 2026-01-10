@@ -1,5 +1,6 @@
-import Image from "next/image";
-import type { Artist } from "@/types/artists"; // types에서 불러오기
+import Image from 'next/image';
+import type { Artist } from '@/types/artists'; // types에서 불러오기
+import artistDefulat from '@/assets/detail/artist_default.svg';
 
 interface ArtistItemProps {
   artist: Artist;
@@ -12,7 +13,7 @@ export default function ArtistItem({ artist, isSelected, toggleSelect }: ArtistI
     <div
       key={artist.bandId}
       className={`cursor-pointer relative w-full aspect-[102/104] border rounded-sm ${
-        isSelected ? "border-main-red-2 custom-box-shadow" : "border-gray-700"
+        isSelected ? 'border-main-red-2 custom-box-shadow' : 'border-gray-700'
       }`}
       onClick={() => toggleSelect(artist.bandId)}
     >
@@ -25,7 +26,13 @@ export default function ArtistItem({ artist, isSelected, toggleSelect }: ArtistI
           className="rounded-sm object-cover z-0"
         />
       ) : (
-        <div className="w-full h-full rounded-sm" />
+        <Image
+          src={artistDefulat}
+          alt="기본 아티스트 이미지"
+          fill
+          sizes="(max-width: 375px) 100vw, 33vw"
+          className="rounded-sm object-cover z-0"
+        />
       )}
 
       {isSelected ? (
