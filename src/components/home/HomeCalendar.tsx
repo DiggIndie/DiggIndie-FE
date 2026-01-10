@@ -63,7 +63,7 @@ export default function HomeCalendar() {
         </Link>
       </div>
 
-      <div className={'mx-5 mt-3 mb-4 text-4 font-medium text-gray-500'}>{yearMonth}</div>
+      <div className={'mx-5 mt-4 text-4 font-medium text-gray-500'}>{yearMonth}</div>
 
       <div className={'flex justify-between w-[340px] mx-[17.5px]'}>
         <button
@@ -77,7 +77,6 @@ export default function HomeCalendar() {
         <div className="flex items-center justify-center w-[284px] h-[62px]">
           {weekdays.map((day, i) => {
             const isSelected = selectedIndex === i;
-
             return (
               <div
                 key={i}
