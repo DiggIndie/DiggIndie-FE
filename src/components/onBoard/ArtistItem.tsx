@@ -44,7 +44,7 @@ export default function ArtistItem({ artist, isSelected, toggleSelect }: ArtistI
         <div className="absolute inset-0 bg-black/60 z-10 rounded-sm" />
       )}
 
-      <p className="absolute bottom-2 left-2 right-2 text-sm text-white font-normal z-20 leading-normal">
+      <p className="absolute bottom-2 left-2 right-2 text-sm text-white font-normal z-20 leading-normal whitespace-nowrap overflow-hidden text-ellipsis max-w-[6em]">
         {artist.bandName}
       </p>
     </div>
