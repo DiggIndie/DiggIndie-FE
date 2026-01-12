@@ -26,10 +26,12 @@ export default function SearchSection({
           }
         }}
       />
-      {searchTerm && (
-        <Image src={clearIcon} alt="검색어 삭제" onClick={onClear} className="cursor-pointer" />
-      )}
-      <GraySearchIcon className="text-gray-300" />
+      <div className="flex gap-2">
+        {searchTerm && (
+          <Image src={clearIcon} alt="검색어 삭제" onClick={onClear} className="cursor-pointer" />
+        )}
+        <GraySearchIcon className="text-gray-300" />
+      </div>
     </section>
   );
 }

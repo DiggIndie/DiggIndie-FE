@@ -58,8 +58,8 @@ export default function SideTab({ onClose }: SideTabProps) {
           <span className="text-white">아티스트</span>
         </div>
         <div className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800">
-          <Image src={communityIcon} alt="커뮤니티" />
-          <span className="text-white">커뮤니티</span>
+          <Image src={communityIcon} alt="디깅라운지" />
+          <span className="text-white">디깅라운지</span>
         </div>
         <div className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800">
           <Image src={indieIcon} alt="인디스토리" />

@@ -108,7 +108,7 @@ export default function OnboardArtistPage() {
         )}
       </div>
 
-      <div className="px-5 pb-5">
+      <div className="px-5 mb-5">
         <LinkButton
           href="/onboard/genre"
           disabled={selectedIds.length < 2}

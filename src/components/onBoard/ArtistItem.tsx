@@ -38,7 +38,7 @@ export default function ArtistItem({ artist, isSelected, toggleSelect }: ArtistI
       {isSelected ? (
         <div
           className="absolute inset-0 z-10 rounded-sm
-          bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(99,20,21,0.8)_98.08%)]"
+       bg-[linear-gradient(180deg,#00000000_0%,rgba(0,0,0,0.65)_80%)]"
         />
       ) : (
         <div className="absolute inset-0 bg-black/60 z-10 rounded-sm" />
