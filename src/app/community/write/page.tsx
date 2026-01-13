@@ -14,12 +14,18 @@ export default function Write() {
   const tags = boardType === 'general' ? generalTag : tradeTag;
 
   const [annonymous, setAnonymous] = useState<boolean>(false);
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const isFormValid =
+    title.trim().length > 0 && content.trim().length > 0 && selectedTag.length > 0;
   useEffect(() => {
     setSelectedTag(boardType === 'general' ? '없음' : '판매');
   }, [boardType]);
   return (
     <div className="mb-16 ">
-      <CommunityHeader />
+      <CommunityHeader disabled={!isFormValid} />
       <div className="flex justify-between mb-3 px-5">
         <span className="font-medium text-base text-white">게시판 선택</span>
         <p className="flex gap-2 " onClick={() => setAnonymous(!annonymous)}>
@@ -103,7 +109,12 @@ export default function Write() {
         ))}
       </div>
       <ImageUploadSection />
-      <TextArea />
+      <TextArea
+        title={title}
+        content={content}
+        onChangeTitle={setTitle}
+        onChangeContent={setContent}
+      />
     </div>
   );
 }
