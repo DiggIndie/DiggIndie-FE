@@ -2,6 +2,8 @@
 import CommunityHeader from '@/components/community/CommunityHeader';
 import ImageUploadSection from '@/components/community/ImageUploadSection';
 import TextArea from '@/components/community/TextArea';
+import TradingLinkArea from '@/components/community/TradingLinkArea';
+import TradingPriceArea from '@/components/community/TradingPriceArea';
 import { Checkbox } from '@mui/material';
 import { useEffect, useState } from 'react';
 
@@ -97,7 +99,7 @@ export default function Write() {
           <span
             key={tag}
             onClick={() => setSelectedTag(tag)}
-            className={`border font-medium text-sm px-3 py-1 rounded-sm cursor-pointer
+            className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer
         ${
           selectedTag === tag
             ? 'border-main-red-1 bg-main-red-4 text-white'
@@ -109,12 +111,14 @@ export default function Write() {
         ))}
       </div>
       <ImageUploadSection />
+      {boardType === 'trade' && <TradingPriceArea />}
       <TextArea
         title={title}
         content={content}
         onChangeTitle={setTitle}
         onChangeContent={setContent}
       />
+      {boardType === 'trade' && <TradingLinkArea />}
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function TextArea({
       />
       <textarea
         value={content}
-        className="px-2 py-4 text-gray-300 text-normal focus:outline-none min-h-41"
+        className="px-2 py-4 text-gray-300 text-normal focus:outline-none "
         placeholder="내용을 입력해주세요."
         onChange={(e) => onChangeContent(e.target.value)}
       />
