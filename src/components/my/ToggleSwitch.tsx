@@ -15,11 +15,11 @@ export const ToggleSwitch = styled((props: SwitchProps) => (
       transform: 'translateX(16px)',
       color: '#fff',
       '& + .MuiSwitch-track': {
-        backgroundColor: '#65C466',
+        backgroundColor: '#FF3637',
         opacity: 1,
         border: 0,
         ...theme.applyStyles('dark', {
-          backgroundColor: '#2ECA45',
+          backgroundColor: '#FF3637',
         }),
       },
       '&.Mui-disabled + .MuiSwitch-track': {
@@ -27,7 +27,7 @@ export const ToggleSwitch = styled((props: SwitchProps) => (
       },
     },
     '&.Mui-focusVisible .MuiSwitch-thumb': {
-      color: '#33cf4d',
+      color: '#FF3637',
       border: '6px solid #fff',
     },
     '&.Mui-disabled .MuiSwitch-thumb': {
