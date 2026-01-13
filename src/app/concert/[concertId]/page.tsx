@@ -20,11 +20,9 @@ export default function ConcertDetailPage() {
   }
 
   return (
-    <div className="text-white flex flex-col min-h-screen bg-black relative pb-20">
-      <div className="relative">
-        <MyHeader title="" />
-        <DetailImgSection imageSrc={concert.mainImage} variant="concert" />
-      </div>
+    <div className="text-white flex flex-col h-screen bg-black relative pb-20 overflow-scroll">
+      <MyHeader title="" />
+      <DetailImgSection imageSrc={concert.mainImage} variant="concert" />
       <ConcertContentSection concert={concert} />
       <LineupSection concert={concert} />
       <ConcertStorySection concert={concert} />

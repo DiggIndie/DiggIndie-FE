@@ -27,11 +27,11 @@ export default function ConcertContentSection({ concert }: ConcertContentSection
           `}
         />
       </p>
-      <p className="flex gap-2 pb-3 border-b border-gray-850">
+      <p className="flex gap-2 pb-4 border-b border-gray-850">
         <Image src={Calendar} alt="calendar" width={24} height={24} />
         <span className="text-white text-xl font-medium">{concert.startDate}</span>
       </p>
-      <p className="flex gap-2 items-center py-3 pb-3 border-b border-gray-850 mb-3 items-start">
+      <p className="flex gap-2 items-center py-3 pb-4 border-b border-gray-850 mb-3 items-start">
         <Image src={location} alt="location" width={24} height={24} />
         <span className="flex flex-col">
           <span className="font-medium text-base">{concert.concertHallName}</span>
