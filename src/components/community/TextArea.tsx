@@ -17,13 +17,13 @@ export default function TextArea({
       <span className="font-medium text-base text-white mb-2">글 작성</span>
       <input
         value={title}
-        className="font-medium text-base px-2 py-3 text-gray-300 border-b border-gray-850 focus:outline-none"
+        className="font-medium text-base px-2 py-3 text-gray-300 border-b border-gray-850 focus:outline-none placeholder-gray-700"
         placeholder="제목을 입력해주세요.(최대 00자)"
         onChange={(e) => onChangeTitle(e.target.value)}
       />
       <textarea
         value={content}
-        className="px-2 py-4 text-gray-300 text-normal focus:outline-none "
+        className="px-2 py-4 text-gray-300 text-normal focus:outline-none placeholder-gray-700 "
         placeholder="내용을 입력해주세요."
         onChange={(e) => onChangeContent(e.target.value)}
       />

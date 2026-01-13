@@ -41,7 +41,11 @@ export default function MyPage() {
       <div className="flex flex-col gap-3 bg-black">
         <MenuSection title="스크랩한 게시물" hasBorder={true} />
         <MenuSection title="스크랩한 인디스토리" hasBorder={true} />
-        <MenuSection title="연동된 소셜계정" hasBorder={true} />
+        <MenuSection
+          title="연동된 소셜계정"
+          hasBorder={true}
+          onclick={() => router.push('/my/social')}
+        />
       </div>
       <p className="flex justify-center items-center gap-2 pt-37 p-5 text-center bg-black ">
         <span
