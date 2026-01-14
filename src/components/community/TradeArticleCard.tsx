@@ -22,7 +22,7 @@ export default function FreeArticleCard({ article }: Props) {
 
       <div className="flex flex-col min-w-0 flex-1 font-medium justify-between ">
         <div className="flex h-[22px] text-white text-[16px] min-w-0">
-          <span className="shrink-0">[{article.boardHeader}]</span>
+          <span className="shrink-0 mr-[2px]">[{article.boardHeader}]</span>
           <span className="truncate min-w-0">{article.boardTitle}</span>
         </div>
 

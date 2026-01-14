@@ -8,7 +8,7 @@ type props = {
   backUrl?: string;
 };
 
-export default function MyHeader({ title, backUrl }: props) {
+export default function MyHeader({ title }: props) {
   const router = useRouter();
   return (
     <div className="bg-black w-full flex items-center px-5 py-3 justify-center top-0 z-50">
