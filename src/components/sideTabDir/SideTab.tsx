@@ -57,7 +57,10 @@ export default function SideTab({ onClose }: SideTabProps) {
           <Image src={artistIcon} alt="아티스트" />
           <span className="text-white">아티스트</span>
         </div>
-        <div className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800">
+        <div
+          className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
+          onClick={() => router.push('/community')}
+        >
           <Image src={communityIcon} alt="디깅라운지" />
           <span className="text-white">디깅라운지</span>
         </div>

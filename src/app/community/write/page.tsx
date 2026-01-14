@@ -5,7 +5,7 @@ import TextArea from '@/components/community/TextArea';
 import TradingLinkArea from '@/components/community/TradingLinkArea';
 import TradingPriceArea from '@/components/community/TradingPriceArea';
 import { Checkbox } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function Write() {
   const generalTag = ['없음', '정보', '공연 후기', '추천', '신보', '음악 뉴스', '동행'];
@@ -22,9 +22,11 @@ export default function Write() {
 
   const isFormValid =
     title.trim().length > 0 && content.trim().length > 0 && selectedTag.length > 0;
-  useEffect(() => {
-    setSelectedTag(boardType === 'general' ? '없음' : '판매');
-  }, [boardType]);
+
+  const handleBoardTypeChange = (type: 'general' | 'trade') => {
+    setBoardType(type);
+    setSelectedTag(type === 'general' ? '없음' : '판매');
+  };
   return (
     <div className="mb-16 ">
       <CommunityHeader disabled={!isFormValid} />
@@ -68,7 +70,7 @@ export default function Write() {
 
       <div className="flex gap-2 pb-3 px-5">
         <span
-          onClick={() => setBoardType('general')}
+          onClick={() => handleBoardTypeChange('general')}
           className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer
       ${
         boardType === 'general'
@@ -79,7 +81,7 @@ export default function Write() {
           일반
         </span>
         <span
-          onClick={() => setBoardType('trade')}
+          onClick={() => handleBoardTypeChange('trade')}
           className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer
       ${
         boardType === 'trade'
