@@ -17,7 +17,7 @@ export default function MyHeader({ title, backUrl }: props) {
         alt="이전"
         width={24}
         height={24}
-        onClick={() => (backUrl ? router.push(backUrl) : router.back())}
+        onClick={() => router.push('/my')}
         className="cursor-pointer absolute left-5"
       />
       <span className="text-base font-semibold">{title}</span>
