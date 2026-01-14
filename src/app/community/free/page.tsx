@@ -31,13 +31,13 @@ export default function CommunityFreePage() {
         <CommunityTab />
       </div>
 
-      <CommunityHeaderFilter
-        headers={headerOptions}
-        value={header}
-        onChangeAction={setHeader}
-      />
-
       <main className="flex-1 min-h-0 overflow-y-auto scrollbar flex flex-col bg-black">
+        <CommunityHeaderFilter
+          headers={headerOptions}
+          value={header}
+          onChangeAction={setHeader}
+        />
+
         <ArticleList
           articles={filteredArticles}
           basePath="/community/free"
