@@ -1,5 +1,5 @@
 'use client';
-import CommunityHeader from '@/components/community/CommunityHeader';
+import CommunityHeader from '@/components/community/CommunityWriteHeader';
 import ImageUploadSection from '@/components/community/ImageUploadSection';
 import TextArea from '@/components/community/TextArea';
 import TradingLinkArea from '@/components/community/TradingLinkArea';

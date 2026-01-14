@@ -1,12 +1,12 @@
-import homeIcon from '@/assets/sidTab/Home 2.svg';
+import homeIcon from '@/assets/sideTab/Home 2.svg';
 import concertIcon from '@/assets/common/Calendar.svg';
 import artistIcon from '@/assets/common/Voice 3.svg';
-import communityIcon from '@/assets/sidTab/Chat 2.svg';
-import indieIcon from '@/assets/sidTab/Document.svg';
+import communityIcon from '@/assets/sideTab/Chat 2.svg';
+import indieIcon from '@/assets/sideTab/Document.svg';
 import myIcon from '@/assets/common/Profile.svg';
-import xIcon from '@/assets/sidTab/Star 8.svg';
-import loginIcon from '@/assets/sidTab/Login.svg';
-import logoutIcon from '@/assets/sidTab/Logout.svg';
+import xIcon from '@/assets/sideTab/Star 8.svg';
+import loginIcon from '@/assets/sideTab/Login.svg';
+import logoutIcon from '@/assets/sideTab/Logout.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/authService';
@@ -59,7 +59,7 @@ export default function SideTab({ onClose }: SideTabProps) {
         </div>
         <div
           className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
-          onClick={() => router.push('/community')}
+          onClick={() => router.push('/community/free')}
         >
           <Image src={communityIcon} alt="디깅라운지" />
           <span className="text-white">디깅라운지</span>
