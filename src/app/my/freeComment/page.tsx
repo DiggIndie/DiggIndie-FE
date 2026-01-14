@@ -3,7 +3,7 @@
 import MyHeader from '@/components/my/MyHeader';
 import ArticleList from '@/components/community/ArticleList';
 import { MockArticles } from '@/mocks/mockArticles';
-import CommentTab from '@/components/community/CommentTab';
+import CommentTab from '@/components/my/CommentTab';
 
 export default function MyFreeCommentPage() {
   return (

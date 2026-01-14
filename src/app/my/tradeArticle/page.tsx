@@ -3,7 +3,7 @@
 import MyHeader from '@/components/my/MyHeader';
 import ArticleList from '@/components/community/ArticleList';
 import { MockArticles } from '@/mocks/mockArticles';
-import BoardTab from '@/components/community/BoardTab';
+import BoardTab from '@/components/my/BoardTab';
 
 export default function MyTradeArticlePage() {
   return (
