@@ -19,17 +19,16 @@ type Vote = 'up' | 'down' | null;
 export default function ResetPreference({ isLoggedIn }: Props) {
   const router = useRouter();
   const [selected, setSelected] = useState<Vote>(null);
-  const [hovered, setHovered] = useState<Vote>(null);
 
   if (!isLoggedIn) return null;
 
   const getUpIcon = () => {
-    if (selected === 'up' || hovered === 'up') return thumbsUpRedBtn;
+    if (selected === 'up') return thumbsUpRedBtn;
     return thumbsUpBtn;
   };
 
   const getDownIcon = () => {
-    if (selected === 'down' || hovered === 'down') return thumbsDownRedBtn;
+    if (selected === 'down') return thumbsDownRedBtn;
     return thumbsDownBtn;
   };
 
@@ -62,8 +61,6 @@ export default function ResetPreference({ isLoggedIn }: Props) {
           <button
             type="button"
             onClick={() => setSelected(selected === 'up' ? null : 'up')}
-            onMouseEnter={() => setHovered('up')}
-            onMouseLeave={() => setHovered(null)}
             className="flex items-center justify-center"
           >
             <Image src={getUpIcon()} alt="thumbs up" width={24} height={24} />
@@ -72,8 +69,6 @@ export default function ResetPreference({ isLoggedIn }: Props) {
           <button
             type="button"
             onClick={() => setSelected(selected === 'down' ? null : 'down')}
-            onMouseEnter={() => setHovered('down')}
-            onMouseLeave={() => setHovered(null)}
             className="flex items-center justify-center"
           >
             <Image src={getDownIcon()} alt="thumbs down" width={24} height={24} />

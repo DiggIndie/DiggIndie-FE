@@ -2,7 +2,7 @@ import ConcertCard from '@/components/home/HomeConcertCard';
 import Image from 'next/image';
 import more from '@/assets/common/more.svg';
 import { mockConcerts } from '@/mocks/mockConcerts';
-import { daysUntilConcert } from '@/components/home/ConcertCard';
+import { daysUntilConcert } from '@/components/home/HomeConcertCard';
 
 type Props = {
   isLoggedIn: boolean;
