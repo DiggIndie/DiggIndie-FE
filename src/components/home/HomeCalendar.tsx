@@ -13,6 +13,15 @@ import Link from 'next/link';
 
 import { useConcertsByDate } from '@/hooks/useConcertsByDate';
 
+function pad2(n: number) {
+  return String(n).padStart(2, '0');
+}
+
+function todayKey() {
+  const t = new Date();
+  return `${t.getFullYear()}-${pad2(t.getMonth() + 1)}-${pad2(t.getDate())}`;
+}
+
 export default function HomeCalendar() {
   const weekdays = ['월', '화', '수', '목', '금', '토', '일'];
 
@@ -20,29 +29,22 @@ export default function HomeCalendar() {
   const dates = useMemo(() => getThisWeekDates(weekOffset), [weekOffset]);
 
   const today = new Date().getDay();
-  const initialIndex = today === 0 ? 6 : today - 1; // 월요일: 0 기준으로 보정
+  const initialIndex = today === 0 ? 6 : today - 1;
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
 
-  // weekOffset 변경 시 선택 요일을 조정
   useEffect(() => {
-    if (weekOffset === 0) setSelectedIndex(initialIndex); // 이번 주: 오늘
-    if (weekOffset === 1) setSelectedIndex(0); // 다음 주: 월요일
+    if (weekOffset === 0) setSelectedIndex(initialIndex);
+    if (weekOffset === 1) setSelectedIndex(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [weekOffset]);
 
   const selectedDate = dates[selectedIndex];
 
-  //선택된 날짜의 공연 최대 2개
-  const {
-    concerts: todayConcerts,
-    error,
-  } = useConcertsByDate(selectedDate, {
+  const { concerts: todayConcerts, error } = useConcertsByDate(selectedDate, {
     size: 2,
     page: 0,
-    // 정렬: 시작 내림차순
   });
 
-  // 이번주와 다음주만 표기
   const isThisWeek = weekOffset === 0;
   const isNextWeek = weekOffset === 1;
 
@@ -54,10 +56,14 @@ export default function HomeCalendar() {
 
   return (
     <div className="flex flex-col justify-center mt-10 bg-black">
-      <div className={"flex mx-[20px]"}>
+      <div className={'flex mx-[20px]'}>
         <div className={'text-[20px] font-semibold'}>공연 위클리 캘린더</div>
+
+        {/* 상단 > : 무조건 "오늘"로 전체 캘린더 진입 */}
         <Link
-          href={{ pathname: '/calendar', query: { date: selectedDate } }} className="ml-auto">
+          href={{ pathname: '/calendar', query: { date: todayKey() } }}
+          className="ml-auto"
+        >
           <Image src={nextBtn} alt="next" width={24} height={24} />
         </Link>
       </div>
@@ -84,10 +90,10 @@ export default function HomeCalendar() {
                   flex flex-col items-center justify-center cursor-pointer rounded-sm
                   w-11 h-[62px] transition-all gap-[4px] border-[1px]
                   ${
-                    isSelected
-                      ? 'bg-[#880405] font-bold border-[#C31C20]'
-                      : 'border-black text-white'
-                  }
+                  isSelected
+                    ? 'bg-[#880405] font-bold border-[#C31C20]'
+                    : 'border-black text-white'
+                }
                 `}
               >
                 <span className="text-[14px]">{day}</span>
@@ -106,22 +112,28 @@ export default function HomeCalendar() {
         </button>
       </div>
 
-      {/*구분 선*/}
       <span className={'w-[334px] ml-[17.5px] mt-[12px] border-b-[1px] border-[#332F2F]'} />
 
-      {/*캘린더 더보기버튼*/}
-      <div className={'flex text-[14px] font-medium text-gray-500 mt-[12px]'}>
-        <Link href={{ pathname: '/calendar', query: { date: "all" } }} className="ml-auto">
-          더보기
-        </Link>
-        <Image src={nextGrayBtn} alt={'more'} className={'mr-[20px]'} width={20} height={20} />
-      </div>
+      {/* 더보기 : 위클리에서 선택된 날짜로 전체 캘린더 진입 */}
+      <Link
+        href={{ pathname: '/calendar', query: { date: selectedDate } }}
+        className={'flex items-center text-[14px] font-medium text-gray-500 mt-[12px] ml-auto'}
+      >
+        더보기
+        <Image
+          src={nextGrayBtn}
+          alt={'more'}
+          className={'mr-[20px]'}
+          width={20}
+          height={20}
+        />
+      </Link>
 
       <div
         className="flex flex-col w-[334px] min-h-[56px] max-h-[224px]
         bg-black gap-[12px] mt-[8px] mx-[20px]"
       >
-        { error ? (
+        {error ? (
           <div className="text-[#FF6B6B] text-[14px] break-words">{error}</div>
         ) : todayConcerts.length !== 0 ? (
           todayConcerts.map((concert) => (
@@ -136,8 +148,6 @@ export default function HomeCalendar() {
               </div>
               <div className={'ml-[36px] text-[#8C8888] font-normal'}>{concert.location}</div>
             </div>
-
-
           ))
         ) : (
           <div
