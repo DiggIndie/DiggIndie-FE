@@ -43,18 +43,20 @@ export default function FreeArticleDetailPage({ params }: Props) {
     ]);
   };
   return (
-    <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
+    <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20 ">
       <ArticleHeader title="자유 라운지" />
-      <ArticleBody
-        nickname={freeDetailData.member.nickname}
-        time={freeDetailData.createdAt}
-        title={freeDetailData.boardTitle}
-        content={freeDetailData.boardContent}
-        images={freeDetailData.imageUrls}
-        likes={freeDetailData.liked}
-        commentCount={freeDetailData.comment}
-      />
-      <CommentCard comments={comments} />
+      <div className="mt-10 pb-[90px]">
+        <ArticleBody
+          nickname={freeDetailData.member.nickname}
+          time={freeDetailData.createdAt}
+          title={freeDetailData.boardTitle}
+          content={freeDetailData.boardContent}
+          images={freeDetailData.imageUrls}
+          likes={freeDetailData.liked}
+          commentCount={freeDetailData.comment}
+        />
+        <CommentCard comments={comments} />
+      </div>
       <ReplyInputSection addReply={addReply} />
     </div>
   );

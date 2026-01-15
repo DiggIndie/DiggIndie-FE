@@ -1,6 +1,5 @@
 'use client';
 import Image from 'next/image';
-import likeBtn from '@/assets/community/Heart.svg';
 import commentsIcon from '@/assets/sideTab/Chat 2.svg';
 import HeartIcon from '@/assets/community/HeartIcon';
 import { useState } from 'react';
@@ -35,16 +34,13 @@ export default function ArticleBody({
 
       {/*이미지 row*/}
       {images.length > 0 && (
-        <div className="flex gap-3 overflow-x-scroll">
+        <div className="flex gap-3 overflow-x-scroll mb-3">
           {images.map((src, idx) => (
-            <div key={`${src}-${idx}`} className="rounded-sm w-50 h-50">
-              <Image
-                src={src}
-                alt={`article-image-${idx + 1}`}
-                width={200}
-                height={200}
-                className="object-cover"
-              />
+            <div
+              key={`${src}-${idx}`}
+              className="w-[200px] h-[200px] flex-shrink-0 relative overflow-hidden"
+            >
+              <Image src={src} alt={`article-image-${idx + 1}`} fill className="object-cover" />
             </div>
           ))}
         </div>

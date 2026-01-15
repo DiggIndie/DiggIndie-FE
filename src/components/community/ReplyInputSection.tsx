@@ -19,7 +19,7 @@ export default function ReplyInputSection({ addReply }: Props) {
     if (e.key === 'Enter' && !e.nativeEvent.isComposing) handleSend();
   };
   return (
-    <section className="absolute bottom-0 p-5 min-w-[375px]">
+    <section className="fixed bottom-0 p-5 min-w-[375px] z-30">
       <div className="bg-gray-800 px-4 py-3 rounded-sm">
         <Checkbox
           sx={{
