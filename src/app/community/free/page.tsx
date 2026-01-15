@@ -7,6 +7,7 @@ import CommunityTab from '@/components/community/CommunityTab';
 import ArticleList from '@/components/community/ArticleList';
 import CommunityHeaderFilter from '@/components/community/CommunityHeaderFilter';
 import { MockArticles } from '@/mocks/mockArticles';
+import SideTab from '@/components/sideTabDir/SideTab';
 
 export default function CommunityFreePage() {
   const headerOptions = useMemo(
@@ -21,10 +22,13 @@ export default function CommunityFreePage() {
     return MockArticles.filter((a) => a.boardHeader === header);
   }, [header]);
 
+  const [isSideTabOpen, setIsSideTabOpen] = useState(false);
+
   return (
+
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">
       <header className="sticky top-0 z-50 h-[52px] bg-black flex items-center shrink-0">
-        <CommunityHeader title={'디깅 라운지'} />
+        <CommunityHeader title={'디깅 라운지'} onHamburgerClick={() => setIsSideTabOpen(true)} />
       </header>
 
       <div className="shrink-0">
@@ -44,6 +48,7 @@ export default function CommunityFreePage() {
           variant="free"
         />
       </main>
+      {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>
   );
 }
