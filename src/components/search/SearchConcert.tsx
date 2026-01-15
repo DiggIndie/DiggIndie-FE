@@ -93,7 +93,7 @@ export default function SearchConcert() {
             }
           }}
           placeholder="검색어를 입력하세요"
-          className="placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full"
+          className="placeholder:text-[#A6A6A6] font-regular outline- none bg-transparent w-full"
         />
       </div>
 

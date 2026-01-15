@@ -81,7 +81,7 @@ export default function SimpleCalendar({ selectedDate, onSelectDate }: CalendarP
       className={
         "flex flex-col items-center w-[335px] bg-gray-900 " +
         "border-gray-800 border-[1px] " +
-        "py-[16px]" // 위아래 패딩으로 안정적으로
+        "py-[16px]"
       }
     >
       {/* header */}

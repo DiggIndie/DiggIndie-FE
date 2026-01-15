@@ -34,7 +34,7 @@ export default function IndieStoryPage() {
       return [...filtered].sort((a, b) => b.views - a.views);
     }
 
-    // 업데이트순(기본): API 연결 후 수정필요
+    // 업데이트순, API 연결 후 수정필요
     return filtered;
   }, [query, sortKey]);
 
