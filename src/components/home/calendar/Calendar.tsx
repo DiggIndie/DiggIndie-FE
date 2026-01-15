@@ -69,6 +69,8 @@ export default function SimpleCalendar({ selectedDates, onChangeSelectedDates }:
 
   const selectedSet = useMemo(() => new Set(selectedDates), [selectedDates]);
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
   const pointerDownRef = useRef(false);
   const didDragRef = useRef(false);
 
@@ -173,8 +175,24 @@ export default function SimpleCalendar({ selectedDates, onChangeSelectedDates }:
     };
   }, []);
 
+  // 캘린더 셀 외부(캘린더 컴포넌트 바깥) 클릭 시 배열 비우기
+  useEffect(() => {
+    const onDown = (e: PointerEvent) => {
+      const el = wrapperRef.current;
+      if (!el) return;
+      if (el.contains(e.target as Node)) return;
+      onChangeSelectedDates([]);
+    };
+
+    window.addEventListener("pointerdown", onDown);
+    return () => {
+      window.removeEventListener("pointerdown", onDown);
+    };
+  }, [onChangeSelectedDates]);
+
   return (
     <div
+      ref={wrapperRef}
       className={
         "flex flex-col items-center w-[335px] bg-gray-900 " +
         "border-gray-800 border-[1px] " +
