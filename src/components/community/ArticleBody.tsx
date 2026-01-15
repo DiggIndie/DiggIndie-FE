@@ -35,7 +35,7 @@ export default function ArticleBody({
 
       {/*이미지 row*/}
       {images.length > 0 && (
-        <div className="flex gap-3 overflow-x-auto">
+        <div className="flex gap-3 overflow-x-scroll">
           {images.map((src, idx) => (
             <div key={`${src}-${idx}`} className="rounded-sm w-50 h-50">
               <Image

@@ -1,7 +1,7 @@
 'use client';
 import ArticleHeader from '@/components/community/ArticleHeader';
 import CommentCard from '@/components/community/CommentCard';
-import freeDetailData from '@/mocks/community/FreeDetail.json';
+import freeDetailData from '@/mocks/community/freeDetail.json';
 import ArticleBody from '@/components/community/ArticleBody';
 import ReplyInputSection from '@/components/community/ReplyInputSection';
 import { useState } from 'react';
@@ -44,7 +44,7 @@ export default function FreeArticleDetailPage({ params }: Props) {
   };
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
-      <ArticleHeader />
+      <ArticleHeader title="자유 라운지" />
       <ArticleBody
         nickname={freeDetailData.member.nickname}
         time={freeDetailData.createdAt}
