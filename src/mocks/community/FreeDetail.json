@@ -6,7 +6,7 @@
   },
   "boardId": 1,
   "boardTitle": "게시글 제목",
-  "boardContent": "게시글 본문 내용입니다.",
+  "boardContent": "게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.게시글 본문 내용입니다.",
   "imageUrls": [
     "https://cdn.pixabay.com/photo/2022/08/31/20/47/concert-7424190_1280.jpg",
     "https://cdn.pixabay.com/photo/2022/08/31/20/47/concert-7424190_1280.jpg"
@@ -22,6 +22,8 @@
         "nickname": "첫 댓글 작성자"
       },
       "content": "이 팀 음원만 듣다가...",
+      "isLiked": false,
+      "likeCount": 0,
       "hasParent": false,
       "parentId": null
     },

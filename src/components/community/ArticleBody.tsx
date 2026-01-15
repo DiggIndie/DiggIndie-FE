@@ -1,6 +1,9 @@
+'use client';
 import Image from 'next/image';
 import likeBtn from '@/assets/community/Heart.svg';
 import commentsIcon from '@/assets/sideTab/Chat 2.svg';
+import HeartIcon from '@/assets/community/HeartIcon';
+import { useState } from 'react';
 
 interface ArticleBodyProps {
   title: string;
@@ -20,8 +23,9 @@ export default function ArticleBody({
   likes,
   commentCount,
 }: ArticleBodyProps) {
+  const [isLiked, setIsLiked] = useState(false);
   return (
-    <div className="flex flex-col w-full py-4 px-5">
+    <div className="flex flex-col w-full py-4 px-5 border-b-4 border-gray-850">
       <span className="font-semibold text-xl text-white mb-1">{title}</span>
       <p className="flex gap-[7px] mb-2">
         <span className="text-gray-600 font-medium text-sm">{nickname}</span>
@@ -33,7 +37,7 @@ export default function ArticleBody({
       {images.length > 0 && (
         <div className="flex gap-3 overflow-x-auto">
           {images.map((src, idx) => (
-            <div key={`${src}-${idx}`} className="w-50 h-50 rounded-sm">
+            <div key={`${src}-${idx}`} className="rounded-sm w-50 h-50">
               <Image
                 src={src}
                 alt={`article-image-${idx + 1}`}
@@ -49,7 +53,7 @@ export default function ArticleBody({
       {/* 좋아요, 댓글 수 */}
       <div className="flex gap-1 text-sm font-normal">
         <p className="flex gap-[3px] justify-center items-center">
-          <Image src={likeBtn} alt="like" width={24} height={24} />
+          <HeartIcon size={24} active={isLiked} onClick={() => setIsLiked(!isLiked)} />
           <span className="font-normal text-sm text-white">{likes}</span>
         </p>
         <p className="flex gap-[3px] justify-center items-center">
@@ -57,8 +61,6 @@ export default function ArticleBody({
           <span className="font-normal text-sm text-white">{commentCount}</span>
         </p>
       </div>
-
-      <p className="border-b-4 border-gray-850" />
     </div>
   );
 }
