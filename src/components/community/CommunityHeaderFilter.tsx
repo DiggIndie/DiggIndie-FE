@@ -25,11 +25,11 @@ export default function CommunityHeaderFilter({ headers, value, onChangeAction }
   }, []);
 
   return (
-    <div ref={ref} className="relative ml-[20px] w-[min(83px,100%)] z-30">
+    <div ref={ref} className="relative ml-[20px] w-[min(92px,100%)] z-30">
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
-        className="border border-[#736F6F] rounded-[4px] w-[83px] max-w-full h-[28px] px-1 py-1
+        className="border border-[#736F6F] rounded-[4px] w-fit min-w-[68px] max-w-[92px] h-[28px] px-1 py-1
         text-[14px] flex items-center gap-1 bg-black justify-center"
       >
         {value}
