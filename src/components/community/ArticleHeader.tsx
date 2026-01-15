@@ -11,7 +11,7 @@ export default function ArticleHeader({ title }: ArticleHeaderProps) {
   const router = useRouter();
 
   return (
-    <div className="w-full flex items-center px-5 py-[10px] justify-start gap-3 text-white relative h-11">
+    <div className="w-full flex items-center px-5 py-[10px] justify-start gap-3 text-white h-11 absolute z-10 bg-transparent">
       <Image
         src={backBtn}
         alt="back"

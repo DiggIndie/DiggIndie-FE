@@ -10,16 +10,10 @@ export default function DetailImgSection({
   alt = 'detail image',
 }: DetailImgSectionProps) {
   return (
-    <section className="relative">
-      <Image
-        src={imageSrc}
-        alt={alt}
-        width={376}
-        height={531}
-        className="relative flex-shrink-0 w-[376px]"
-      />
+    <section className="relative w-full h-[425px] ">
+      <Image src={imageSrc} alt={alt} fill className="object-cover" />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-transparent " />
     </section>
   );
 }
