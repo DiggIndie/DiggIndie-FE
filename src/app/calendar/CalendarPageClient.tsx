@@ -12,25 +12,26 @@ export default function CalendarPageClient() {
   const searchParams = useSearchParams();
   const dateParam = searchParams.get('date'); // "YYYY-MM-DD" or null
 
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  // []: 전체
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
   const [showCalendar, setShowCalendar] = useState(true);
 
+  // url파라미터가 있을 시 해당 날짜만 선택
   useEffect(() => {
-    if (selectedDate === 'all') setShowCalendar(false);
-  }, [selectedDate]);
-
-  useEffect(() => {
-    if (dateParam) setSelectedDate(dateParam);
+    if (!dateParam) return;
+    setSelectedDates([dateParam]);
   }, [dateParam]);
 
   const concertsToShow = useMemo(() => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
+    const selectedSet = new Set(selectedDates);
+
     const base =
-      !selectedDate || selectedDate === 'all'
+      selectedDates.length === 0
         ? mockConcerts
-        : mockConcerts.filter((c) => c.date === selectedDate);
+        : mockConcerts.filter((c) => selectedSet.has(c.date));
 
     return [...base].sort((a, b) => {
       const aDate = new Date(a.date);
@@ -39,11 +40,11 @@ export default function CalendarPageClient() {
       const aPast = aDate < today;
       const bPast = bDate < today;
 
-      if (aPast !== bPast) return aPast ? 1 : -1;
-      if (!aPast) return bDate.getTime() - aDate.getTime();
-      return aDate.getTime() - bDate.getTime();
+      if (aPast !== bPast) return aPast ? 1 : -1; // 예정 먼저
+      if (!aPast) return bDate.getTime() - aDate.getTime(); // 예정 가까운 날짜가 위
+      return aDate.getTime() - bDate.getTime(); // 종료된 공연: 오래된 날짜가 위
     });
-  }, [selectedDate]);
+  }, [selectedDates]);
 
   return (
     <div className="text-white flex flex-col items-center min-h-screen bg-black">
@@ -53,7 +54,10 @@ export default function CalendarPageClient() {
       />
 
       {showCalendar && (
-        <Calendar selectedDate={selectedDate} onSelectDate={setSelectedDate} />
+        <Calendar
+          selectedDates={selectedDates}
+          onChangeSelectedDates={setSelectedDates}
+        />
       )}
 
       <div className="w-full flex justify-start ml-10">
