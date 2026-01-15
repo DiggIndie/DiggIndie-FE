@@ -1,16 +1,49 @@
+'use client';
 import ArticleHeader from '@/components/community/ArticleHeader';
 import CommentCard from '@/components/community/CommentCard';
 import freeDetailData from '@/mocks/community/FreeDetail.json';
 import ArticleBody from '@/components/community/ArticleBody';
-import { Checkbox } from '@mui/material';
+import ReplyInputSection from '@/components/community/ReplyInputSection';
+import { useState } from 'react';
 
+interface Comment {
+  commentId: number;
+  member: {
+    memberId: number;
+    nickname: string;
+  };
+  content: string;
+  isLiked: boolean;
+  likeCount: number;
+  hasParent: boolean;
+  parentId: number | null;
+}
 type Props = {
   params: { id: string };
 };
 
-export default async function FreeArticleDetailPage({ params }: Props) {
+export default function FreeArticleDetailPage({ params }: Props) {
+  const [comments, setComments] = useState(freeDetailData.comments);
+
+  const addReply = (content: string) => {
+    setComments((prev) => [
+      ...prev,
+      {
+        commentId: Date.now(),
+        member: {
+          memberId: -1, // 임시값
+          nickname: '나',
+        },
+        content,
+        isLiked: false,
+        likeCount: 0,
+        hasParent: false,
+        parentId: null,
+      },
+    ]);
+  };
   return (
-    <div className="min-h-screen bg-black text-white max-w-[375px]">
+    <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
       <ArticleHeader />
       <ArticleBody
         nickname={freeDetailData.member.nickname}
@@ -21,44 +54,8 @@ export default async function FreeArticleDetailPage({ params }: Props) {
         likes={freeDetailData.liked}
         commentCount={freeDetailData.comment}
       />
-      <CommentCard comments={freeDetailData.comments} />
-      <section className="absolute bottom-0 p-5 w-full max-w-[375px]">
-        <div className="bg-gray-800 px-4 py-3 rounded-sm">
-          <Checkbox
-            sx={{
-              width: 20,
-              height: 20,
-              padding: 0,
-              borderRadius: '4px',
-              border: '1px solid #A5A1A1', // gray-700
-              backgroundColor: '#fff',
-              '& .MuiSvgIcon-root': {
-                display: 'none',
-              },
-              '&.Mui-checked': {
-                backgroundColor: '#ef4444', // 빨간 배경
-                borderColor: '#dc2626',
-              },
-              '&.Mui-checked::after': {
-                content: '"✔"',
-                color: '#fff',
-                fontSize: 12,
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              },
-            }}
-          />
-          <span className="text-sm font-medium text-main-red-2 pl-1 pr-2">익명</span>
-          <input
-            type="text"
-            placeholder="댓글을 입력하세요."
-            className="focus:outline-none font-normal text-sm placeholder-gray-600"
-          />
-        </div>
-      </section>
+      <CommentCard comments={comments} />
+      <ReplyInputSection addReply={addReply} />
     </div>
   );
 }
