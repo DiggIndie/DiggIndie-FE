@@ -35,7 +35,6 @@ export default function HomeCalendar() {
   //선택된 날짜의 공연 최대 2개
   const {
     concerts: todayConcerts,
-    loading,
     error,
   } = useConcertsByDate(selectedDate, {
     size: 2,
@@ -122,9 +121,7 @@ export default function HomeCalendar() {
         className="flex flex-col w-[334px] min-h-[56px] max-h-[224px]
         bg-black gap-[12px] mt-[8px] mx-[20px]"
       >
-        {loading ? (
-          <div className="text-[#8C8888] text-[14px]">불러오는 중...</div>
-        ) : error ? (
+        { error ? (
           <div className="text-[#FF6B6B] text-[14px] break-words">{error}</div>
         ) : todayConcerts.length !== 0 ? (
           todayConcerts.map((concert) => (

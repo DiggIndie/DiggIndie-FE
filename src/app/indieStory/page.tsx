@@ -13,13 +13,6 @@ import deleteBtn from '@/assets/icons/delete.svg'
 
 type SortKey = '업데이트순' | '조회순';
 
-function normalizeText(input: string) {
-  return (input ?? '')
-    .trim()
-    .toLowerCase()
-    .normalize('NFC')
-    .replace(/\s+/g, '');
-}
 
 export default function IndieStoryPage() {
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
@@ -28,12 +21,12 @@ export default function IndieStoryPage() {
 
   const visibleStories = useMemo<MockIndieStory[]>(() => {
     // 검색 필터
-    const q = normalizeText(query);
+    const q = (query);
     const filtered =
       q.length === 0
         ? mockIndieStory
         : mockIndieStory.filter((s) =>
-          normalizeText(s.title).includes(q)
+          (s.title).includes(q)
         );
 
     // 정렬
@@ -54,7 +47,7 @@ export default function IndieStoryPage() {
 
         {/* 검색 input */}
         <div className="flex items-center ml-5 mb-3">
-          {/* query 있을 때만: 28px 슬롯 + back 버튼 */}
+          {/* query 있을 때*/}
           {query && (
             <button
               type="button"
@@ -76,10 +69,10 @@ export default function IndieStoryPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="검색어를 입력하세요"
-              className="flex-1 h-full bg-transparent border-none outline-none ring-0 focus:outline-none focus:ring-0 px-3"
+              className="flex-1 h-full bg-transparent border-none text-[#A6A6A6] outline-none ring-0 focus:outline-none focus:ring-0 px-3"
             />
 
-            {/* delete 버튼*/}
+            {/* x 버튼*/}
             {query && (
               <button
                 type="button"
@@ -96,7 +89,6 @@ export default function IndieStoryPage() {
             </div>
           </div>
         </div>
-
 
         <IndieStoryList
           indieStories={visibleStories}
