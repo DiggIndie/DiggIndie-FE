@@ -40,7 +40,7 @@ export default function ResetPreference({ isLoggedIn }: Props) {
         className="flex w-full h-[46px] bg-[#FF3637] mt-[40px] items-center rounded-[4px] cursor-pointer"
         onClick={() => router.push('/onboard/artist')}
       >
-        <div className="min-w-0 grow-0 shrink text-[16px] ml-[12px] font-semibold">
+        <div className="min-w-0 grow-0 shrink text-[16px] ml-[12px] ">
           <span className="block truncate">취향 재설정 하러 가기</span>
         </div>
 
