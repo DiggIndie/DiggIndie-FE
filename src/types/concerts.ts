@@ -9,19 +9,16 @@ export type PageInfo = {
 export type ConcertItem = {
   concertId: number;
   concertName: string;
-  startsAt: string;
-  concertHall: string;
+  dDay: string;
+  lineUp: string[];
+  mainImage: string;
+  period: string;
 };
 
-export type GetConcertsResponse = {
-  statusCode: number;
-  message: string;
+export type GetConcertsPayload = {
+  concerts: ConcertItem[];
   pageInfo: PageInfo;
-  payload: {
-    concerts: ConcertItem[];
-    pageInfo: PageInfo;
-  };
-  isSuccess: boolean;
+
 };
 
 export type WeeklyConcertItem = {
