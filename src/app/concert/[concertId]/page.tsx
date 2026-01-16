@@ -22,7 +22,7 @@ export default function ConcertDetailPage() {
   return (
     <div className="text-white flex flex-col h-screen bg-black relative pb-20 overflow-scroll">
       <MyHeader title="" />
-      <DetailImgSection imageSrc={concert.mainImage} variant="concert" />
+      <DetailImgSection imageSrc={concert.mainImage} />
       <ConcertContentSection concert={concert} />
       <LineupSection concert={concert} />
       <ConcertStorySection concert={concert} />
