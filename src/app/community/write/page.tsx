@@ -112,7 +112,7 @@ export default function Write() {
           </span>
         ))}
       </div>
-      <ImageUploadSection />
+      <ImageUploadSection required={boardType === 'trade'} />
       {boardType === 'trade' && <TradingPriceArea />}
       <TextArea
         title={title}

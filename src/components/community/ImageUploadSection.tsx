@@ -2,7 +2,10 @@
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
-export default function ImageUploadSection() {
+interface ImageUploadSectionProps {
+  required?: boolean;
+}
+export default function ImageUploadSection({ required }: ImageUploadSectionProps) {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,7 +34,9 @@ export default function ImageUploadSection() {
     <div className="py-3 flex flex-col gap-3 px-5">
       <div className="flex gap-[7px] items-end">
         <span className="font-medium text-base text-white">사진 추가</span>
-        <span className="text-gray-700 text-sm font-medium">선택</span>
+        <span className={`${required ? 'text-main-red-1' : 'text-gray-700'} text-sm font-medium`}>
+          {required ? '필수' : '선택'}
+        </span>
       </div>
 
       <div className="flex gap-2 overflow-x-auto shrink-0">

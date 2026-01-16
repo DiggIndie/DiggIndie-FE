@@ -20,10 +20,11 @@ export default function CommunityHeader({ onRightButtonClick, disabled }: Commun
       />
       <span className="font-semibold text-base text-white">게시물 작성</span>
       <button
-        className={`text-normal text-sm cursor-pointer ${
-          disabled ? 'text-gray-700' : 'text-main-red-2'
+        className={`text-normal text-sm ${
+          disabled ? 'text-gray-700 disabled' : 'text-main-red-2 cursor-pointer'
         }`}
         onClick={onRightButtonClick}
+        disabled={disabled}
       >
         완료
       </button>
