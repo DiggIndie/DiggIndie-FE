@@ -1,7 +1,7 @@
 'use client';
 import ArticleHeader from '@/components/community/ArticleHeader';
 import CommentCard from '@/components/community/CommentCard';
-import freeDetailData from '@/mocks/community/freeDetail.json';
+import freeDetailData from '@/mocks/community/freeDetailDummy.json';
 import ArticleBody from '@/components/community/ArticleBody';
 import ReplyInputSection from '@/components/community/ReplyInputSection';
 import { useState } from 'react';
