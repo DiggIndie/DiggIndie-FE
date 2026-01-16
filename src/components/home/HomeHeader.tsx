@@ -10,7 +10,7 @@ type Props = {
 export default function HomeHeader({ onHamburgerClick }: Props) {
   const router = useRouter();
   return (
-    <div className="w-full max-w-[375px] h-13 flex flex-col items-center font-bold bg-gray-850">
+    <div className="w-full min-w-[375px] h-13 flex flex-col items-center font-bold bg-gray-850">
       <div className="h-13 flex items-center font-bold mx-5">
         <Image
           src={logo}

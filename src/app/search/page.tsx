@@ -7,10 +7,10 @@ import { mockArtists } from '@/mocks/mockArtists';
 import back from '@/assets/icons/Arrow-Left.svg';
 import MockArtistCard from '@/components/home/MockArtistCard';
 import HomeConcertCard from '@/components/home/HomeConcertCard';
-        
+
 import mikeIcon from '@/assets/common/Voice 3.svg';
 import calendarIcon from '@/assets/common/Calendar.svg';
-import documentIcon from '@/assets/sidTab/Document.svg';
+import documentIcon from '@/assets/sideTab/Document.svg';
 import { mockIndieStory } from '@/mocks/mockIndieStory';
 import IndieStoryRecard from '@/components/home/IndieStoryRecCard';
 import SearchCardSkeleton from '@/components/search/SearchCardSkeleton';
