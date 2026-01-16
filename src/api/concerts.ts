@@ -57,4 +57,31 @@ export async function getConcerts(params: GetConcertParams) {
     method: "GET",
     auth: false,
   });
+
+}
+
+// 전체캘린더 공연 조회
+export type GetConcertsByDatesParams = {
+  dates: string[];
+  page?: number;
+  size?: number;
+  sort?: string[];
+};
+
+export async function getConcertsByDates(params: GetConcertsByDatesParams) {
+  const { dates, page = 0, size = 20, sort } = params;
+
+  const qs = new URLSearchParams();
+
+  dates.forEach((d) => qs.append("dates", d));
+
+  qs.set("page", String(page));
+  qs.set("size", String(size));
+
+  if (sort?.length) sort.forEach((s) => qs.append("sort", s));
+
+  return fetchClient<GetConcertsPayload>(`/concerts/calendar?${qs.toString()}`, {
+    method: "GET",
+    auth: false,
+  });
 }

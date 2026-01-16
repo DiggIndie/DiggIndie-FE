@@ -151,7 +151,10 @@ export default function SearchConcert() {
       {error ? <div className="mt-4 text-[#FF6B6B] text-[14px] break-words">{error}</div> : null}
 
       {/* 결과 */}
-      {showSkeleton ? <SearchCardSkeleton /> : <ConcertGrid concerts={concerts} />}
+      <div className="mt-4">
+        {showSkeleton ? <SearchCardSkeleton /> : <ConcertGrid concerts={concerts} />}
+      </div>
+
     </section>
   );
 }
