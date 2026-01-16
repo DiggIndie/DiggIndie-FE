@@ -19,7 +19,7 @@ export default function MyPage() {
   return (
     <div className="text-white flex flex-col h-screen bg-black relative">
       <MyPageHeader />
-      <div className="flex flex-col">
+      <div className="flex flex-col pb-6 bg-black">
         <ProfileSection />
         <div onClick={() => router.push('/my/concert')}>
           <MenuSection title="스크랩한 공연" />
@@ -38,10 +38,19 @@ export default function MyPage() {
           </HorizontalSwipeList>
         </div>
       </div>
-      <div className="flex flex-col gap-3 bg-black">
-        <MenuSection title="스크랩한 게시물" hasBorder={true} />
-        <MenuSection title="스크랩한 인디스토리" hasBorder={true} />
-        <MenuSection title="연동된 소셜계정" hasBorder={true} />
+      <div className="flex flex-col gap-3 bg-black py-2">
+        <MenuSection
+          title="MY 커뮤니티 활동"
+          hasBorder={true}
+          onclick={() => router.push('/my/community')}
+        />
+        <MenuSection title="MY 인디스토리 활동" hasBorder={true} />
+        <MenuSection
+          title="연동된 소셜계정"
+          hasBorder={true}
+          onclick={() => router.push('/my/social')}
+        />
+        <MenuSection title="마케팅 수신 동의" hasBorder={true} />
       </div>
       <p className="flex justify-center items-center gap-2 pt-37 p-5 text-center bg-black ">
         <span
