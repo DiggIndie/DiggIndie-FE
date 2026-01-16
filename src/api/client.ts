@@ -1,8 +1,8 @@
-import { env } from "@/lib/env";
-import { authService } from "@/services/authService";
-import { useAuthStore } from "@/stores/authStore";
-import { ApiResponse } from "@/types/api";
-import { RequestInit } from "next/dist/server/web/spec-extension/request";
+import { env } from '@/lib/env';
+import { authService } from '@/services/authService';
+import { useAuthStore } from '@/stores/authStore';
+import { ApiResponse } from '@/types/api';
+import { RequestInit } from 'next/dist/server/web/spec-extension/request';
 
 export async function apiFetch<T>(
   path: string,
@@ -13,7 +13,7 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const { query, useDevAuth, ...init } = options;
 
-  if (!env.BASE_URL) throw new Error("NEXT_PUBLIC_BASE_URL not set");
+  if (!env.BASE_URL) throw new Error('NEXT_PUBLIC_BASE_URL not set');
 
   const url = new URL(path, env.BASE_URL);
 
@@ -25,46 +25,49 @@ export async function apiFetch<T>(
   }
 
   const headers = new Headers(init.headers);
-  headers.set("Content-Type", "application/json");
+  headers.set('Content-Type', 'application/json');
 
   if (useDevAuth) {
     const token = process.env.NEXT_PUBLIC_DEV_ACCESS_TOKEN;
-    if (token) headers.set("Authorization", `Bearer ${token}`);
+    if (token) headers.set('Authorization', `Bearer ${token}`);
   }
 
   const res = await fetch(url.toString(), {
     ...init,
     headers,
-    cache: "no-store",
+    cache: 'no-store',
   });
 
   if (!res.ok) {
-    const text = await res.text().catch(() => "");
+    const text = await res.text().catch(() => '');
     throw new Error(`API Error ${res.status}: ${text || res.statusText}`);
   }
 
   return res.json();
 }
-
+//--------------------------------------------------------
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type FetchOptions = RequestInit & {
   auth?: boolean;
 };
-
+const parseResponse = async <T>(res: Response): Promise<T | null> => {
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+};
 export async function fetchClient<T>(
   url: string,
   options: FetchOptions
-): Promise<ApiResponse<T>> {
+): Promise<ApiResponse<T> | null> {
   const { auth = false, headers, ...rest } = options;
   const token = useAuthStore.getState().accessToken;
 
   const sendRequest = (t: string | null) =>
     fetch(`${BASE_URL}${url}`, {
       ...rest,
-      credentials: "include",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...(auth && t ? { Authorization: `Bearer ${t}` } : {}),
         ...headers,
       },
@@ -72,14 +75,14 @@ export async function fetchClient<T>(
 
   let res = await sendRequest(token);
 
-  if (res.status === 401 && auth && url !== "/auth/reissue") {
+  if (res.status === 401 && auth && url !== '/auth/reissue') {
     try {
       const newToken = await authService.refreshAccessToken();
       res = await sendRequest(newToken);
     } catch (err) {
-      console.log("new access token 재발급 실패", err);
+      console.log('new access token 재발급 실패', err);
     }
   }
 
-  return res.json();
+  return parseResponse<ApiResponse<T>>(res);
 }

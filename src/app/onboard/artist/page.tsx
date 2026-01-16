@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import type { Artist } from '@/types/artists';
 import { saveSelectedArtists } from '@/services/artistsService';
 import { useArtistSearch } from '@/hooks/useArtistSearch';
+import { onBoardKeywordService } from '@/services/onBoardKeyword.service';
 
 export default function OnboardArtistPage() {
   const router = useRouter();
@@ -52,7 +53,18 @@ export default function OnboardArtistPage() {
       prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
     );
   };
+  useEffect(() => {
+    const fetchSelectedArtists = async () => {
+      try {
+        const res = await onBoardKeywordService.getSelectedArtists();
+        setSelectedIds(res.bands.map((item: Artist) => item.bandId));
+      } catch (e) {
+        console.error('선택된 아티스트 불러오기 실패', e);
+      }
+    };
 
+    void fetchSelectedArtists();
+  }, []);
   const handleComplete = async () => {
     if (selectedIds.length < 2) return;
 

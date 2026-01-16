@@ -20,6 +20,8 @@ export default function OnBoardGenrePage() {
       try {
         const data = await onBoardKeywordService.getKeywords();
         setKeywords(data);
+        const selected = await onBoardKeywordService.getSeletedKeywords();
+        setSelectedIds(selected.map((item) => item.keywordId));
       } catch (err) {
         console.error(err);
       }
@@ -73,7 +75,11 @@ export default function OnBoardGenrePage() {
         </div>
       </div>
       <div className="px-5 pb-5">
-        <LinkButton href={'/onboard/end'} disabled={selectedIds.length < 2} onClick={handleComplete}>
+        <LinkButton
+          href={'/onboard/end'}
+          disabled={selectedIds.length < 2}
+          onClick={handleComplete}
+        >
           선택완료
         </LinkButton>
       </div>

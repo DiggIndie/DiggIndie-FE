@@ -1,4 +1,4 @@
-import { apiFetch, fetchClient } from '@/api/client';
+import { fetchClient } from '@/api/client';
 
 type BasicResponse = {
   statusCode: number;
