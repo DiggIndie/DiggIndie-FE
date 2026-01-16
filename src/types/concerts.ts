@@ -23,3 +23,15 @@ export type GetConcertsResponse = {
   };
   isSuccess: boolean;
 };
+
+export type WeeklyConcertItem = {
+  concertId: number;
+  concertName: string;
+  startsAt: string;
+  concertHall: string;
+};
+
+export type WeeklyConcertPayload = {
+  concerts: WeeklyConcertItem[];
+  pageInfo: PageInfo;
+};

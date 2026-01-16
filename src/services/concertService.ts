@@ -2,7 +2,7 @@ import { apiFetch } from "@/api/client";
 import type { GetConcertsResponse } from "@/types/concerts";
 
 export type GetConcertsParams = {
-  date: string;     //YYYY-MM-DD
+  date: string;
   page?: number;
   size?: number;
   sort?: string;

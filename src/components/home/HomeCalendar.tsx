@@ -11,7 +11,7 @@ import nextDisabledBtn from '@/assets/icons/nextDisabled.svg';
 import nextGrayBtn from '@/assets/icons/nextGray.svg';
 import Link from 'next/link';
 
-import { useConcertsByDate } from '@/hooks/useConcertsByDate';
+import { useWeeklyConcerts } from '@/hooks/useWeeklyConcerts';
 
 function pad2(n: number) {
   return String(n).padStart(2, '0');
@@ -40,7 +40,7 @@ export default function HomeCalendar() {
 
   const selectedDate = dates[selectedIndex];
 
-  const { concerts: todayConcerts, error } = useConcertsByDate(selectedDate, {
+  const { concerts: todayConcerts, error } = useWeeklyConcerts(selectedDate, {
     size: 2,
     page: 0,
   });
@@ -59,7 +59,7 @@ export default function HomeCalendar() {
       <div className={'flex mx-[20px]'}>
         <div className={'text-[20px] font-semibold'}>공연 위클리 캘린더</div>
 
-        {/* 상단 > : 무조건 "오늘"로 전체 캘린더 진입 */}
+        {/* 상단 >: 금일 날짜로 진입 */}
         <Link
           href={{ pathname: '/calendar', query: { date: todayKey() } }}
           className="ml-auto"
@@ -138,15 +138,15 @@ export default function HomeCalendar() {
         ) : todayConcerts.length !== 0 ? (
           todayConcerts.map((concert) => (
             <div
-              key={concert.id}
-              className="flex flex-col w[335px] h-[100px] font-semibold bg-[#1F1D1D] rounded-[4px]"
+              key={concert.concertId}
+              className="flex flex-col w-[335px] h-[100px] font-semibold bg-[#1F1D1D] rounded-[4px]"
             >
-              <span className={'mx-[16px] mt-[13px] text-[18px]'}>{concert.time}</span>
+              <span className={'mx-[16px] mt-[13px] text-[18px]'}>{concert.startsAt}</span>
               <div className={'flex mx-[16px] mt-[2px] gap-[4px] font-normal'}>
                 <Image src={ticket} alt={'ticket'} width={20} height={20} />
-                {concert.title}
+                {concert.concertName}
               </div>
-              <div className={'ml-[36px] text-[#8C8888] font-normal'}>{concert.location}</div>
+              <div className={'ml-[36px] text-[#8C8888] font-normal'}>{concert.concertHall}</div>
             </div>
           ))
         ) : (
