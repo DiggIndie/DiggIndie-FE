@@ -16,7 +16,7 @@ export default function CommunityHeader({ onRightButtonClick, disabled }: Commun
         height={24}
         alt="back"
         className="cursor-pointer"
-        onClick={() => router.push('/community')}
+        onClick={() => router.push('/community/free')}
       />
       <span className="font-semibold text-base text-white">게시물 작성</span>
       <button

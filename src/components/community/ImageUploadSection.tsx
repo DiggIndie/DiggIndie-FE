@@ -12,7 +12,7 @@ export default function ImageUploadSection() {
     const selectedFiles = Array.from(e.target.files);
 
     // 최대 개수 제한
-    const MAX_IMAGES = 5;
+    const MAX_IMAGES = 10;
     if (images.length + selectedFiles.length > MAX_IMAGES) {
       alert(`이미지는 최대 ${MAX_IMAGES}장까지 업로드할 수 있어요.`);
       return;
@@ -34,7 +34,7 @@ export default function ImageUploadSection() {
         <span className="text-gray-700 text-sm font-medium">선택</span>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto">
+      <div className="flex gap-2 overflow-x-auto shrink-0">
         <input
           ref={fileInputRef}
           type="file"
@@ -44,24 +44,24 @@ export default function ImageUploadSection() {
           className="hidden"
         />
         {/* + 버튼 */}
-        {images.length < 5 && (
+        {images.length < 10 && (
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
             className="w-24 h-24 flex items-center justify-center
                  border border-gray-800
                  bg-gray-900
-                 text-gray-600 text-3xl shrink-0"
+                 text-gray-600 text-3xl shrink-0 cursor-pointer"
           >
             +
           </button>
         )}
         {previews.map((src, index) => (
-          <div key={index} className="relative w-24 h-24">
-            <Image src={src} alt="preview" className="w-full h-full object-cover rounded" />
+          <div key={index} className="relative w-24 h-24 shrink-0">
+            <Image src={src} alt="preview" fill className="object-cover rounded" />
             <button
               type="button"
-              className="absolute top-1 right-1 bg-black/60 text-white text-xs rounded-full w-5 h-5"
+              className="absolute top-1 right-1 bg-black/60 text-white text-xs rounded-full w-5 h-5 cursor-pointer"
               onClick={() => removeImage(index)}
             >
               ✕
