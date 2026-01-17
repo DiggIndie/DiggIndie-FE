@@ -1,6 +1,5 @@
 import { ApiResponse, Keyword, KeywordResponse, SelectedArtistsResponse } from '@/types/api';
 import { fetchClient } from './client';
-import { Artist } from '@/types/artists';
 
 export const onBoardApi = {
   async getOnboardingKeywords(): Promise<KeywordResponse> {

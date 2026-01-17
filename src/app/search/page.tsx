@@ -15,12 +15,15 @@ import IndieStoryRecard from '@/components/home/IndieStoryRecCard';
 import SearchCardSkeleton from '@/components/search/SearchCardSkeleton';
 import { useRouter } from 'next/navigation';
 import RecentSearchSection from '@/components/search/RecentSearchSection';
+import { searchService } from '@/services/searchService';
+import { RecentSearch } from '@/types/searches';
 
 export default function HomeSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedTerm, setDebouncedTerm] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
 
   const router = useRouter();
   //디바운스 처리
@@ -41,11 +44,40 @@ export default function HomeSearch() {
   //API 호출
   useEffect(() => {
     if (!isSubmitted || !debouncedTerm) return;
-  }, [debouncedTerm]);
+    searchService.saveRecent({ content: debouncedTerm, category: 'GENERAL' });
+  }, [isSubmitted]);
 
   const handleChange = (value: string) => {
     setSearchTerm(value);
     setIsSubmitted(false);
+  };
+
+  const loadRecentSearches = async () => {
+    try {
+      const data = await searchService.getRecentSearches();
+      setRecentSearches(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await searchService.getRecentSearches();
+        setRecentSearches(data);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    await searchService.deleteRecentSearch(id);
+    await loadRecentSearches();
+  };
+  const handleClearAll = async () => {
+    await searchService.clearRecentSearches();
+    await loadRecentSearches();
   };
 
   return (
@@ -63,11 +95,18 @@ export default function HomeSearch() {
           onClear={() => {
             setSearchTerm('');
             setIsSubmitted(false);
+            loadRecentSearches();
           }}
           onSubmit={handleSubmit}
         />
       </div>
-      {searchTerm === '' && <RecentSearchSection />}
+      {searchTerm === '' && (
+        <RecentSearchSection
+          searches={recentSearches}
+          onDelete={handleDelete}
+          onClearAll={handleClearAll}
+        />
+      )}
       {searchTerm !== '' && (
         <>
           <span className="block font-medium text-sm text-gray-400 px-5 py-5">검색결과 00개</span>
