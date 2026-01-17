@@ -10,12 +10,14 @@ import MyHeader from '@/components/my/MyHeader';
 import { useEffect, useState } from 'react';
 import { getDetailConcerts } from '@/services/concertService';
 import { ConcertDetail } from '@/types/concerts';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function ConcertDetailPage() {
   const params = useParams<{ concertId: string }>();
   const concertId = Number(params.concertId);
   const [concert, setConcert] = useState<ConcertDetail | null>(null);
-
+  // zustand에서 로그인 상태 구독
+  const isLoggedIn = useAuthStore((state) => state.isAuthed);
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDetailConcerts(concertId);
@@ -33,7 +35,7 @@ export default function ConcertDetailPage() {
     <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 overflow-auto">
       <MyHeader title="" />
       <DetailImgSection imageSrc={concert.imageUrl} />
-      <ConcertContentSection concert={concert} />
+      <ConcertContentSection isLoggedIn={isLoggedIn} concert={concert} />
       <LineupSection concert={concert} />
       <ConcertStorySection concert={concert} />
       <div className="px-5 pb-5 fixed bottom-0 w-full max-w-94">

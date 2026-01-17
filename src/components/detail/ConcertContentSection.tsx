@@ -10,21 +10,28 @@ import { ConcertDetail } from '@/types/concerts';
 
 interface ConcertContentSectionProps {
   concert: ConcertDetail;
+  isLoggedIn?: boolean;
 }
-export default function ConcertContentSection({ concert }: ConcertContentSectionProps) {
+export default function ConcertContentSection({ concert, isLoggedIn }: ConcertContentSectionProps) {
   const [isScrapped, setIsScrapped] = useState(concert.isScrapped ?? false);
   const handleToggleScrap = () => {
     setIsScrapped((prev) => !prev);
   };
   return (
     <section className="px-5 pt-5 pb-7 border-b-4 border-gray-800">
-      <p className="flex justify-between items-center gap-6">
+      <p className="flex justify-between gap-6">
         <span className="font-semibold text-xl">{concert.concertName}</span>
         <BookmarkIcon
           isActive={isScrapped}
           onClick={handleToggleScrap}
-          className={`cursor-pointer w-6 h-6 transition-colors
-            ${isScrapped ? 'text-white scale-110' : 'text-gray-600'}
+          className={`w-6 h-6 transition-colors
+            ${
+              isLoggedIn
+                ? isScrapped
+                  ? 'text-white scale-110 cursor-pointer'
+                  : 'text-white cursor-pointer'
+                : 'text-gray-600 cursor-not-allowed'
+            }
           `}
         />
       </p>
@@ -43,11 +50,15 @@ export default function ConcertContentSection({ concert }: ConcertContentSection
         <Image src={ticket} alt="ticket" width={24} height={24} />
         <div>
           <p className="flex gap-1 items-end">
-            <span className="font-normal text-base text-white">{concert.onsitePrice}원</span>
+            <span className="font-normal text-base text-white">
+              {concert.onsitePrice != null ? `${concert.onsitePrice}원` : '정보 없음'}
+            </span>
             <span className="text-gray-500 text-xs ">현장예매</span>
           </p>
           <p className="flex gap-1 items-end">
-            <span className="font-normal text-base text-white">{concert.preorderPrice}원</span>
+            <span className="font-normal text-base text-white">
+              {concert.preorderPrice != null ? `${concert.preorderPrice}원` : '정보 없음'}
+            </span>
             <span className="text-gray-500 text-xs">사전예매</span>
           </p>
         </div>
