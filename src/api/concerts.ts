@@ -1,7 +1,12 @@
 
 import { fetchClient } from "@/api/client";
-import type { WeeklyConcertPayload, GetConcertsPayload } from "@/types/concerts";
+import type {
+  WeeklyConcertPayload, GetConcertsPayload, MonthConcertPayload, MyConcertItem, MyConcertPayload,
+  RecConcertItem, RecConcertPayload, ConcertItem
+}
+  from '@/types/concerts';
 
+import { recToConcertItem } from "@/services/concertMappers";
 
 // 위클리 캘린더 용
 export type GetWeeklyConcertParams = {
@@ -84,4 +89,47 @@ export async function getConcertsByDates(params: GetConcertsByDatesParams) {
     method: "GET",
     auth: false,
   });
+}
+
+// 전체캘린더 월별
+export async function getMonthConcerts(params: { year: number; month: number }) {
+  const { year, month } = params;
+
+  const qs = new URLSearchParams();
+  qs.set("year", String(year));
+  qs.set("month", String(month));
+
+  return fetchClient<MonthConcertPayload>(
+    `/concerts/calendar/monthly?${qs.toString()}`,
+    { method: "GET", auth: false }
+  );
+}
+
+//마이페이지 스크랩한 콘서트
+export async function getMyConcerts(): Promise<MyConcertItem[]> {
+  const res = await fetchClient<MyConcertPayload>("/my/concerts", {
+    method: "GET",
+    auth: true,
+  });
+
+  if (!res.isSuccess) {
+    throw new Error(res.message || "Failed to fetch my concerts");
+  }
+
+  return res.payload?.concerts ?? [];
+}
+
+//추천 콘서트
+export async function getRecConcerts(): Promise<ConcertItem[]> {
+  const res = await fetchClient<RecConcertPayload>("/concerts/recommendations", {
+    method: "GET",
+    auth: true,
+  });
+
+  if (!res.isSuccess) {
+    throw new Error(res.message || "Failed to fetch recommended concerts");
+  }
+
+  const raw = res.payload?.concerts ?? [];
+  return raw.map(recToConcertItem);
 }

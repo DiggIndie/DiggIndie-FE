@@ -6,6 +6,7 @@ export type PageInfo = {
   totalPages: number;
 };
 
+//콘서트 검색용
 export type ConcertItem = {
   concertId: number;
   concertName: string;
@@ -21,6 +22,7 @@ export type GetConcertsPayload = {
 
 };
 
+//위클리 캘린더 용
 export type WeeklyConcertItem = {
   concertId: number;
   concertName: string;
@@ -32,3 +34,48 @@ export type WeeklyConcertPayload = {
   concerts: WeeklyConcertItem[];
   pageInfo: PageInfo;
 };
+
+//전체 캘린더 날짜별 콘서트 유무 조회용
+export type MonthConcertItem = {
+  day: number;
+  hasConcert:boolean;
+}
+export type MonthConcertPayload = {
+  year: number;
+  month: number;
+  days: MonthConcertItem[];
+}
+
+//스크랩한 콘서트 용
+export type MyConcertItem = {
+  concertId: number;
+  concertName: string;
+  duration: string;
+  imageUrl: string;
+  dday: string;
+  finished: boolean;
+}
+
+export type MyConcertPayload = {
+  concerts: MyConcertItem[];
+}
+
+//추천 공연 용
+export type LineUpItem = {
+  bandId: number;
+  bandName: string;
+};
+
+export type RecConcertItem = {
+  concertId: number;
+  concertName: string;
+  dDay: string;
+  lineUp: LineUpItem[];
+  mainImage: string;
+  period: string;
+};
+
+export type RecConcertPayload = {
+  concerts: RecConcertItem[]
+}
+
