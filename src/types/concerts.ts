@@ -23,3 +23,20 @@ export type GetConcertsResponse = {
   };
   isSuccess: boolean;
 };
+export interface ConcertLineUp {
+  bandId: number;
+  bandName: string;
+  bandImage: string;
+}
+export interface ConcertDetail {
+  concertName: string;
+  isScrapped: boolean;
+  startDate: string;
+  concertHallName: string;
+  address: string;
+  preorderPrice: number;
+  onsitePrice: number;
+  imageUrl: string;
+  description: string;
+  lineUp: ConcertLineUp[];
+}

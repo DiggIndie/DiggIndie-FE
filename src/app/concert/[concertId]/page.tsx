@@ -6,28 +6,38 @@ import DetailImgSection from '@/components/detail/DetailImgSection';
 import LineupSection from '@/components/detail/LineupSection';
 import ConcertContentSection from '@/components/detail/ConcertContentSection';
 import ConcertStorySection from '@/components/detail/ConcertStorySection';
-import concertData from '@/mocks/mockConcertDetail.json';
 import MyHeader from '@/components/my/MyHeader';
+import { useEffect, useState } from 'react';
+import { getDetailConcerts } from '@/services/concertService';
+import { ConcertDetail } from '@/types/concerts';
 
 export default function ConcertDetailPage() {
   const params = useParams<{ concertId: string }>();
   const concertId = Number(params.concertId);
+  const [concert, setConcert] = useState<ConcertDetail | null>(null);
 
-  const concert = concertData.concerts.find((c) => c.concertId === concertId);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getDetailConcerts(concertId);
+      setConcert(data);
+    };
+
+    fetchData();
+  }, [concertId]);
 
   if (!concert) {
-    return <p className="text-white">콘서트를 찾을 수 없습니다.</p>;
+    return <div>조회하신 아티스트가 없습니다.</div>;
   }
 
   return (
-    <div className="text-white flex flex-col h-screen bg-black relative pb-20 overflow-scroll">
+    <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 overflow-auto">
       <MyHeader title="" />
-      <DetailImgSection imageSrc={concert.mainImage} />
+      <DetailImgSection imageSrc={concert.imageUrl} />
       <ConcertContentSection concert={concert} />
       <LineupSection concert={concert} />
       <ConcertStorySection concert={concert} />
       <div className="px-5 pb-5 fixed bottom-0 w-full max-w-94">
-        <LinkButton href="#">예매하러가기</LinkButton>
+        <LinkButton href="">예매하러가기</LinkButton>
       </div>
     </div>
   );

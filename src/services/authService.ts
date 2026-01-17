@@ -6,7 +6,6 @@ export const authService = {
     const email = `${emailLocal}${emailDomain}`;
     try {
       const res = await authApi.signup({ userId: id, email, password });
-      console.log('[signup] 응답 성공', res.payload);
       if (!res || !res.payload) {
         throw new Error('서버 응답에 데이터가 없습니다.');
       }
@@ -28,7 +27,6 @@ export const authService = {
       const res = await authApi.login({ userId, password });
       const { accessToken, userId: responseUserId } = res.payload;
       useAuthStore.getState().login(accessToken, responseUserId);
-      console.log('login 성공', res.payload);
       return res;
     } catch (err) {
       console.log('login 실패', err);

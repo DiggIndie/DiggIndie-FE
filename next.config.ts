@@ -25,6 +25,16 @@ const nextConfig: NextConfig = {
         hostname: 'i.scdn.co',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'diggindie-images.s3.ap-northeast-2.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.indistreet.app',
+        pathname: '/**', // 모든 경로 허용
+      },
     ],
   },
 };

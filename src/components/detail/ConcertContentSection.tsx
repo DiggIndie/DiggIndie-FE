@@ -1,14 +1,15 @@
 'use client';
 import Image from 'next/image';
-import concertData from '@/mocks/mockConcertDetail.json';
+//import concertData from '@/mocks/mockConcertDetail.json';
 import Calendar from '@/assets/common/Calendar.svg';
 import ticket from '@/assets/common/ticket.svg';
 import location from '@/assets/detail/Location.svg';
 import BookmarkIcon from '@/components/detail/BookmarkIcon';
 import { useState } from 'react';
+import { ConcertDetail } from '@/types/concerts';
 
 interface ConcertContentSectionProps {
-  concert: (typeof concertData.concerts)[number];
+  concert: ConcertDetail;
 }
 export default function ConcertContentSection({ concert }: ConcertContentSectionProps) {
   const [isScrapped, setIsScrapped] = useState(concert.isScrapped ?? false);
@@ -42,15 +43,11 @@ export default function ConcertContentSection({ concert }: ConcertContentSection
         <Image src={ticket} alt="ticket" width={24} height={24} />
         <div>
           <p className="flex gap-1 items-end">
-            <span className="font-normal text-base text-white">
-              {concertData.concerts[0].onSite}원
-            </span>
+            <span className="font-normal text-base text-white">{concert.onsitePrice}원</span>
             <span className="text-gray-500 text-xs ">현장예매</span>
           </p>
           <p className="flex gap-1 items-end">
-            <span className="font-normal text-base text-white">
-              {concertData.concerts[0].preorderPrice}원
-            </span>
+            <span className="font-normal text-base text-white">{concert.preorderPrice}원</span>
             <span className="text-gray-500 text-xs">사전예매</span>
           </p>
         </div>
