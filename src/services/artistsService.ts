@@ -3,21 +3,6 @@ import { fetchArtists } from '@/api/artists';
 import { postOnboardArtist } from '@/api/onboardArtists';
 import type { Artist, PageInfo } from '@/types/artists';
 
-export async function getOnboardingArtists(): Promise<{
-  artists: Artist[];
-  pageInfo: PageInfo;
-}> {
-  const res = await fetchArtists({ page: 0, size: 12 });
-
-  if (!res.isSuccess) {
-    throw new Error(res.message || 'Failed to fetch artists');
-  }
-
-  return {
-    artists: res.payload,
-    pageInfo: res.pageInfo,
-  };
-}
 
 export async function getArtistsPage(params: {
   page: number;
