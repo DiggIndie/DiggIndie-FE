@@ -8,7 +8,7 @@ interface ArtistItemProps {
   toggleSelect: (id: number) => void;
 }
 
-export default function ArtistItem({ artist, isSelected, toggleSelect }: ArtistItemProps) {
+export default function OnboardArtistItem({ artist, isSelected, toggleSelect }: ArtistItemProps) {
   return (
     <div
       key={artist.bandId}
