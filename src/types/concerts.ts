@@ -72,7 +72,7 @@ export type RecConcertItem = {
   dDay: string;
   lineUp: LineUpItem[];
   mainImage: string;
-  period: string;
+  duration: string;
 };
 
 export type RecConcertPayload = {

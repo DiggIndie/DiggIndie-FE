@@ -137,16 +137,12 @@ export default function SimpleCalendar({
 
     startKeyRef.current = cell.key;
     lastKeyRef.current = cell.key;
-
-    if (!cell.inMonth) setCurrent(new Date(cell.y, cell.m, 1));
   }
 
   function enterCellWhileDown(cell: Cell) {
     if (!pointerDownRef.current) return;
 
     if (!didDragRef.current) didDragRef.current = true;
-
-    if (!cell.inMonth) setCurrent(new Date(cell.y, cell.m, 1));
 
     const startKey = startKeyRef.current;
     if (!startKey) return;

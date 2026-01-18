@@ -18,7 +18,7 @@ export function recToConcertItem(item: RecConcertItem): ConcertItem {
     concertId: item.concertId,
     concertName: item.concertName,
     dDay: item.dDay,
-    period: item.period,
+    period: item.duration,
     mainImage: item.mainImage,
     lineUp: item.lineUp.map((b) => b.bandName),
   };

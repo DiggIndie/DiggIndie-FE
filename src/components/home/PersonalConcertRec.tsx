@@ -24,7 +24,7 @@ function parseDday(dday: string) {
   return Number(m[1]);
 }
 
-// 비로그인용: 카드 자리만 동일하게 차지하는 이미지 카드
+// 비로그인용 카드 자리만 동일하게 차지하는 이미지 카드
 function GuestConcertCard() {
   return (
     <div className="shrink-0">
