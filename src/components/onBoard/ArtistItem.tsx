@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import type { Artist } from '@/types/artists'; // types에서 불러오기
+import type { OnboardArtist } from '@/types/artists'; // types에서 불러오기
 import artistDefulat from '@/assets/detail/artist_default.svg';
 
 interface ArtistItemProps {
-  artist: Artist;
+  artist: OnboardArtist;
   isSelected: boolean;
   toggleSelect: (id: number) => void;
 }

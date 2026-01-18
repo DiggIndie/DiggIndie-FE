@@ -1,3 +1,10 @@
+
+export interface OnboardArtist {
+  bandId: number;
+  bandName: string;
+  imageUrl: string | null;
+}
+
 export type PageInfo = {
   page: number;
   size: number;
@@ -6,17 +13,11 @@ export type PageInfo = {
   totalPages: number;
 }
 
-export interface Artist {
-  bandId: number;
-  bandName: string;
-  imageUrl: string | null;
-}
-
 export interface OnboardArtistsResponse {
   statusCode: number;
   message: string;
   pageInfo: PageInfo;
-  payload: Artist[];
+  payload: OnboardArtist[];
   isSuccess: boolean;
 }
 
@@ -42,17 +43,22 @@ export type ArtistPayload = {
   pageInfo: PageInfo;
 };
 
-export type ArtistResponse = {
-  statusCode: number;
-  isSuccess: boolean;
-  message: string;
-  pageInfo: PageInfo;
-  payload: ArtistPayload;
-};
-
 export type GetArtistsParams = {
   order?: ArtistOrder;
   query?: string;
   page?: number;
   size?: number;
 };
+
+//마이 아티스트 용
+export type MyArtistsItem = {
+  bandId: number;
+  bandName: string;
+  keywords: string[];
+  bandImage: string;
+  mainMusic: string;
+}
+
+export type MyArtistsPayload = {
+  artists: MyArtistsItem[];
+}

@@ -4,16 +4,16 @@ import Header from '@/components/onBoard/Header';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
 import ProgressBar from '@/components/onBoard/ProgressBar';
-import ArtisItem from '@/components/onBoard/ArtistItem';
+import ArtistItem from '@/components/onBoard/ArtistItem';
 import NoResult from '@/components/onBoard/NoResult';
 import LinkButton from '@/components/common/LinkButton';
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import type { Artist } from '@/types/artists';
+import type { OnboardArtist } from '@/types/artists';
 import { saveSelectedArtists } from '@/services/artistsService';
-import { useArtistSearch } from '@/hooks/useArtistSearch';
+import { useOnboardArtists } from '@/hooks/useOnboardArtists';
 
 export default function OnboardArtistPage() {
   const router = useRouter();
@@ -21,14 +21,14 @@ export default function OnboardArtistPage() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const {
-    artists,
+    OnboardArtist,
     searchTerm,
     onChangeSearch,
     onSubmitSearch,
     onClearSearch,
     loadFirstPage,
     loadNextPage,
-  } = useArtistSearch(12);
+  } = useOnboardArtists(12);
 
   useEffect(() => {
     void loadFirstPage(undefined);
@@ -91,10 +91,10 @@ export default function OnboardArtistPage() {
           />
         </div>
 
-        {artists.length > 0 ? (
+        {OnboardArtist.length > 0 ? (
           <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
-            {artists.map((artist: Artist) => (
-              <ArtisItem
+            {OnboardArtist.map((artist: OnboardArtist) => (
+              <ArtistItem
                 key={artist.bandId}
                 artist={artist}
                 isSelected={selectedIds.includes(artist.bandId)}
@@ -102,7 +102,7 @@ export default function OnboardArtistPage() {
               />
             ))}
             <div ref={sentinelRef} className="col-span-3 h-1" />
-          </div>
+          </>
         ) : (
           <NoResult />
         )}

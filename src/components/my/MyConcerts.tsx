@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import downBtn from '@/assets/icons/down.svg';
+import { myConcertToConcertItem } from '@/services/concertMappers'
 
 import MyConcertGrid from '@/components/my/ConcertGrid';
 import { useMyConcerts } from '@/hooks/useMyConcerts';
@@ -20,16 +21,6 @@ function parseDday(dday: string) {
   return Number(m[1]);
 }
 
-function myConcertToConcertItem(item: MyConcertItem): ConcertItem {
-  return {
-    concertId: item.concertId,
-    concertName: item.concertName,
-    dDay: item.dday,
-    period: item.duration,
-    mainImage: item.imageUrl,
-    lineUp: [],
-  };
-}
 
 export default function MyConcerts() {
   const [isOpen, setIsOpen] = useState(false);

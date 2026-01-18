@@ -45,3 +45,5 @@ export async function getArtists(params: GetArtistsParams = {}): Promise<ArtistP
     }
   );
 }
+
+//마이 아티스트 용
