@@ -1,3 +1,5 @@
+import { RecConcertItem } from '@/types/concerts';
+
 export interface OnboardArtist {
   bandId: number;
   bandName: string;
@@ -69,3 +71,17 @@ export type MyArtistsResult = {
   artists: MyArtistsItem[];
   pageInfo: PageInfo;
 };
+
+//아티스트 추천용
+export type  RecArtistItem = {
+  bandId: number;
+  score: number;
+  bandName: string;
+  imageUrl: string;
+  topTrack: TopTrack | null;
+  keywords: string[];
+}
+
+export type RecArtistPayload = {
+  bands: RecArtistItem[];
+}
