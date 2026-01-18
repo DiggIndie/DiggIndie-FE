@@ -3,7 +3,6 @@
 import { useMemo } from 'react';
 import ConcertCard from '@/components/home/ConcertCard';
 import Image from 'next/image';
-import more from '@/assets/common/more.svg';
 
 import { useRecConcerts } from '@/hooks/useRecConcerts';
 import type { ConcertItem } from '@/types/concerts';
@@ -41,7 +40,9 @@ function GuestConcertCard() {
 }
 
 export default function PersonalConcertRec({ isLoggedIn }: Props) {
-  const { concerts, isLoading, error } = useRecConcerts();
+  const { concerts, isLoading, error } = useRecConcerts({
+    enabled: isLoggedIn,
+  });
 
   const visibleConcerts = useMemo<ConcertItem[]>(() => {
     return [...concerts]
@@ -55,7 +56,6 @@ export default function PersonalConcertRec({ isLoggedIn }: Props) {
         <span className="h-[28px] font-semibold mr-[4px] text-[20px]">
           리스너님을 위한 추천 공연
         </span>
-        <Image src={more} alt="more" width={24} height={24} />
       </div>
 
       <div className={`flex overflow-x-auto ml-[20px] ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>

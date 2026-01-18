@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { MyConcertItem } from "@/types/concerts";
 import { getMyConcerts } from "@/api/concerts";
+import { useAuthStore } from "@/stores/authStore";
 
 type State = {
   concerts: MyConcertItem[];
@@ -10,49 +11,43 @@ type State = {
   error: string | null;
 };
 
-export function useMyConcerts() {
+type Options = {
+  enabled?: boolean;
+};
+
+export function useMyConcerts(options: Options = {}) {
+  const { enabled = true } = options;
+  const accessToken = useAuthStore((s) => s.accessToken);
+
   const [state, setState] = useState<State>({
     concerts: [],
-    isLoading: true,
+    isLoading: false,
     error: null,
   });
 
-  const refetch = useCallback(async () => {
+  const fetch = useCallback(async () => {
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
-
     try {
       const concerts = await getMyConcerts();
       setState({ concerts, isLoading: false, error: null });
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Failed to fetch my concerts";
-      setState((prev) => ({ ...prev, isLoading: false, error: msg }));
+      setState({ concerts: [], isLoading: false, error: msg });
     }
   }, []);
 
+  // 첫마운트
   useEffect(() => {
-    let mounted = true;
+    if (!enabled) return;
+    if (!accessToken) return; // 토큰 준비 전 호출방지
 
-    (async () => {
-      try {
-        const concerts = await getMyConcerts();
-        if (!mounted) return;
-        setState({ concerts, isLoading: false, error: null });
-      } catch (e) {
-        if (!mounted) return;
-        const msg = e instanceof Error ? e.message : "Failed to fetch my concerts";
-        setState((prev) => ({ ...prev, isLoading: false, error: msg }));
-      }
-    })();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+    fetch();
+  }, [enabled, accessToken, fetch]);
 
   return {
     concerts: state.concerts,
     isLoading: state.isLoading,
     error: state.error,
-    refetch,
+    refetch: fetch,
   };
 }

@@ -1,7 +1,5 @@
 import MockArtistCard from '@/components/home/MockArtistCard';
 import { mockArtists } from '@/mocks/mockArtists';
-import Image from 'next/image';
-import more from '@/assets/common/more.svg';
 
 type Props = {
   isLoggedIn: boolean;
@@ -14,7 +12,6 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
         <span className="text-[20px] font-semibold mr-[4px] truncate">
           리스너님을 위한 추천 아티스트
         </span>
-        <Image src={more} alt="more" width={24} height={24} className="shrink-0" />
       </div>
 
       <div className={`flex overflow-x-auto ml-[20px] ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
