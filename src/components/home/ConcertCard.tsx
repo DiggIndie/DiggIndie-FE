@@ -3,6 +3,7 @@
 import { ImageTile } from "@/components/home/ImageTile";
 import { useRouter } from "next/navigation";
 import type { ConcertItem } from "@/types/concerts";
+import concertDefault from "@/assets/common/concertDefault.png"
 
 type Props = {
   concert: ConcertItem;
@@ -25,7 +26,7 @@ export default function ConcertCard({ concert }: Props) {
         }`}
       >
         <ImageTile
-          src={concert.mainImage}
+          src={(concert.mainImage ?? "").trim() || concertDefault.src}
           alt={concert.concertName}
           variant="concertRec"
           className="rounded-t-sm"
