@@ -1,13 +1,13 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import type { OnboardArtist, PageInfo } from "@/types/artists";
+import { OnboardArtist, PageInfo} from '@/types/artists';
 import { getArtistsPage } from "@/services/artistsService";
 
 export type SortKey = "updated" | "korean";
 
 //페이지당 12개의 아티스트 로드
-export function useOnboardArtists(pageSize: number = 12) {
+export function useArtistSearch(pageSize: number = 12) {
   const [artists, setArtists] = useState<OnboardArtist[]>([]);
   const [pageInfo, setPageInfo] = useState<PageInfo | null>(null);
   const [page, setPage] = useState(0);

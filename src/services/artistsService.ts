@@ -1,6 +1,7 @@
-import { fetchArtists } from "@/api/artists";
-import { postOnboardArtist } from "@/api/onboardArtists";
-import type { OnboardArtist, PageInfo } from "@/types/artists";
+// src/services/artistsService.ts
+import { fetchArtists } from '@/api/artists';
+import { postOnboardArtist } from '@/api/onboardArtists';
+import type { OnboardArtist, PageInfo } from '@/types/artists';
 
 export async function getOnboardingArtists(): Promise<{
   artists: OnboardArtist[];
@@ -9,7 +10,7 @@ export async function getOnboardingArtists(): Promise<{
   const res = await fetchArtists({ page: 0, size: 12 });
 
   if (!res.isSuccess) {
-    throw new Error(res.message || "Failed to fetch artists");
+    throw new Error(res.message || 'Failed to fetch artists');
   }
 
   return {
@@ -26,13 +27,16 @@ export async function getArtistsPage(params: {
   const res = await fetchArtists(params);
 
   if (!res.isSuccess) {
-    throw new Error(res.message || "Failed to fetch artists");
+    throw new Error(res.message || 'Failed to fetch artists');
   }
 
   return { artists: res.payload, pageInfo: res.pageInfo };
 }
 
-export async function saveSelectedArtists(bandIds: number[]): Promise<void> {
-  const res = await postOnboardArtist(bandIds);
-  if (!res.isSuccess) throw new Error(res.message || "Failed to save artists");
+export async function saveSelectedArtists(bands: number[]): Promise<void> {
+  try {
+    const res = await postOnboardArtist(bands);
+  } catch (err) {
+    console.error('온보딩 아티스트 저장 중 에러:', err);
+  }
 }

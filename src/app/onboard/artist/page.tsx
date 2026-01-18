@@ -4,7 +4,7 @@ import Header from '@/components/onBoard/Header';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
 import ProgressBar from '@/components/onBoard/ProgressBar';
-import ArtistItem from '@/components/onBoard/ArtistItem';
+import ArtisItem from '@/components/onBoard/ArtistItem';
 import NoResult from '@/components/onBoard/NoResult';
 import LinkButton from '@/components/common/LinkButton';
 
@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 
 import type { OnboardArtist } from '@/types/artists';
 import { saveSelectedArtists } from '@/services/artistsService';
-import { useOnboardArtists } from '@/hooks/useOnboardArtists';
+import { useArtistSearch } from '@/hooks/useArtistSearch';
 
 export default function OnboardArtistPage() {
   const router = useRouter();
@@ -21,14 +21,14 @@ export default function OnboardArtistPage() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const {
-    OnboardArtist,
+    artists,
     searchTerm,
     onChangeSearch,
     onSubmitSearch,
     onClearSearch,
     loadFirstPage,
     loadNextPage,
-  } = useOnboardArtists(12);
+  } = useArtistSearch(12);
 
   useEffect(() => {
     void loadFirstPage(undefined);
@@ -91,10 +91,10 @@ export default function OnboardArtistPage() {
           />
         </div>
 
-        {OnboardArtist.length > 0 ? (
+        {artists.length > 0 ? (
           <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
-            {OnboardArtist.map((artist: OnboardArtist) => (
-              <ArtistItem
+            {artists.map((artist: OnboardArtist) => (
+              <ArtisItem
                 key={artist.bandId}
                 artist={artist}
                 isSelected={selectedIds.includes(artist.bandId)}
@@ -102,7 +102,7 @@ export default function OnboardArtistPage() {
               />
             ))}
             <div ref={sentinelRef} className="col-span-3 h-1" />
-          </>
+          </div>
         ) : (
           <NoResult />
         )}

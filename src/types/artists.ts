@@ -1,11 +1,10 @@
-
 export interface OnboardArtist {
   bandId: number;
   bandName: string;
   imageUrl: string | null;
 }
 
-export type PageInfo = {
+export interface PageInfo {
   page: number;
   size: number;
   hasNext: boolean;
@@ -20,6 +19,7 @@ export interface OnboardArtistsResponse {
   payload: OnboardArtist[];
   isSuccess: boolean;
 }
+
 
 
 //아티스트 검색용
