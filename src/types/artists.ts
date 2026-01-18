@@ -36,6 +36,7 @@ export type ArtistItem = {
   keywords: string[];
   artistImage: string;
   topTrack: TopTrack | null;
+  mainMusic?: string; // 마이아티스트 용
 };
 
 export type ArtistPayload = {
@@ -57,8 +58,14 @@ export type MyArtistsItem = {
   keywords: string[];
   bandImage: string;
   mainMusic: string;
-}
+};
 
-export type MyArtistsPayload = {
+export type GetMyArtistsParams = {
+  page?: number;
+  size?: number;
+};
+
+export type MyArtistsResult = {
   artists: MyArtistsItem[];
-}
+  pageInfo: PageInfo;
+};

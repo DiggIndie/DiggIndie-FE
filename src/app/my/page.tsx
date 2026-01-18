@@ -1,19 +1,21 @@
 'use client';
 
-import PersonalArtistRecCard from '@/components/home/MockArtistCard';
+import ArtistCard from '@/components/home/ArtistCard';
 import ConcertCard from '@/components/home/ConcertCard';
 import HorizontalSwipeList from '@/components/my/HorizontalSwipeList';
 import MenuSection from '@/components/my/MenuSection';
 import MyPageHeader from '@/components/my/MyPageHeader';
 import ProfileSection from '@/components/my/ProfileSection';
-import { mockArtists } from '@/mocks/mockArtists';
 import { authService } from '@/services/authService';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { useMyConcerts } from '@/hooks/useMyConcerts';
+import { useMyArtists } from '@/hooks/useMyArtists';
 import { useAuthStore } from '@/stores/authStore';
 import type { ConcertItem } from '@/types/concerts';
+import type { ArtistItem } from '@/types/artists';
 import { myConcertToConcertItem } from '@/services/concertMappers';
+import { myArtistToArtistItem } from '@/services/artistMappers';
 
 export default function MyPage() {
   const router = useRouter();
@@ -25,9 +27,19 @@ export default function MyPage() {
     enabled: isLoggedIn,
   });
 
+  const { artists: myArtists, isLoading: isMyArtistsLoading } = useMyArtists({
+    enabled: isLoggedIn,
+  });
+
+
   const mappedConcerts = useMemo<ConcertItem[]>(
     () => myConcerts.map(myConcertToConcertItem),
     [myConcerts]
+  );
+
+  const mappedArtists = useMemo<ArtistItem[]>(
+    () => myArtists.map(myArtistToArtistItem),
+    [myArtists]
   );
 
   const handleLogout = async () => {
@@ -45,7 +57,6 @@ export default function MyPage() {
         {/* 스크랩한 공연 */}
         <div onClick={() => router.push('/my/concert')}>
           <MenuSection title="스크랩한 공연" />
-
           <HorizontalSwipeList>
             {isMyConcertsLoading ? (
               <div className="text-[14px] text-[#8C8888] px-5">불러오는 중...</div>
@@ -61,9 +72,13 @@ export default function MyPage() {
         <div onClick={() => router.push('/my/artist')}>
           <MenuSection title="스크랩한 아티스트" />
           <HorizontalSwipeList>
-            {mockArtists.map((artist) => (
-              <PersonalArtistRecCard key={artist.id} artist={artist} />
-            ))}
+            {isMyArtistsLoading ? (
+              <div className="text-[14px] text-[#8C8888] px-5">불러오는 중...</div>
+            ) : (
+              mappedArtists.map((artist) => (
+                <ArtistCard key={artist.artistId} artist={artist} />
+              ))
+            )}
           </HorizontalSwipeList>
         </div>
       </div>

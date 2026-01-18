@@ -35,9 +35,25 @@ export default function ArtistCard({ artist }: Props) {
           <Image src={playBtn} alt="Play" width={20} height={20} />
 
           {/* 대표곡 제목 */}
-          <span className="ml-[3px] max-w-[118px] truncate text-[14px] font-normal flex items-center text-white">
-            {artist.topTrack?.title ?? "대표곡 정보 없음"}
-          </span>
+          {artist.topTrack ? (
+            <a
+              href={artist.topTrack.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer" //보안
+              className="ml-[3px] max-w-[118px] truncate text-[14px] font-normal flex items-center text-white"
+            >
+              {artist.topTrack.title}
+            </a> //마이 아티스트 대비용
+          ) : artist.mainMusic?.trim() ? (
+            <span className="ml-[3px] max-w-[118px] truncate text-[14px] font-normal flex items-center text-white">
+              {artist.mainMusic}
+            </span>
+          ) : (
+            <span className="ml-[3px] max-w-[118px] truncate text-[14px] font-normal flex items-center text-[#8C8888]">
+              대표곡 정보 없음
+            </span>
+          )}
+
         </div>
 
         {/* 키워드  */}

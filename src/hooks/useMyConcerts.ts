@@ -39,7 +39,7 @@ export function useMyConcerts(options: Options = {}) {
   // 첫마운트
   useEffect(() => {
     if (!enabled) return;
-    if (!accessToken) return; // 토큰 준비 전 호출방지
+    if (!accessToken) return; // 토큰 준비전 호출방지
 
     fetch();
   }, [enabled, accessToken, fetch]);
