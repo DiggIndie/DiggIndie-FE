@@ -1,4 +1,4 @@
-import { RecConcertItem } from '@/types/concerts';
+
 
 export interface OnboardArtist {
   bandId: number;

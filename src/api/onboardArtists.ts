@@ -10,7 +10,7 @@ type BasicResponse = {
 export function postOnboardArtist(bands: number[]) {
   return apiFetch<BasicResponse>("/artists/preferences", {
     method: "POST",
-    useDevAuth: true,
+    auth: true,
     body: JSON.stringify({ bands }),
   });
 }
