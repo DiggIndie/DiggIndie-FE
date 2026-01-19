@@ -1,9 +1,6 @@
 'use client';
 import InputSection from '@/components/auth/InputSection';
 import Button from '@/components/common/Button';
-import xButton from '@/assets/auth/xButton.svg';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { joinSchema } from '@/lib/auth';
@@ -59,7 +56,7 @@ export default function JoinPage() {
     }
 
     // 3️. 회원가입
-    await authService.signup(form.id, form.password, form.email, form.emailConfirm);
+    await authService.signup(form.id, form.password, form.email);
 
     router.push('/auth/agree');
   };

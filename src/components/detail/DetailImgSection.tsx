@@ -22,7 +22,7 @@ export default function DetailImgSection({
   const showGradient = src !== default_image;
 
   return (
-    <section className="h-[376px] w-full relative">
+    <section className="h-120 w-full relative">
       <Image
         src={src}
         alt={alt}

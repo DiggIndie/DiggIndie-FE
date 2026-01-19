@@ -11,7 +11,6 @@ export default function MyHeader() {
     <header className="flex px-5 py-3 items-center justify-between">
       <Image src={logo} alt="Logo" width={100} height={50} />
       <div className="flex gap-2">
-        <Image src={search} alt="Search" width={20} height={20} className="cursor-pointer" />
         <Image
           src={sidTab}
           alt="SidTab"

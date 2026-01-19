@@ -37,7 +37,6 @@ export default function LoginPage() {
     // API 요청 보내기
     await authService.login(form.id, form.password);
     router.push('/');
-    console.log('로그인 성공', result.data);
   };
   return (
     <div className="text-white flex flex-col h-screen items-center relative">

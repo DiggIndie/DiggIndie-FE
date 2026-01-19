@@ -1,5 +1,5 @@
 import { apiFetch } from '@/api/client';
-import { fetchDetailConcert } from '@/api/concert';
+import { concertApi } from '@/api/concert';
 import type { ConcertDetail, GetConcertsResponse } from '@/types/concerts';
 
 export type GetConcertsParams = {
@@ -25,7 +25,7 @@ export async function getConcerts(params: GetConcertsParams): Promise<GetConcert
 }
 
 export async function getDetailConcerts(concertId: number): Promise<ConcertDetail> {
-  const res = await fetchDetailConcert({ concertId });
+  const res = await concertApi.fetchDetailConcert({ concertId });
   if (!res) {
     throw new Error('서버 응답이 없습니다.');
   }
@@ -34,4 +34,17 @@ export async function getDetailConcerts(concertId: number): Promise<ConcertDetai
   }
 
   return res.payload;
+}
+
+export async function toggleScrapConcert(concertId: number): Promise<boolean> {
+  const res = await concertApi.scrapConcert({ concertId });
+
+  if (!res) {
+    throw new Error('서버 응답이 없습니다.');
+  }
+  if (!res.isSuccess) {
+    throw new Error(res?.message ?? '스크랩 실패');
+  }
+
+  return res.payload.isScrapped;
 }

@@ -7,6 +7,7 @@ import location from '@/assets/detail/Location.svg';
 import BookmarkIcon from '@/components/detail/BookmarkIcon';
 import { useState } from 'react';
 import { ConcertDetail } from '@/types/concerts';
+import { toggleScrapConcert } from '@/services/concertService';
 
 interface ConcertContentSectionProps {
   concert: ConcertDetail;
@@ -15,6 +16,8 @@ interface ConcertContentSectionProps {
 export default function ConcertContentSection({ concert, isLoggedIn }: ConcertContentSectionProps) {
   const [isScrapped, setIsScrapped] = useState(concert.isScrapped ?? false);
   const handleToggleScrap = () => {
+    if (!isLoggedIn) return;
+    toggleScrapConcert(concert.concertId);
     setIsScrapped((prev) => !prev);
   };
   return (
