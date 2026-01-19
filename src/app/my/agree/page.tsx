@@ -15,6 +15,8 @@ export default function MyAgreePage() {
           <a
             className="font-medium text-xs text-gray-600 underline"
             href="https://www.notion.so/diggindie-2e43f601039f808ab65fd15529200981?source=copy_link"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             보기
           </a>
@@ -24,6 +26,8 @@ export default function MyAgreePage() {
           <a
             className="font-medium text-xs text-gray-600 underline"
             href="https://www.notion.so/3-2e43f601039f80d6a84df777449f1db4?source=copy_link"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             보기
           </a>
@@ -33,6 +37,8 @@ export default function MyAgreePage() {
           <a
             className="font-medium text-xs text-gray-600 underline"
             href="https://www.notion.so/2e43f601039f808eb43dde8f495239ec?source=copy_link"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             보기
           </a>
@@ -46,6 +52,8 @@ export default function MyAgreePage() {
             <a
               className="font-medium text-xs text-gray-600 underline"
               href="https://www.notion.so/2-2e43f601039f80ab9911fce97bb05ed0?source=copy_link"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               보기
             </a>
