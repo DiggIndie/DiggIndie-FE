@@ -17,8 +17,9 @@ export default function TextArea({
       <span className="font-medium text-base text-white mb-2">글 작성</span>
       <input
         value={title}
+        maxLength={50}
         className="font-medium text-base px-2 py-3 text-gray-300 border-b border-gray-850 focus:outline-none placeholder-gray-700"
-        placeholder="제목을 입력해주세요.(최대 00자)"
+        placeholder="제목을 입력해주세요.(최대 50자)"
         onChange={(e) => onChangeTitle(e.target.value)}
       />
       <textarea

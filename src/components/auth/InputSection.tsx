@@ -18,7 +18,7 @@ export default function InputSection({
     >
       <input
         placeholder={placeholder}
-        className="focus:outline-none selection:bg-gray-600 bg-gray-900 text-gray-300 text-sm placeholder-gray-600 w-full self-center"
+        className="focus:outline-none selection:bg-gray-600 bg-gray-900 text-white text-sm placeholder-gray-600 w-full self-center"
         type={type}
         value={value}
         onChange={onChange}

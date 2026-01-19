@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import RecentSearchSection from '@/components/search/RecentSearchSection';
 import { searchService } from '@/services/searchService';
 import { RecentSearch } from '@/types/searches';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function HomeSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,6 +25,7 @@ export default function HomeSearch() {
   const [debouncedTerm, setDebouncedTerm] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
+  const { isAuthed } = useAuthStore();
 
   const router = useRouter();
   //디바운스 처리
@@ -61,6 +63,7 @@ export default function HomeSearch() {
     }
   };
   useEffect(() => {
+    if (!isAuthed) return;
     (async () => {
       try {
         const data = await searchService.getRecentSearches();
@@ -69,7 +72,7 @@ export default function HomeSearch() {
         console.error(e);
       }
     })();
-  }, []);
+  }, [isAuthed]);
 
   const handleDelete = async (id: number) => {
     await searchService.deleteRecentSearch(id);
@@ -79,7 +82,6 @@ export default function HomeSearch() {
     await searchService.clearRecentSearches();
     await loadRecentSearches();
   };
-
   return (
     <div className="min-h-screen w-full bg-black">
       <div className="px-5 py-3 w-full flex gap-1">
@@ -100,7 +102,7 @@ export default function HomeSearch() {
           onSubmit={handleSubmit}
         />
       </div>
-      {searchTerm === '' && (
+      {isAuthed && searchTerm === '' && (
         <RecentSearchSection
           searches={recentSearches}
           onDelete={handleDelete}

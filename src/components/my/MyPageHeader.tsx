@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import logo from '@/assets/common/diggindie.svg';
 import sidTab from '@/assets/common/hamburger.svg';
-import search from '@/assets/common/search.svg';
 import { useState } from 'react';
 import SideTab from '../sideTabDir/SideTab';
 export default function MyHeader() {
