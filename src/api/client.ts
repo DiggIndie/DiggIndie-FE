@@ -50,17 +50,20 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type FetchOptions = RequestInit & {
   auth?: boolean;
+  baseUrl?: string;
 };
 
 export async function fetchClient<T>(
   url: string,
   options: FetchOptions
 ): Promise<ApiResponse<T>> {
-  const { auth = false, headers, ...rest } = options;
+  const { auth = false, headers, baseUrl, ...rest } = options;
   const token = useAuthStore.getState().accessToken;
 
+  const origin = baseUrl ?? BASE_URL;
+
   const sendRequest = (t: string | null) =>
-    fetch(`${BASE_URL}${url}`, {
+    fetch(`${origin}${url}`, {
       ...rest,
       credentials: "include",
       headers: {

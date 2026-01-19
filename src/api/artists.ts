@@ -7,7 +7,8 @@ import type {
   GetMyArtistsParams,
   MyArtistsResult,
   MyArtistsItem,
-  PageInfo
+  PageInfo,
+  RecArtistPayload
 } from '@/types/artists';
 
 export function fetchArtists(params: { page: number; size: number; query?: string }) {
@@ -56,7 +57,6 @@ export async function getArtists(params: GetArtistsParams = {}): Promise<ArtistP
 }
 
 
-
 // 마이 아티스트 조회
 type MyArtistsRawResponse = ApiResponse<MyArtistsItem[]> & {
   pageInfo?: PageInfo;
@@ -90,4 +90,29 @@ export async function getMyArtists(params: GetMyArtistsParams = {}): Promise<MyA
         totalPages: 0,
       },
   };
+}
+
+
+//아티스트 추천
+const AI_BASE_URL = process.env.NEXT_PUBLIC_AI_BASE_URL;
+
+export async function postUpdateBandRecommendations(): Promise<RecArtistPayload> {
+  const res = await fetchClient<RecArtistPayload>(
+    "/api/bands/recommendations/update",
+    {
+      method: "POST",
+      auth: true,
+      baseUrl: AI_BASE_URL,
+      body: JSON.stringify({}),
+      headers: {
+        "Content-Type": undefined as any, // or delete override
+      },
+    }
+  );
+
+  if (!res.isSuccess) {
+    throw new Error(res.message || "Failed to update band recommendations");
+  }
+
+  return res.payload;
 }

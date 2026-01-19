@@ -13,7 +13,7 @@ export default function ConcertCard({ concert }: Props) {
   const router = useRouter();
 
   const dDay = (concert.dDay ?? "").trim();
-  const ended = dDay === "공연 종료";
+  const ended = dDay === "공연 종료" || "종료"; //api 종료된 공연 d-day 통일 후 "종료" 삭제
 
   return (
     <div
