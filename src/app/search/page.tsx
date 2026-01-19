@@ -45,9 +45,10 @@ export default function HomeSearch() {
 
   //API 호출
   useEffect(() => {
+    if (!isAuthed) return;
     if (!isSubmitted || !debouncedTerm) return;
     searchService.saveRecent({ content: debouncedTerm, category: 'GENERAL' });
-  }, [isSubmitted]);
+  }, [isSubmitted, debouncedTerm, isAuthed]);
 
   const handleChange = (value: string) => {
     setSearchTerm(value);
@@ -55,22 +56,16 @@ export default function HomeSearch() {
   };
 
   const loadRecentSearches = async () => {
-    try {
-      const data = await searchService.getRecentSearches();
-      setRecentSearches(data);
-    } catch (e) {
-      console.error(e);
-    }
+    const data = await searchService.getRecentSearches();
+    setRecentSearches(data);
   };
   useEffect(() => {
     if (!isAuthed) return;
     (async () => {
-      try {
-        const data = await searchService.getRecentSearches();
-        setRecentSearches(data);
-      } catch (e) {
-        console.error(e);
-      }
+      setIsLoading(true);
+      const data = await searchService.getRecentSearches();
+      setIsLoading(false);
+      setRecentSearches(data);
     })();
   }, [isAuthed]);
 
