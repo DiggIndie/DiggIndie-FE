@@ -45,12 +45,17 @@ export default function MyPage() {
           onclick={() => router.push('/my/community')}
         />
         <MenuSection title="MY 인디스토리 활동" hasBorder={true} />
+
         <MenuSection
-          title="연동된 소셜계정"
+          title="약관 및 수신동의"
+          hasBorder={true}
+          onclick={() => router.push('/my/agree')}
+        />
+        <MenuSection
+          title="소셜계정 연동하기"
           hasBorder={true}
           onclick={() => router.push('/my/social')}
         />
-        <MenuSection title="마케팅 수신 동의" hasBorder={true} />
       </div>
       <p className="flex justify-center items-center gap-2 pt-37 p-5 text-center bg-black ">
         <span
