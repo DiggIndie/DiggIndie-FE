@@ -58,7 +58,7 @@ export default function CalendarPageClient() {
     loadMore,
   } = useCalendarConcerts({
     dates: fetchDates ?? [],
-    size: 20,
+    size: 100,
     enabled: concertsEnabled,
   });
 

@@ -16,7 +16,7 @@ function makeDatesKey(dates: string[]) {
 
 export function useCalendarConcerts({
                                               dates,
-                                              size = 20,
+                                              size = 100,
                                               enabled = true,
                                             }: Params) {
   const datesKey = useMemo(() => makeDatesKey(dates), [dates]);

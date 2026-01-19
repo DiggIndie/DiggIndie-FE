@@ -74,7 +74,7 @@ export type GetConcertsByDatesParams = {
 };
 
 export async function getConcertsByDates(params: GetConcertsByDatesParams) {
-  const { dates, page = 0, size = 20, sort } = params;
+  const { dates, page = 0, size = 100, sort } = params;
 
   const qs = new URLSearchParams();
 
