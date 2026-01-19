@@ -39,7 +39,7 @@ export function ImageTile({
     <div className={clsx("relative overflow-hidden", wrap)}>
       <Image
         src={imgSrc}
-        alt={alt}
+        alt={"Image"}
         width={w}
         height={h}
         className={clsx("h-full w-full object-cover", className)}

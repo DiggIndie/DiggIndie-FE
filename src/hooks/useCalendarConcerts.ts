@@ -1,34 +1,55 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getConcertsByDates } from "@/api/concerts";
 import type { ConcertItem, PageInfo } from "@/types/concerts";
 
 type Params = {
   dates: string[];
-  page?: number;
   size?: number;
   enabled?: boolean;
 };
 
-export function useCalendarConcerts({ dates, page = 0, size = 20, enabled = true }: Params) {
+function makeDatesKey(dates: string[]) {
+  return dates.join("|");
+}
+
+export function useCalendarConcerts({
+                                              dates,
+                                              size = 20,
+                                              enabled = true,
+                                            }: Params) {
+  const datesKey = useMemo(() => makeDatesKey(dates), [dates]);
+
   const [concerts, setConcerts] = useState<ConcertItem[]>([]);
   const [pageInfo, setPageInfo] = useState<PageInfo | null>(null);
+
+  const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  //요청 중복 방지
   const reqIdRef = useRef(0);
+
+  const hasNext = !!pageInfo?.hasNext;
+
+  // dates 바뀌면 초기화
+  useEffect(() => {
+    setConcerts([]);
+    setPageInfo(null);
+    setError(null);
+    setPage(0);
+  }, [datesKey]);
 
   useEffect(() => {
     if (!enabled) return;
 
-    // 날짜 없으면 초기화
     if (!dates || dates.length === 0) {
       setConcerts([]);
       setPageInfo(null);
       setError(null);
       setIsLoading(false);
+      setIsLoadingMore(false);
       return;
     }
 
@@ -36,29 +57,51 @@ export function useCalendarConcerts({ dates, page = 0, size = 20, enabled = true
     let cancelled = false;
 
     const run = async () => {
-      setIsLoading(true);
+      const firstPage = page === 0;
+
+      if (firstPage) setIsLoading(true);
+      else setIsLoadingMore(true);
+
       setError(null);
 
       try {
         const res = await getConcertsByDates({ dates, page, size });
 
-        // 최신 요청만 반영
         if (cancelled || reqId !== reqIdRef.current) return;
 
         if (!res?.isSuccess || !res.payload) {
           throw new Error(res?.message ?? "공연 조회 실패");
         }
 
-        setConcerts(res.payload.concerts ?? []);
-        setPageInfo(res.payload.pageInfo ?? null);
+        const nextItems = res.payload.concerts ?? [];
+        const nextPageInfo = res.payload.pageInfo ?? null;
+
+        setPageInfo(nextPageInfo);
+
+        if (firstPage) {
+          setConcerts(nextItems);
+        } else {
+          setConcerts((prev) => {
+            // 중복 방지(혹시 서버가 겹치게 내려주는 경우)
+            const seen = new Set(prev.map((c) => c.concertId));
+            const merged = [...prev];
+            for (const item of nextItems) {
+              if (seen.has(item.concertId)) continue;
+              seen.add(item.concertId);
+              merged.push(item);
+            }
+            return merged;
+          });
+        }
       } catch (e) {
         if (cancelled || reqId !== reqIdRef.current) return;
-        setConcerts([]);
+        if (page === 0) setConcerts([]);
         setPageInfo(null);
         setError(e instanceof Error ? e.message : "에러가 발생했습니다.");
       } finally {
         if (cancelled || reqId !== reqIdRef.current) return;
         setIsLoading(false);
+        setIsLoadingMore(false);
       }
     };
 
@@ -67,33 +110,33 @@ export function useCalendarConcerts({ dates, page = 0, size = 20, enabled = true
     return () => {
       cancelled = true;
     };
-  }, [enabled, page, size, dates.join("|")]); // dates 배열 의존성 안정화
+  }, [enabled, datesKey, page, size, dates]);
 
-  const refetch = async () => {
-    const reqId = ++reqIdRef.current;
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const res = await getConcertsByDates({ dates, page, size });
-      if (reqId !== reqIdRef.current) return;
-
-      if (!res?.isSuccess || !res.payload) {
-        throw new Error(res?.message ?? "공연 조회 실패");
-      }
-
-      setConcerts(res.payload.concerts ?? []);
-      setPageInfo(res.payload.pageInfo ?? null);
-    } catch (e) {
-      if (reqId !== reqIdRef.current) return;
-      setConcerts([]);
-      setPageInfo(null);
-      setError(e instanceof Error ? e.message : "에러가 발생했습니다.");
-    } finally {
-      if (reqId !== reqIdRef.current) return;
-      setIsLoading(false);
-    }
+  const loadMore = () => {
+    if (!enabled) return;
+    if (isLoading || isLoadingMore) return;
+    if (!hasNext) return;
+    setPage((p) => p + 1);
   };
 
-  return { concerts, pageInfo, isLoading, error, refetch };
+  const refetch = () => {
+    const reqId = ++reqIdRef.current;
+    void reqId;
+
+    setConcerts([]);
+    setPageInfo(null);
+    setError(null);
+    setPage(0);
+  };
+
+  return {
+    concerts,
+    pageInfo,
+    hasNext,
+    isLoading,
+    isLoadingMore,
+    error,
+    loadMore,
+    refetch,
+  };
 }
