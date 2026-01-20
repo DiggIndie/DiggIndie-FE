@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import artistData from '@/mocks/mockArtistDetail.json';
+import { ArtistDetail } from '@/types/artists';
 
 interface EndedConcertSectionProps {
-  artist: (typeof artistData.artists)[number];
+  artist: ArtistDetail;
 }
 export default function EndedConcertSection({ artist }: EndedConcertSectionProps) {
   return (
     <section className="px-5">
       <span className="font-semibold text-xl mb-3">종료된 공연</span>
-      {artist.endedConcert.map((concert) => (
+      {artist.endedConcerts.map((concert) => (
         <div key={concert.concertId} className="my-4 relative w-40 h-[226px]">
           <Image
             src={concert.concertImage}

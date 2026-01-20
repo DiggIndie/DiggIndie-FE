@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useMemo } from "react";
-import ArtistCard from "@/components/home/ArtistCard";
-import type { Artist } from "@/types/artists";
+import { useMemo } from 'react';
+import ArtistCard from '@/components/home/ArtistCard';
+import type { Artist } from '@/types/artists';
 
 type Props = {
   artists: Artist[];

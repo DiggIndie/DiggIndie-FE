@@ -4,15 +4,16 @@ import voice from '@/assets/common/Voice 3.svg';
 import profile from '@/assets/common/Profile.svg';
 import albumIcon from '@/assets/detail/music.svg';
 import BookmarkIcon from '@/components/detail/BookmarkIcon';
-import artistData from '@/mocks/mockArtistDetail.json';
+// import artistData from '@/mocks/mockArtistDetail.json';
 import { useState } from 'react';
 import default_album_image from '@/assets/detail/default_album.svg';
+import { ArtistDetail } from '@/types/artists';
 
 interface ArtistContentSectionProps {
-  artist: (typeof artistData.artists)[number];
+  artist: ArtistDetail;
 }
 export default function ArtistContentSection({ artist }: ArtistContentSectionProps) {
-  const [isScrapped, setIsScrapped] = useState(artist.isScrapped ?? false);
+  const [isScrapped, setIsScrapped] = useState(artist.isScraped ?? false);
   const handleToggleScrap = () => {
     setIsScrapped((prev) => !prev);
   };
@@ -55,9 +56,16 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
         <div className="pt-4 pb-3 flex flex-col gap-2 items-start border-b border-gray-850">
           <div className="flex gap-2">
             <Image src={play} alt="play" width={24} height={24} />
-            <span className="font-medium text-base">{artist.mainMusic.title}</span>
+            <a
+              className="font-medium text-base"
+              href={artist.topTrack?.externalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {artist.topTrack?.title}
+            </a>
           </div>
-          <span className="font-normal text-sm text-gray-500">{artist.mainMusic.description}</span>
+          <span className="font-normal text-sm text-gray-500">설명설명</span>
         </div>
         <div className="flex flex-col gap-2 pb-3 border-b border-gray-850">
           <p className="flex gap-2">
@@ -86,8 +94,10 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
                     height={92}
                     className="mb-1 object-cover"
                   />
-                  <span className="font-medium text-sm text-gray-500 truncate">{album.title}</span>
-                  <span className="font-medium text-sm text-gray-500">{album.year}</span>
+                  <span className="font-medium text-sm text-gray-500 truncate">
+                    {album.albumName}
+                  </span>
+                  <span className="font-medium text-sm text-gray-500">{album.releaseYear}</span>
                 </div>
               );
             })}

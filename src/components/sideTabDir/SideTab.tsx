@@ -45,14 +45,14 @@ export default function SideTab({ onClose }: SideTabProps) {
         </div>
         <div
           className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
-          onClick={() => router.push('/search/concert')}
+          onClick={() => router.push('/concert')}
         >
           <Image src={concertIcon} alt="공연" />
           <span className="text-white">공연</span>
         </div>
         <div
           className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
-          onClick={() => router.push('/search/artist')}
+          onClick={() => router.push('/artist')}
         >
           <Image src={artistIcon} alt="아티스트" />
           <span className="text-white">아티스트</span>

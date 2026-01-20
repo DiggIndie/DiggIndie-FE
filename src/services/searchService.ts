@@ -1,8 +1,8 @@
 import { searchApi } from '@/api/search';
 export const searchService = {
-  async saveRecent({ content, category }: { content: string; category: string }) {
+  async saveRecent({ content }: { content: string }) {
     try {
-      const result = await searchApi.saveRecent({ content, category });
+      const result = await searchApi.saveRecent({ content });
       return result.payload; // 데이터 배열만 반환
     } catch (err) {
       console.error('검색어 저장 중 에러:', err);
@@ -22,7 +22,7 @@ export const searchService = {
     try {
       await searchApi.deleteRecentSearch(id);
     } catch (err) {
-      console.error('최근 검색어 삭제 중 에러:', err);
+      console.error('최근 검색어 개별 삭제 중 에러:', err);
     }
   },
   async clearRecentSearches() {

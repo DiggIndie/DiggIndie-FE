@@ -2,11 +2,11 @@ import { fetchClient } from './client';
 import { RecentSearch, RecentSearchResponse } from '@/types/searches';
 
 export const searchApi = {
-  async saveRecent({ content, category }: { content: string; category: string }) {
+  async saveRecent({ content }: { content: string }) {
     const res = await fetchClient<void>('/search/recent', {
       method: 'POST',
       auth: true,
-      body: JSON.stringify({ content, category }),
+      body: JSON.stringify({ content }),
     });
     if (!res) {
       throw new Error('검색어 저장 실패.');
@@ -15,7 +15,7 @@ export const searchApi = {
     return res;
   },
   async getRecentSearches(): Promise<RecentSearch[]> {
-    const res = await fetchClient<RecentSearchResponse>('/search/recent?category=GENERAL', {
+    const res = await fetchClient<RecentSearchResponse>('/search/recent', {
       method: 'GET',
       auth: true,
     });

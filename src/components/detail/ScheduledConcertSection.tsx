@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import artistData from '@/mocks/mockArtistDetail.json';
+import { ArtistDetail } from '@/types/artists';
 interface ScheduledConcertSectionProps {
-  artist: (typeof artistData.artists)[number];
+  artist: ArtistDetail;
 }
 export default function ScheduledConcertSection({ artist }: ScheduledConcertSectionProps) {
   return (
     <section className="px-5 mb-9">
       <span className="font-semibold text-xl mb-3">진행 예정 공연</span>
       <div className="mt-3">
-        {artist.scheduledConcert.map((concert) => (
+        {artist.scheduledConcerts.map((concert) => (
           <div key={concert.concertId}>
             <div className="py-4 relative w-[160px] h-[226px]">
               <Image
