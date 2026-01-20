@@ -56,7 +56,7 @@ export default function ResetPreference({ isLoggedIn }: Props) {
         </span>
 
         <div
-          className="flex px-4 py-2 gap-3 justify-center items-center
+          className="flex px-4 py-2 gap-3 justify-center items-center border-gray-800 border-1
             bg-[#1F1D1D] border-[#413D3D] border-0.25 rounded-[20px] h-[40px] shrink-0"
         >
           <button
