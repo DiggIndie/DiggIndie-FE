@@ -49,7 +49,7 @@ export default function ResetPreference({ isLoggedIn }: Props) {
       </div>
 
       {/* 만족도 영역 */}
-      <div className="flex w-full max-w-83.75 h-10 bg-black mt-2 min-w-0 gap-2">
+      <div className="flex w-full h-10 bg-black mt-2 min-w-0 gap-2">
         <span className="min-w-0 flex-1 text-[#736F6F] text-[14px] font-medium truncate">
           추천 결과가 마음에 드시나요?
         </span>
