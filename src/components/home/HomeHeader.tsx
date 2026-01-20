@@ -21,7 +21,7 @@ export default function HomeHeader({ onHamburgerClick }: Props) {
           className="cursor-pointer"
         />
 
-        <div className={'flex w-full max-w-14 gap-2'}>
+        <div className={'flex max-w-14 gap-2'}>
           <Link href="/search" className="flex justify-center">
             <Image
               src={search}
