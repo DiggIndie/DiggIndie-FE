@@ -4,16 +4,16 @@ import Header from '@/components/onBoard/Header';
 import TitleSection from '@/components/onBoard/TitleSection';
 import SearchSection from '@/components/onBoard/SearchSection';
 import ProgressBar from '@/components/onBoard/ProgressBar';
-import ArtisItem from '@/components/onBoard/ArtistItem';
+import OnboardArtistItem from '@/components/onBoard/OnboardArtistItem';
 import NoResult from '@/components/onBoard/NoResult';
 import LinkButton from '@/components/common/LinkButton';
+
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { Artist } from '@/types/artists';
+
+import type { OnboardArtist } from '@/types/artists';
 import { saveSelectedArtists } from '@/services/artistsService';
-import { useArtistSearch } from '@/hooks/useArtistSearch';
-import { onBoardKeywordService } from '@/services/onBoardKeyword.service';
-import ArtistSkeletonGrid from '@/components/onBoard/ArtistSkeleton';
+import { useOnboardArtists } from '@/hooks/useOnboardArtists';
 
 export default function OnboardArtistPage() {
   const router = useRouter();
@@ -23,13 +23,16 @@ export default function OnboardArtistPage() {
   const {
     artists,
     searchTerm,
-    loading,
     onChangeSearch,
     onSubmitSearch,
     onClearSearch,
     loadFirstPage,
     loadNextPage,
-  } = useArtistSearch(12);
+  } = useOnboardArtists(12);
+
+  useEffect(() => {
+    void loadFirstPage(undefined);
+  }, []);
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -49,26 +52,18 @@ export default function OnboardArtistPage() {
       prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
     );
   };
-  useEffect(() => {
-    //온보딩 때 선택했던 아티스트 불러오기
-    const fetchSelectedArtists = async () => {
-      const res = await onBoardKeywordService.getSelectedArtists();
-      setSelectedIds(res.bands.map((item: Artist) => item.bandId));
-    };
 
-    void fetchSelectedArtists();
-  }, []);
   const handleComplete = async () => {
     if (selectedIds.length < 2) return;
 
-    //선택한 아티스트 저장
-    await saveSelectedArtists(selectedIds);
-    router.push('/onboard/genre');
+    try {
+      await saveSelectedArtists(selectedIds);
+      router.push('/onboard/genre');
+    } catch (err) {
+      console.log('키워드 저장에 실패했습니다. 다시 시도해주세요.', err);
+    }
   };
 
-  useEffect(() => {
-    loadFirstPage();
-  }, []);
   return (
     <div className="text-white flex flex-col h-screen">
       <Header />
@@ -96,12 +91,10 @@ export default function OnboardArtistPage() {
           />
         </div>
 
-        {loading && artists.length === 0 ? (
-          <ArtistSkeletonGrid />
-        ) : artists.length > 0 ? (
+        {artists.length > 0 ? (
           <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
-            {artists.map((artist: Artist) => (
-              <ArtisItem
+            {artists.map((artist: OnboardArtist) => (
+              <OnboardArtistItem
                 key={artist.bandId}
                 artist={artist}
                 isSelected={selectedIds.includes(artist.bandId)}
@@ -119,10 +112,12 @@ export default function OnboardArtistPage() {
         <LinkButton
           href="/onboard/genre"
           disabled={selectedIds.length < 2}
+          isFinished={false} // 또는 어떤 상태값
           onClick={handleComplete}
         >
           선택완료
         </LinkButton>
+
       </div>
     </div>
   );

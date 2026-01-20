@@ -4,14 +4,24 @@ import { useAuthStore } from '@/stores/authStore';
 import { ApiResponse } from '@/types/api';
 import { RequestInit } from 'next/dist/server/web/spec-extension/request';
 
+function getAccessTokenSafely() {
+  try {
+    return useAuthStore.getState().accessToken ?? null;
+  } catch {
+    return null;
+  }
+}
+
+//온보딩시에만 사용함. 나머지 모두 fetchClient사용
 export async function apiFetch<T>(
   path: string,
   options: {
     query?: Record<string, string | number | boolean | null | undefined>;
     useDevAuth?: boolean;
+    auth?: boolean;
   } & RequestInit = {}
 ): Promise<T> {
-  const { query, useDevAuth, ...init } = options;
+  const { query, useDevAuth, auth, ...init } = options;
 
   if (!env.BASE_URL) throw new Error('NEXT_PUBLIC_BASE_URL not set');
 
@@ -25,11 +35,20 @@ export async function apiFetch<T>(
   }
 
   const headers = new Headers(init.headers);
-  headers.set('Content-Type', 'application/json');
+
+  if (!headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
 
   if (useDevAuth) {
     const token = process.env.NEXT_PUBLIC_DEV_ACCESS_TOKEN;
     if (token) headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  if (auth) {
+    const token = getAccessTokenSafely();
+    if (token) headers.set("Authorization", `Bearer ${token}`);
   }
 
   const res = await fetch(url.toString(), {
@@ -43,34 +62,42 @@ export async function apiFetch<T>(
     throw new Error(`API Error ${res.status}: ${text || res.statusText}`);
   }
 
-  return res.json();
+  // 204
+  if (res.status === 204) {
+    return undefined as T;
+  }
+
+  // 빈 바디
+  const text = await res.text().catch(() => "");
+  if (!text) {
+    return undefined as T;
+  }
+
+  return JSON.parse(text) as T;
 }
 //--------------------------------------------------------
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type FetchOptions = RequestInit & {
   auth?: boolean;
+  baseUrl?: string;
 };
-const parseResponse = async <T>(res: Response): Promise<T | null> => {
-  // 204 No Content
-  if (res.status === 204) {
-    return null;
-  }
-  return await res.json();
-};
+
 export async function fetchClient<T>(
   url: string,
   options: FetchOptions
-): Promise<ApiResponse<T> | null> {
-  const { auth = false, headers, ...rest } = options;
+): Promise<ApiResponse<T>> {
+  const { auth = false, headers, baseUrl, ...rest } = options;
   const token = useAuthStore.getState().accessToken;
 
+  const origin = baseUrl ?? BASE_URL;
+
   const sendRequest = (t: string | null) =>
-    fetch(`${BASE_URL}${url}`, {
+    fetch(`${origin}${url}`, {
       ...rest,
-      credentials: 'include',
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...(auth && t ? { Authorization: `Bearer ${t}` } : {}),
         ...headers,
       },
@@ -78,14 +105,14 @@ export async function fetchClient<T>(
 
   let res = await sendRequest(token);
 
-  if (res.status === 401 && auth && url !== '/auth/reissue') {
+  if (res.status === 401 && auth && url !== "/auth/reissue") {
     try {
       const newToken = await authService.refreshAccessToken();
       res = await sendRequest(newToken);
     } catch (err) {
-      console.log('new access token 재발급 실패', err);
+      console.log("new access token 재발급 실패", err);
     }
   }
 
-  return parseResponse<ApiResponse<T>>(res);
+  return res.json();
 }

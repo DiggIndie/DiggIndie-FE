@@ -1,10 +1,10 @@
 // src/services/artistsService.ts
 import { artistAPI, fetchArtists } from '@/api/artists';
 import { postOnboardArtist } from '@/api/onboardArtists';
-import type { Artist, ArtistDetail, PageInfo } from '@/types/artists';
+import type { OnboardArtist, ArtistDetail, PageInfo } from '@/types/artists';
 
 export async function getOnboardingArtists(): Promise<{
-  artists: Artist[];
+  artists: OnboardArtist[];
   pageInfo: PageInfo;
 }> {
   const res = await fetchArtists({ page: 0, size: 12 });
@@ -23,7 +23,7 @@ export async function getArtistsPage(params: {
   page: number;
   size: number;
   query?: string;
-}): Promise<{ artists: Artist[]; pageInfo: PageInfo }> {
+}): Promise<{ artists: OnboardArtist[]; pageInfo: PageInfo }> {
   const res = await fetchArtists(params);
 
   if (!res.isSuccess) {
@@ -35,7 +35,7 @@ export async function getArtistsPage(params: {
 
 export async function saveSelectedArtists(bands: number[]): Promise<void> {
   try {
-    await postOnboardArtist(bands);
+    const res = await postOnboardArtist(bands);
   } catch (err) {
     console.error('온보딩 아티스트 저장 중 에러:', err);
   }
