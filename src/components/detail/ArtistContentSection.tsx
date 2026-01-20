@@ -8,13 +8,16 @@ import BookmarkIcon from '@/components/detail/BookmarkIcon';
 import { useState } from 'react';
 import default_album_image from '@/assets/detail/default_album.svg';
 import { ArtistDetail } from '@/types/artists';
+import { scrapArtist } from '@/services/artistsService';
 
 interface ArtistContentSectionProps {
   artist: ArtistDetail;
 }
 export default function ArtistContentSection({ artist }: ArtistContentSectionProps) {
-  const [isScrapped, setIsScrapped] = useState(artist.isScraped ?? false);
-  const handleToggleScrap = () => {
+  const [isScrapped, setIsScrapped] = useState<boolean>(artist.isScraped);
+
+  const handleToggleScrap = async () => {
+    await scrapArtist(artist.artistId);
     setIsScrapped((prev) => !prev);
   };
 
@@ -27,7 +30,7 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
             isActive={isScrapped}
             onClick={handleToggleScrap}
             className={`cursor-pointer w-6 h-6 transition-colors
-            ${isScrapped ? 'text-white scale-110' : 'text-gray-600'}
+            ${isScrapped ? 'text-white scale-110' : 'text-white'}
           `}
           />
         </p>
@@ -54,17 +57,15 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
       </div>
       <div className="flex flex-col gap-4">
         <div className="pt-4 pb-3 flex flex-col gap-2 items-start border-b border-gray-850">
-          <div className="flex gap-2">
+          <a
+            className="flex gap-2"
+            href={artist.topTrack?.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image src={play} alt="play" width={24} height={24} />
-            <a
-              className="font-medium text-base"
-              href={artist.topTrack?.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {artist.topTrack?.title}
-            </a>
-          </div>
+            <span className="font-medium text-base">{artist.topTrack?.title}</span>
+          </a>
           <span className="font-normal text-sm text-gray-500">설명설명</span>
         </div>
         <div className="flex flex-col gap-2 pb-3 border-b border-gray-850">

@@ -59,14 +59,12 @@ export const authService = {
   async refreshAccessToken() {
     const res = await authApi.reissue();
     if (!res) {
-      throw new Error('로그인 응답이 없습니다.');
+      useAuthStore.getState().logout();
+      throw new Error('토큰 재발급 실패');
     }
     const { accessToken, userId } = res.payload;
-
     // 재발급 받은 새 토큰을 스토어에 업데이트
     useAuthStore.getState().login(accessToken, userId);
     return accessToken;
-    // Refresh Token까지 만료된 상황
-    useAuthStore.getState().logout();
   },
 };

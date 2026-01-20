@@ -14,10 +14,27 @@ export function fetchArtists(params: { page: number; size: number; query?: strin
 }
 
 export const artistAPI = {
-  async getDetailArtist(artistId: number) {
-    return await fetchClient<ApiResponse<ArtistDetail>>(`/artists/${artistId}`, {
+  async getDetailArtist(artistId: number): Promise<ApiResponse<ArtistDetail>> {
+    const res = await fetchClient<ArtistDetail>(`/artists/${artistId}`, {
       method: 'GET',
-      auth: false, // 아티스트 상세페이지는 토큰이 필요 없음
+      auth: true,
+    });
+    if (!res) {
+      throw new Error('아티스트 상세 응답이 null입니다.');
+    }
+    return res;
+  },
+
+  async toggleScrapArtist(params: { bandIds: number[] }): Promise<void> {
+    await fetchClient<void>('/my/artists', {
+      method: 'PATCH',
+      auth: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        bandIds: params.bandIds,
+      }),
     });
   },
 };

@@ -51,7 +51,11 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 type FetchOptions = RequestInit & {
   auth?: boolean;
 };
-const parseResponse = async <T>(res: Response): Promise<T> => {
+const parseResponse = async <T>(res: Response): Promise<T | null> => {
+  // 204 No Content
+  if (res.status === 204) {
+    return null;
+  }
   return await res.json();
 };
 export async function fetchClient<T>(

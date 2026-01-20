@@ -15,7 +15,7 @@ export const concertApi = {
     concertId: number;
   }): Promise<ApiResponse<{ isScrapped: boolean }> | null> {
     return fetchClient<{ isScrapped: boolean }>(`my/concerts/${params.concertId}`, {
-      method: 'POST',
+      method: 'PATCH',
       auth: true,
     });
   },
