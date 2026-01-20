@@ -133,14 +133,15 @@ export default function CalendarPageClient() {
         )}
       </div>
 
-      <div className="w-full flex justify-start ml-10">
+      <div className="w-full flex justify-start px-5">
         {noConcertsToday ? (
           <div
-            className="w-full max-w-[335px] h-[44px] bg-[#1F1D1D] border-[1px] border-[#413D3D]
+            className="w-full max-w-full min-w-0 box-border h-[44px] bg-[#1F1D1D] border-[1px] border-[#413D3D]
             rounded-[4px] font-medium text-[14px] text-[#8C8888] px-4 flex items-center"
           >
             금일 예정된 공연은 없습니다
           </div>
+
         ) : (
           <div className="w-full">
             <ConcertGrid concerts={concertsToShow} />
