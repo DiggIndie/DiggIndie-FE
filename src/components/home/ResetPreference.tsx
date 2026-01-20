@@ -33,29 +33,29 @@ export default function ResetPreference({ isLoggedIn }: Props) {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-[335px] min-w-0 items-center justify-center">
+    <div className="flex flex-col w-full max-w-83.75 min-w-0 items-center justify-center">
       {/* 취향 재설정 버튼 */}
       <div
-        className="flex w-full h-[46px] bg-[#FF3637] mt-[40px] items-center rounded-[4px] cursor-pointer min-w-0"
+        className="flex w-full h-11.5 bg-[#FF3637] mt-10 items-center rounded-1 cursor-pointer min-w-0"
         onClick={() => router.push("/onboard/artist")}
       >
-        <div className="min-w-0 flex-1 text-[16px] ml-[12px]">
+        <div className="min-w-0 text-4 ml-3">
           <span className="block truncate">취향 재설정 하러 가기</span>
         </div>
 
-        <div className="w-[16px] h-[16px] ml-[4px] shrink-0 flex items-center justify-center">
+        <div className="w-4 h-4 ml-1 shrink-0 flex items-center mr-auto">
           <Image src={next} alt="next" width={16} height={16} />
         </div>
       </div>
 
       {/* 만족도 영역 */}
-      <div className="flex w-full max-w-[335px] h-[40px] bg-black mt-[8px] min-w-0 gap-[8px]">
+      <div className="flex w-full max-w-83.75 h-10 bg-black mt-2 min-w-0 gap-2">
         <span className="min-w-0 flex-1 text-[#736F6F] text-[14px] font-medium truncate">
           추천 결과가 마음에 드시나요?
         </span>
 
         <div
-          className="flex w-[92px] h-[40px] gap-[12px] justify-center items-center
+          className="flex w-23 h-10 gap-3 justify-center items-center
             bg-[#1F1D1D] border-[#413D3D] border-[1px] rounded-[20px] shrink-0"
         >
           <button

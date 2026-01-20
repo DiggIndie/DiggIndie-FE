@@ -134,27 +134,30 @@ export default function HomeCalendar() {
         bg-black gap-[12px] mt-[8px] mx-[20px]"
       >
         {error ? (
-          <div className="text-[#FF6B6B] text-[14px] break-words">{error}</div>
+          <div className="text-[#FF6B6B] text-3.5 break-words">{error}</div>
         ) : todayConcerts.length !== 0 ? (
           todayConcerts.map((concert) => (
             <div
               key={concert.concertId}
-              className="flex flex-col w-[335px] h-[100px] font-semibold bg-[#1F1D1D] rounded-[4px]"
+              className="flex flex-col w-83.75 h-25 font-semibold bg-[#1F1D1D] rounded-1"
             >
-              <span className="mx-[16px] mt-[13px] text-[18px] truncate">
+              <span className="mx-4 mt-3.25 text-4.5 truncate">
                 {concert.startsAt}
               </span>
 
-              <div className="flex mx-[16px] mt-[2px] gap-[4px] font-normal min-w-0">
-                <Image src={ticket} alt="ticket" width={20} height={20} />
-                <span className="truncate">
+              <div className={'flex'}>
+                <div className="flex ml-4 mr-1 mt-0.5 gap-1 font-normal min-w-0 pb-8">
+                  <Image src={ticket} alt="ticket" width={20} height={20} />
+                </div>
+
+                <div className="flex flex-col text-[#8C8888] font-normal truncate">
+                <span className="truncate text-white">
                   {concert.concertName}
                 </span>
+                  {concert.concertHall}
+                </div>
               </div>
 
-              <div className="ml-[36px] text-[#8C8888] font-normal truncate">
-                {concert.concertHall}
-              </div>
             </div>
           ))
         ) : (
