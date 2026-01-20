@@ -55,10 +55,9 @@ export default function HomeCalendar() {
   }
 
   return (
-    <div className="flex flex-col w-full px-5 justify-center mt-10 bg-black">
-      <div className={'flex '}>
+    <div className="flex flex-col w-full max-w-[375px] px-5 justify-center mt-10 bg-black">
+      <div className={'flex'}>
         <div className={'text-[20px] font-semibold'}>공연 위클리 캘린더</div>
-
         {/* 상단 >: 금일 날짜로 진입 */}
         <Link
           href={{ pathname: '/calendar', query: { date: todayKey() } }}
