@@ -141,12 +141,20 @@ export default function HomeCalendar() {
               key={concert.concertId}
               className="flex flex-col w-[335px] h-[100px] font-semibold bg-[#1F1D1D] rounded-[4px]"
             >
-              <span className={'mx-[16px] mt-[13px] text-[18px]'}>{concert.startsAt}</span>
-              <div className={'flex mx-[16px] mt-[2px] gap-[4px] font-normal'}>
-                <Image src={ticket} alt={'ticket'} width={20} height={20} />
-                {concert.concertName}
+              <span className="mx-[16px] mt-[13px] text-[18px] truncate">
+                {concert.startsAt}
+              </span>
+
+              <div className="flex mx-[16px] mt-[2px] gap-[4px] font-normal min-w-0">
+                <Image src={ticket} alt="ticket" width={20} height={20} />
+                <span className="truncate">
+                  {concert.concertName}
+                </span>
               </div>
-              <div className={'ml-[36px] text-[#8C8888] font-normal'}>{concert.concertHall}</div>
+
+              <div className="ml-[36px] text-[#8C8888] font-normal truncate">
+                {concert.concertHall}
+              </div>
             </div>
           ))
         ) : (

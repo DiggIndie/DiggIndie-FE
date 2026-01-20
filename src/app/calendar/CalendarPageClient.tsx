@@ -107,7 +107,7 @@ export default function CalendarPageClient() {
   }, [concertsEnabled, loadMore]);
 
   return (
-    <div className="text-white flex flex-col items-center min-h-screen bg-black">
+    <div className="text-white flex flex-col items-center min-h-screen bg-black pb-4">
       <CalendarHeader
         isCalendarOpen={showCalendar}
         onToggleCalendar={() => setShowCalendar((prev) => !prev)}
