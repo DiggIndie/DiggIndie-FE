@@ -1,4 +1,5 @@
 'use client';
+export const dynamic = 'force-dynamic';
 //import artistData from '@/mocks/mockArtistDetail.json';
 import { useParams } from 'next/navigation';
 import DetailImgSection from '@/components/detail/DetailImgSection';
@@ -19,17 +20,24 @@ export default function ArtistDetailPage() {
   const [artist, setArtist] = useState<ArtistDetail>();
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchArtist = async () => {
+    if (!artistId || Number.isNaN(artistId)) return;
+    const res = await getArtistDetail(artistId);
+    setArtist(res);
+  };
   useEffect(() => {
     if (!artistId || Number.isNaN(artistId)) return;
 
-    const fetchArtist = async () => {
+    const run = async () => {
       setIsLoading(true);
-      const res = await getArtistDetail(artistId);
-      setArtist(res);
-      setIsLoading(false);
+      try {
+        await fetchArtist();
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    fetchArtist();
+    run();
   }, [artistId]);
 
   const artistImageSrc =
@@ -50,7 +58,7 @@ export default function ArtistDetailPage() {
 
         <DetailImgSection imageSrc={artistImageSrc} alt={artist.artistName} />
       </div>
-      <ArtistContentSection artist={artist} />
+      <ArtistContentSection artist={artist} onRefresh={fetchArtist} />
       <ScheduledConcertSection artist={artist} />
       <EndedConcertSection artist={artist} />
     </div>

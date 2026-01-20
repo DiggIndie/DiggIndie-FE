@@ -1,9 +1,11 @@
 import type { NextConfig } from 'next';
 import withPWA from 'next-pwa';
 
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   turbopack: {},
   images: {
+    domains: ['diggindie-images.s3.ap-northeast-2.amazonaws.com', 'i.scdn.co'],
     remotePatterns: [
       {
         protocol: 'https',

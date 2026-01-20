@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import play from '@/assets/common/play.svg';
 import voice from '@/assets/common/Voice 3.svg';
@@ -5,20 +6,20 @@ import profile from '@/assets/common/Profile.svg';
 import albumIcon from '@/assets/detail/music.svg';
 import BookmarkIcon from '@/components/detail/BookmarkIcon';
 // import artistData from '@/mocks/mockArtistDetail.json';
-import { useState } from 'react';
 import default_album_image from '@/assets/detail/default_album.svg';
 import { ArtistDetail } from '@/types/artists';
 import { scrapArtist } from '@/services/artistsService';
 
 interface ArtistContentSectionProps {
   artist: ArtistDetail;
+  onRefresh: () => Promise<void>;
 }
-export default function ArtistContentSection({ artist }: ArtistContentSectionProps) {
-  const [isScrapped, setIsScrapped] = useState<boolean>(artist.isScraped);
+export default function ArtistContentSection({ artist, onRefresh }: ArtistContentSectionProps) {
+  const isScrapped = artist.isScraped;
 
   const handleToggleScrap = async () => {
     await scrapArtist(artist.artistId);
-    setIsScrapped((prev) => !prev);
+    await onRefresh(); // 부모에게 "다시 조회해줘" 요청
   };
 
   return (
@@ -47,13 +48,14 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
           <Image src={profile} alt="profile" width={24} height={24} />
           <span>멤버</span>
         </p>
-        <p className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
           {artist.members.map((member, index) => (
-            <span key={index} className="font-medium text-sm text-gray-500">
-              {member},
+            <span key={index} className="font-medium text-sm text-gray-500 flex-shrink-0">
+              {member}
+              {index !== artist.members.length - 1 && ','}
             </span>
           ))}
-        </p>
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         <div className="pt-4 pb-3 flex flex-col gap-2 items-start border-b border-gray-850">
@@ -80,22 +82,26 @@ export default function ArtistContentSection({ artist }: ArtistContentSectionPro
             <Image src={albumIcon} alt="album" width={24} height={24} />
             <span>앨범</span>
           </p>
-          <section className="flex gap-3">
+          <section className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
             {artist.albums.map((album) => {
               const albumImageSrc =
                 album.albumImage && album.albumImage.trim() !== ''
                   ? album.albumImage
                   : default_album_image;
+
               return (
-                <div key={album.albumId} className="flex flex-col">
-                  <Image
-                    src={albumImageSrc}
-                    alt="앨범이미지"
-                    width={92}
-                    height={92}
-                    className="mb-1 object-cover"
-                  />
-                  <span className="font-medium text-sm text-gray-500 truncate">
+                <div key={album.albumId} className="flex flex-col w-[92px] flex-shrink-0">
+                  <div className="relative w-[92px] h-[92px]">
+                    <Image
+                      src={albumImageSrc}
+                      alt="앨범이미지"
+                      width={92}
+                      height={92}
+                      className="object-cover rounded"
+                    />
+                  </div>
+
+                  <span className="mt-1 font-medium text-sm text-gray-500 truncate">
                     {album.albumName}
                   </span>
                   <span className="font-medium text-sm text-gray-500">{album.releaseYear}</span>
