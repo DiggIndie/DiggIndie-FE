@@ -51,14 +51,14 @@ export default function PersonalConcertRec({ isLoggedIn }: Props) {
   }, [concerts]);
 
   return (
-    <div className="w-[375px] h-[266px] flex flex-col mt-[40px]">
-      <div className="flex mx-[20px] mb-[12px]">
-        <span className="h-[28px] font-semibold mr-[4px] text-[20px]">
+    <div className="w-full flex flex-col mt-10 px-5 gap-3">
+      <div className="flex w-full">
+        <span className="font-semibold text-[20px]">
           리스너님을 위한 추천 공연
         </span>
       </div>
 
-      <div className={`flex overflow-x-auto ml-[20px] ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
+      <div className={`flex w-full overflow-x-auto ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
         <div className="flex gap-4 w-max">
           {!isLoggedIn ? (
             //로그인 안 했을 시 불러올 임시 사진

@@ -37,17 +37,18 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
   }, [bands]);
 
   return (
-    <section className="mt-[24px] w-full max-w-[375px] min-h-[257px] bg-black flex flex-col">
-      <div className="mx-[20px] mb-[16px] flex items-center">
-        <span className="text-[20px] font-semibold mr-[4px] truncate">
+    <section className="mt-6 gap-4 w-full px-5 bg-black flex flex-col">
+      <div className="flex items-center">
+        <span className="text-[20px] font-semibold truncate">
           리스너님을 위한 추천 아티스트
         </span>
       </div>
 
-      <div className={`flex overflow-x-auto ml-[20px] ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
-        <div className="flex gap-[16px] w-max pr-[20px]">
+      <div className={`flex overflow-x-auto ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
+        <div className="flex w-full gap-4">
           {!isLoggedIn ? (
             <>
+              <GuestArtistCard />
               <GuestArtistCard />
               <GuestArtistCard />
               <GuestArtistCard />

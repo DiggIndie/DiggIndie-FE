@@ -137,7 +137,8 @@ export default function HomeCalendar() {
           todayConcerts.map((concert) => (
             <div
               key={concert.concertId}
-              className="flex flex-col w-full h-25 font-semibold bg-[#1F1D1D] rounded-1 px-4 py-3"
+              className="flex flex-col w-full h-25 font-semibold bg-[#1F1D1D] px-4 py-3
+              border-[1px] border-[#413D3D] rounded-sm"
             >
               <span className="text-[16px] truncate">
                 {concert.startsAt}
@@ -160,8 +161,8 @@ export default function HomeCalendar() {
           ))
         ) : (
           <div
-            className="w-full h-[44px] border-[1px] border-[#413D3D]
-          bg-[#1F1D1D] text-[#8C8888] text-[14px] pt-[10px] px-[12px] rounded-sm"
+            className="w-full border-[1px] border-[#413D3D]
+          bg-[#1F1D1D] text-[#8C8888] text-[14px] py-3 px-4 rounded-sm"
           >
             금일 예정된 공연은 없습니다
           </div>
