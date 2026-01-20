@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import artistData from '@/mocks/mockArtistDetail.json';
+// import artistData from '@/mocks/mockArtistDetail.json';
 import { ArtistDetail } from '@/types/artists';
 interface ScheduledConcertSectionProps {
   artist: ArtistDetail;
@@ -8,10 +8,13 @@ export default function ScheduledConcertSection({ artist }: ScheduledConcertSect
   return (
     <section className="px-5 mb-9">
       <span className="font-semibold text-xl mb-3">진행 예정 공연</span>
-      <div className="mt-3">
-        {artist.scheduledConcerts.map((concert) => (
-          <div key={concert.concertId}>
-            <div className="py-4 relative w-[160px] h-[226px]">
+      <div className="flex gap-3 overflow-x-auto whitespace-nowrap mt-3">
+        {artist.scheduledConcerts.length > 0 ? (
+          artist.scheduledConcerts.map((concert) => (
+            <div
+              className="py-4 relative w-[160px] h-[226px] flex-shrink-0"
+              key={concert.concertId}
+            >
               <Image
                 src={concert.concertImage}
                 alt={concert.concertName}
@@ -30,8 +33,10 @@ export default function ScheduledConcertSection({ artist }: ScheduledConcertSect
                 <span className="font-normal text-sm text-gray-500">{concert.concertDate}</span>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <span className="text-gray-400 text-sm font-bold">예정 공연이 없습니다.</span>
+        )}
       </div>
     </section>
   );

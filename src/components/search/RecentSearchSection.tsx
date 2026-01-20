@@ -17,7 +17,7 @@ export default function RecentSearchSection({
       <p className="flex justify-between">
         <span className="text-gray-600 text-xs font-medium">최근 검색어</span>
         <span
-          className="text-gray-600 text-xs font-medium border-b border-gray-600"
+          className="text-gray-600 text-xs font-medium border-b border-gray-600 cursor-pointer"
           onClick={() => onClearAll()}
         >
           전체 삭제

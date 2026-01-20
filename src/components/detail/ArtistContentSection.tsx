@@ -50,20 +50,26 @@ export default function ArtistContentSection({
           ))}
         </div>
       </div>
+      {/*멤버 */}
       <div className="flex pt-4 pb-3 flex-col gap-2 border-b border-gray-850">
         <p className="flex gap-2">
           <Image src={profile} alt="profile" width={24} height={24} />
-          <span>멤버</span>
+          <span className="text-gray-200 text-base font-medium">멤버</span>
         </p>
         <div className="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
-          {artist.members.map((member, index) => (
-            <span key={index} className="font-medium text-sm text-gray-500 flex-shrink-0">
-              {member}
-              {index !== artist.members.length - 1 && ','}
-            </span>
-          ))}
+          {artist.members.length > 0 ? (
+            artist.members.map((member, index) => (
+              <span key={index} className="font-medium text-sm text-gray-500 flex-shrink-0">
+                {member}
+                {index !== artist.members.length - 1 && ','}
+              </span>
+            ))
+          ) : (
+            <span className="font-bold text-sm text-gray-400 text-sm">1인 아티스트입니다.</span>
+          )}
         </div>
       </div>
+      {/*대표곡 */}
       <div className="flex flex-col gap-4">
         <div className="pt-4 pb-3 flex flex-col gap-2 items-start border-b border-gray-850">
           <a
@@ -73,16 +79,24 @@ export default function ArtistContentSection({
             rel="noopener noreferrer"
           >
             <Image src={play} alt="play" width={24} height={24} />
-            <span className="font-medium text-base">{artist.topTrack?.title}</span>
+            <span className="font-medium text-base text-gray-200">
+              {artist.topTrack ? artist.topTrack.title : '대표곡이 없습니다.'}
+            </span>
           </a>
-          <span className="font-normal text-sm text-gray-500">설명설명</span>
+          <span className="font-normal text-sm text-gray-500">response에 없음</span>
         </div>
         <div className="flex flex-col gap-2 pb-3 border-b border-gray-850">
           <p className="flex gap-2">
             <Image src={voice} alt="voice" width={24} height={24} />
-            <span>{artist.artistName}</span>
+            <span className="text-white font-medium text-base">아티스트</span>
           </p>
-          <p className="font-medium text-sm text-gray-500">{artist.description}</p>
+          <p
+            className={`text-sm text-gray-400  ${artist.description ? 'font-medium' : 'font-bold '}`}
+          >
+            {artist.description && artist.description.trim() !== ''
+              ? artist.description
+              : '없는 정보입니다.'}
+          </p>
         </div>
         <div className="flex flex-col gap-3 pb-7">
           <p className="flex gap-2">
@@ -90,31 +104,35 @@ export default function ArtistContentSection({
             <span>앨범</span>
           </p>
           <section className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-            {artist.albums.map((album) => {
-              const albumImageSrc =
-                album.albumImage && album.albumImage.trim() !== ''
-                  ? album.albumImage
-                  : default_album_image;
+            {artist.albums.length > 0 ? (
+              artist.albums.map((album) => {
+                const albumImageSrc =
+                  album.albumImage && album.albumImage.trim() !== ''
+                    ? album.albumImage
+                    : default_album_image;
 
-              return (
-                <div key={album.albumId} className="flex flex-col w-[92px] flex-shrink-0">
-                  <div className="relative w-[92px] h-[92px]">
-                    <Image
-                      src={albumImageSrc}
-                      alt="앨범이미지"
-                      width={92}
-                      height={92}
-                      className="object-cover rounded"
-                    />
+                return (
+                  <div key={album.albumId} className="flex flex-col w-[92px] flex-shrink-0">
+                    <div className="relative w-[92px] h-[92px]">
+                      <Image
+                        src={albumImageSrc}
+                        alt="앨범이미지"
+                        width={92}
+                        height={92}
+                        className="object-cover rounded"
+                      />
+                    </div>
+
+                    <span className="mt-1 font-medium text-sm text-gray-500 truncate">
+                      {album.albumName}
+                    </span>
+                    <span className="font-medium text-sm text-gray-500">{album.releaseYear}</span>
                   </div>
-
-                  <span className="mt-1 font-medium text-sm text-gray-500 truncate">
-                    {album.albumName}
-                  </span>
-                  <span className="font-medium text-sm text-gray-500">{album.releaseYear}</span>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <span className="font-bold text-sm text-gray-400">앨범이 없습니다.</span>
+            )}
           </section>
         </div>
       </div>

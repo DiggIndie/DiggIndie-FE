@@ -11,9 +11,10 @@ export const searchApi = {
     if (!res) {
       throw new Error('검색어 저장 실패.');
     }
-
+    console.log('검색어 저장 반환 데이터', res.payload);
     return res;
   },
+
   async getRecentSearches(): Promise<RecentSearch[]> {
     const res = await fetchClient<RecentSearchResponse>('/search/recent', {
       method: 'GET',
@@ -25,6 +26,7 @@ export const searchApi = {
     console.log(res);
     return res.payload.searches;
   },
+
   async deleteRecentSearch(id: number) {
     const res = await fetchClient<void>(`/search/recent/${id}`, {
       method: 'DELETE',
@@ -34,6 +36,7 @@ export const searchApi = {
       throw new Error('최근 검색어 삭제 실패.');
     }
   },
+
   async clearRecentSearches() {
     const res = await fetchClient<void>('/search/recent', {
       method: 'DELETE',

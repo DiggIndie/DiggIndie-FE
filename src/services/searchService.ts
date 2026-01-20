@@ -6,7 +6,7 @@ export const searchService = {
       return result.payload; // 데이터 배열만 반환
     } catch (err) {
       console.error('검색어 저장 중 에러:', err);
-      return []; // 에러 시 빈 배열 반환
+      throw err;
     }
   },
   async getRecentSearches() {
