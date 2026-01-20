@@ -42,12 +42,12 @@ export default function ConcertDetailPage() {
 
   return (
     <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 overflow-auto">
-      {!concert ? (
+      {isLoading ? (
+        <DetailSkeleton />
+      ) : !concert ? (
         <div className="min-h-screen flex items-center justify-center text-gray-300 text-base">
           아티스트를 찾을 수 없습니다.
         </div>
-      ) : isLoading ? (
-        <DetailSkeleton />
       ) : (
         <>
           <MyHeader title="" />

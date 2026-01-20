@@ -56,7 +56,7 @@ export default function ArtistContentSection({
           <Image src={profile} alt="profile" width={24} height={24} />
           <span className="text-gray-200 text-base font-medium">멤버</span>
         </p>
-        <div className="flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <div className="flex gap-2 overflow-x-auto line-clamp-4">
           {artist.members.length > 0 ? (
             artist.members.map((member, index) => (
               <span key={index} className="font-medium text-sm text-gray-500 flex-shrink-0">

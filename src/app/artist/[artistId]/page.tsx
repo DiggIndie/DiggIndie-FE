@@ -56,12 +56,12 @@ export default function ArtistDetailPage() {
 
   return (
     <div className="text-white flex flex-col min-h-screen">
-      {!artist ? (
+      {isLoading ? (
+        <DetailSkeleton />
+      ) : !artist ? (
         <p className="min-h-screen flex items-center justify-center text-gray-300 text-base">
           아티스트를 찾을 수 없습니다.
         </p>
-      ) : isLoading ? (
-        <DetailSkeleton />
       ) : (
         <>
           <div className="relative">

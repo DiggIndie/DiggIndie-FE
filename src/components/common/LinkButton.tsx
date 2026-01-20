@@ -22,13 +22,14 @@ export default function LinkButton({
       className={`block p-4 h-13 w-full font-semibold text-center rounded-sm ${
         isDisabled ? 'bg-gray-600 cursor-not-allowed' : 'bg-red cursor-pointer'
       }`}
+      target={isDisabled ? undefined : '_blank'}
+      rel={isDisabled ? undefined : 'noopener noreferrer'}
       aria-disabled={isDisabled}
       onClick={(e) => {
         if (isDisabled) {
           e.preventDefault();
           return;
         }
-        onClick?.();
       }}
     >
       {children}

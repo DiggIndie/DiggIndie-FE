@@ -5,6 +5,7 @@ import ticket from '@/assets/common/ticket.svg';
 import location from '@/assets/detail/Location.svg';
 import BookmarkIcon from '@/components/detail/BookmarkIcon';
 import { ConcertDetail } from '@/types/concerts';
+import { formatConcertDate } from '@/hooks/getDay';
 
 interface ConcertContentSectionProps {
   concert: ConcertDetail;
@@ -37,20 +38,22 @@ export default function ConcertContentSection({
         />
       </p>
       <p className="flex flex-col pb-4 border-b border-gray-850">
-        <span className="flex gap-2">
+        <span className="flex gap-2 items-start">
           <Image src={Calendar} alt="calendar" width={24} height={24} />
-          <span className="text-white text-xl font-medium">{concert.startDate}</span>
+          <span className="text-white text-xl font-medium">
+            {formatConcertDate(concert.startDate, concert.endDate)}
+          </span>
         </span>
-        <span className="flex gap-2">
+        {/* <span className="flex gap-2">
           <Image src={Calendar} alt="calendar" width={24} height={24} />
           <span className="text-white text-xl font-medium">{concert.endDate}</span>
-        </span>
+        </span> */}
       </p>
       <p className="flex gap-2 items-center py-3 pb-4 border-b border-gray-850 mb-3 items-start">
         <Image src={location} alt="location" width={24} height={24} />
         <span className="flex flex-col">
-          <span className="font-medium text-base">{concert.concertHallName}</span>
-          <span className="font-normal text-sm text-gray-500">{concert.address}</span>
+          <span className="font-medium text-base line-clamp-2">{concert.concertHallName}</span>
+          <span className="font-normal text-sm text-gray-500 line-clamp-2">{concert.address}</span>
         </span>
       </p>
       <div className="flex gap-2 items-start">
@@ -58,7 +61,7 @@ export default function ConcertContentSection({
         <div>
           <p className="flex gap-1 items-end">
             <span
-              className={`font-normal text-base ${concert.onsitePrice != null ? 'text-white' : 'text-gray-400'}`}
+              className={`font-normal text-base ${concert.onsitePrice != null ? 'text-white text-gray-200' : 'text-gray-400'}`}
             >
               {concert.onsitePrice != null ? `${concert.onsitePrice}원` : '가격정보 없음'}
             </span>
