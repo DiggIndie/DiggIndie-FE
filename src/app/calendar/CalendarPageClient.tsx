@@ -124,10 +124,14 @@ export default function CalendarPageClient() {
         />
       )}
 
-      <div className="w-full w-max-[375px] h-[40px] mt-3 flex px-5 py-2">
+      <div className="w-full max-w-[375px] h-[40px] mt-3 flex px-5 py-2">
         {selectedDates[0] && (
-          <div className="text-[#BEBABA] text-[16px] font-medium">
-            {selectedDates[0].slice(0, 4)}년 {selectedDates[0].slice(5, 7)}월{' '}
+          <div
+            className={`text-[16px] font-medium ${
+              noConcertsToday ? "text-gray-700" : "text-[#BEBABA]"
+            }`}
+          >
+            {selectedDates[0].slice(0, 4)}년 {selectedDates[0].slice(5, 7)}월{" "}
             {selectedDates[0].slice(8, 10)}일
           </div>
         )}
