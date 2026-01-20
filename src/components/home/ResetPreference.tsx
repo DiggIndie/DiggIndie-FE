@@ -33,10 +33,10 @@ export default function ResetPreference({ isLoggedIn }: Props) {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-83.75 min-w-0 items-center justify-center">
+    <div className="flex flex-col w-full w-[83.75rem] px-5 h-[12.5rem] min-w-0 items-center justify-center rounded-[4px]">
       {/* 취향 재설정 버튼 */}
       <div
-        className="flex w-full h-11.5 bg-[#FF3637] mt-10 items-center rounded-1 cursor-pointer min-w-0"
+        className="flex w-full h-11.5 bg-[#FF3637] mt-10 items-center cursor-pointer min-w-0"
         onClick={() => router.push("/onboard/artist")}
       >
         <div className="min-w-0 text-4 ml-3">
@@ -56,7 +56,7 @@ export default function ResetPreference({ isLoggedIn }: Props) {
 
         <div
           className="flex w-23 h-10 gap-3 justify-center items-center
-            bg-[#1F1D1D] border-[#413D3D] border-[1px] rounded-[20px] shrink-0"
+            bg-[#1F1D1D] border-[#413D3D] border-0.25 rounded-[20px] shrink-0"
         >
           <button
             type="button"
