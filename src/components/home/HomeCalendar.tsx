@@ -55,7 +55,7 @@ export default function HomeCalendar() {
   }
 
   return (
-    <div className="flex flex-col w-full max-w-[375px] px-5 justify-center mt-10 bg-black">
+    <div className="flex flex-col w-full px-5 justify-center mt-10 bg-black">
       <div className={'flex'}>
         <div className={'text-[20px] font-semibold'}>공연 위클리 캘린더</div>
         {/* 상단 >: 금일 날짜로 진입 */}
@@ -87,7 +87,7 @@ export default function HomeCalendar() {
                 onClick={() => setSelectedIndex(i)}
                 className={`
                   flex flex-col items-center justify-center cursor-pointer rounded-sm
-                  w-full h-[62px] transition-all gap-[4px] border-[1px]
+                  w-full h-[62px] transition-all gap-1 border-[1px]
                   ${
                   isSelected
                     ? 'bg-[#880405] font-bold border-[#C31C20]'
@@ -111,18 +111,17 @@ export default function HomeCalendar() {
         </button>
       </div>
 
-      <span className={'w-full mx-5 mt-[12px] border-b-[1px] border-[#332F2F]'} />
+      <span className={'w-full mt-3 border-b-[1px] border-[#332F2F]'} />
 
       {/* 더보기 : 위클리에서 선택된 날짜로 전체 캘린더 진입 */}
       <Link
         href={{ pathname: '/calendar', query: { date: selectedDate } }}
-        className={'flex items-center text-[14px] font-medium text-gray-500 mt-[12px] ml-auto'}
+        className={'flex items-center text-[14px] font-medium text-gray-500 mt-3 ml-auto'}
       >
         더보기
         <Image
           src={nextGrayBtn}
           alt={'more'}
-          className={'mr-[20px]'}
           width={20}
           height={20}
         />
@@ -130,22 +129,22 @@ export default function HomeCalendar() {
 
       <div
         className="flex flex-col w-full min-h-[56px] max-h-[224px]
-        bg-black gap-3 mt-2 "
+        bg-black gap-3 mt-2"
       >
         {error ? (
-          <div className="text-[#FF6B6B] text-3.5 break-words">{error}</div>
+          <div className="text-[#FF6B6B] text-3.5 break-words ">{error}</div>
         ) : todayConcerts.length !== 0 ? (
           todayConcerts.map((concert) => (
             <div
               key={concert.concertId}
-              className="flex flex-col w-83.75 h-25 font-semibold bg-[#1F1D1D] rounded-1"
+              className="flex flex-col w-full h-25 font-semibold bg-[#1F1D1D] rounded-1 px-4 py-3"
             >
-              <span className="mx-4 mt-3.25 text-4.5 truncate">
+              <span className="text-[16px] truncate">
                 {concert.startsAt}
               </span>
 
-              <div className={'flex gap-1'}>
-                <div className="flex ml-4 mt-0.5 gap-1 font-normal min-w-0 pb-8">
+              <div className={'flex gap-1 mt-1'}>
+                <div className="flex gap-1 font-normal min-w-0 pb-8">
                   <Image src={ticket} alt="ticket" width={20} height={20} />
                 </div>
 
