@@ -32,7 +32,7 @@ export async function getDetailConcerts(concertId: number): Promise<ConcertDetai
   if (!res.isSuccess) {
     throw new Error(res?.message ?? '콘서트 상세 조회 실패');
   }
-
+  console.log('공연 상세게시글', res.payload);
   return res.payload;
 }
 
@@ -45,6 +45,6 @@ export async function toggleScrapConcert(concertId: number): Promise<boolean> {
   if (!res.isSuccess) {
     throw new Error(res?.message ?? '스크랩 실패');
   }
-
+  console.log('공연 스크랩 토글 성공', res.payload);
   return res.payload.isScrapped;
 }

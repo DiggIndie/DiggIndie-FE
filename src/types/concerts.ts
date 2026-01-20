@@ -29,13 +29,17 @@ export interface ConcertLineUp {
   bandImage: string;
 }
 export interface ConcertDetail {
+  concertId: number;
   concertName: string;
-  isScrapped: boolean;
+  isScraped: boolean;
   startDate: string;
+  endDate: string;
+  isFinished: boolean;
   concertHallName: string;
   address: string;
   preorderPrice: number;
   onsitePrice: number;
+  bookUrl: string;
   imageUrl: string;
   description: string;
   lineUp: ConcertLineUp[];

@@ -11,12 +11,16 @@ export const concertApi = {
       auth: true,
     });
   },
+
   async scrapConcert(params: {
     concertId: number;
   }): Promise<ApiResponse<{ isScrapped: boolean }> | null> {
-    return fetchClient<{ isScrapped: boolean }>(`my/concerts/${params.concertId}`, {
-      method: 'PATCH',
-      auth: true,
-    });
+    return fetchClient<{ memberId: string; concertId: number; isScrapped: boolean }>(
+      `/my/concerts/${params.concertId}`,
+      {
+        method: 'PATCH',
+        auth: true,
+      }
+    );
   },
 };

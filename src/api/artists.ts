@@ -18,8 +18,6 @@ export const artistAPI = {
     const res = await fetchClient<ArtistDetail>(`/artists/${artistId}`, {
       method: 'GET',
       auth: true,
-      cache: 'no-store',
-      credentials: 'include',
     });
     if (!res) {
       throw new Error('아티스트 상세 응답이 null입니다.');

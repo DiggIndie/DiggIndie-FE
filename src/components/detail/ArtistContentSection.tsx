@@ -8,19 +8,20 @@ import BookmarkIcon from '@/components/detail/BookmarkIcon';
 // import artistData from '@/mocks/mockArtistDetail.json';
 import default_album_image from '@/assets/detail/default_album.svg';
 import { ArtistDetail } from '@/types/artists';
-import { scrapArtist } from '@/services/artistsService';
+import { useAuthStore } from '@/stores/authStore';
 
 interface ArtistContentSectionProps {
   artist: ArtistDetail;
-  onRefresh: () => Promise<void>;
+  onToggleScrap: () => Promise<void>;
+  isScrapped: boolean;
 }
-export default function ArtistContentSection({ artist, onRefresh }: ArtistContentSectionProps) {
-  const isScrapped = artist.isScraped;
-
-  const handleToggleScrap = async () => {
-    await scrapArtist(artist.artistId);
-    await onRefresh(); // 부모에게 "다시 조회해줘" 요청
-  };
+export default function ArtistContentSection({
+  artist,
+  onToggleScrap,
+  isScrapped,
+}: ArtistContentSectionProps) {
+  // zustand에서 로그인 상태 구독
+  const isLoggedIn = useAuthStore((state) => state.isAuthed);
 
   return (
     <section className="px-5 pt-5 border-b-4 border-gray-850 mb-6">
@@ -29,9 +30,15 @@ export default function ArtistContentSection({ artist, onRefresh }: ArtistConten
           <span className="font-semibold text-xl">{artist.artistName}</span>
           <BookmarkIcon
             isActive={isScrapped}
-            onClick={handleToggleScrap}
-            className={`cursor-pointer w-6 h-6 transition-colors
-            ${isScrapped ? 'text-white scale-110' : 'text-white'}
+            onClick={isLoggedIn ? onToggleScrap : undefined}
+            className={`w-6 h-6 transition-colors
+            ${
+              isLoggedIn
+                ? isScrapped
+                  ? 'text-white scale-110 cursor-pointer'
+                  : 'text-white cursor-pointer'
+                : 'text-gray-600 cursor-not-allowed'
+            }
           `}
           />
         </p>

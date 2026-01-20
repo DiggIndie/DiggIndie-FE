@@ -1,5 +1,4 @@
 'use client';
-export const dynamic = 'force-dynamic';
 //import artistData from '@/mocks/mockArtistDetail.json';
 import { useParams } from 'next/navigation';
 import DetailImgSection from '@/components/detail/DetailImgSection';
@@ -9,9 +8,9 @@ import EndedConcertSection from '@/components/detail/EndConcertSection';
 import MyHeader from '@/components/my/MyHeader';
 import default_artist_image from '@/assets/detail/artist_default.svg';
 import { useEffect, useState } from 'react';
-import { getArtistDetail } from '@/services/artistsService';
+import { getArtistDetail, scrapArtist } from '@/services/artistsService';
 import { ArtistDetail } from '@/types/artists';
-import ArtistDetailSkeleton from '@/components/detail/ArtistDetailSkeleton';
+import DetailSkeleton from '@/components/detail/DetailSkeleton';
 
 export default function ArtistDetailPage() {
   const params = useParams();
@@ -19,15 +18,26 @@ export default function ArtistDetailPage() {
   //const artist = artistData.artists.find((a) => a.artistId === bandId);
   const [artist, setArtist] = useState<ArtistDetail>();
   const [isLoading, setIsLoading] = useState(true);
+  const [isScrapped, setIsScrapped] = useState(false);
 
   const fetchArtist = async () => {
     if (!artistId || Number.isNaN(artistId)) return;
     const res = await getArtistDetail(artistId);
     setArtist(res);
+    setIsScrapped(res.isScraped);
   };
-  useEffect(() => {
-    if (!artistId || Number.isNaN(artistId)) return;
 
+  const handleToggleScrap = async () => {
+    if (!artist) return;
+    try {
+      setIsScrapped((prev) => !prev);
+      await scrapArtist(artist.artistId);
+    } catch {
+      setIsScrapped((prev) => !prev);
+    }
+  };
+
+  useEffect(() => {
     const run = async () => {
       setIsLoading(true);
       try {
@@ -36,7 +46,6 @@ export default function ArtistDetailPage() {
         setIsLoading(false);
       }
     };
-
     run();
   }, [artistId]);
 
@@ -45,22 +54,30 @@ export default function ArtistDetailPage() {
       ? artist.artistImage
       : default_artist_image;
 
-  if (isLoading) {
-    return <ArtistDetailSkeleton />;
-  }
-  if (!artist) {
-    return <p className="text-white">아티스트를 찾을 수 없습니다.</p>;
-  }
   return (
     <div className="text-white flex flex-col min-h-screen">
-      <div className="relative">
-        <MyHeader title="" />
+      {!artist ? (
+        <p className="min-h-screen flex items-center justify-center text-gray-300 text-base">
+          아티스트를 찾을 수 없습니다.
+        </p>
+      ) : isLoading ? (
+        <DetailSkeleton />
+      ) : (
+        <>
+          <div className="relative">
+            <MyHeader title="" />
 
-        <DetailImgSection imageSrc={artistImageSrc} alt={artist.artistName} />
-      </div>
-      <ArtistContentSection artist={artist} onRefresh={fetchArtist} />
-      <ScheduledConcertSection artist={artist} />
-      <EndedConcertSection artist={artist} />
+            <DetailImgSection imageSrc={artistImageSrc} alt={artist.artistName} />
+          </div>
+          <ArtistContentSection
+            artist={artist}
+            onToggleScrap={handleToggleScrap}
+            isScrapped={isScrapped}
+          />
+          <ScheduledConcertSection artist={artist} />
+          <EndedConcertSection artist={artist} />
+        </>
+      )}
     </div>
   );
 }

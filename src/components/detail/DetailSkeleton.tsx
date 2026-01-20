@@ -4,7 +4,7 @@ export default function ArtistDetailSkeleton() {
       {/* Header + Image */}
       <div className="relative">
         <div className="h-12 bg-black" />
-        <div className="w-full aspect-square bg-gray-800" />
+        <div className="w-full h-120 aspect-square bg-gray-800" />
       </div>
 
       {/* Artist Content */}
