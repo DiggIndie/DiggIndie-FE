@@ -47,7 +47,7 @@ export default function HomeSearch() {
   useEffect(() => {
     if (!isAuthed) return;
     if (!isSubmitted || !debouncedTerm) return;
-    searchService.saveRecent({ content: debouncedTerm, category: 'GENERAL' });
+    searchService.saveRecent({ content: debouncedTerm });
   }, [isSubmitted, debouncedTerm, isAuthed]);
 
   const handleChange = (value: string) => {
@@ -83,6 +83,8 @@ export default function HomeSearch() {
         <Image
           src={back}
           alt="이전으로"
+          width={24}
+          height={24}
           onClick={() => router.push('/')}
           className="cursor-pointer"
         />
