@@ -41,7 +41,7 @@ export type GetConcertParams = {
 };
 
 export async function getConcerts(params: GetConcertParams) {
-  const { order, query = "", page = 0, size = 10, sort } = params;
+  const { order, query = "", page = 0, size = 20, sort } = params;
 
   const qs = new URLSearchParams();
   qs.set("order", order);

@@ -14,7 +14,9 @@ export default function MyArtistPage() {
         <div className={'sticky top-0 z-50'}>
           <SearchHeader title={'아티스트'} onHamburgerClick={() => setIsSideTabOpen(true)} />
         </div>
-        <SearchArtist />
+        <div className={'pb-4'}>
+          <SearchArtist />
+        </div>
       </div>
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>

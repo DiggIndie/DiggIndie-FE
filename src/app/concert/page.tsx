@@ -14,7 +14,9 @@ export default function ConcertPage() {
         <div className={'sticky top-0 z-50'}>
           <SearchHeader title={'공연'} onHamburgerClick={() => setIsSideTabOpen(true)} />
         </div>
-        <SearchConcert />
+        <div className={'pb-4'}>
+          <SearchConcert />
+        </div>
       </div>
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>

@@ -24,14 +24,12 @@ function mapSortKeyToOrder(key: SortKey): "recent" | "view" | "scrap" {
 export default function SearchConcert() {
   const [query, setQuery] = useState("");
   const [debouncedTerm, setDebouncedTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isTypingLoading, setIsTypingLoading] = useState(false);
 
   const [sortKey, setSortKey] = useState<SortKey>("recent");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  //page size API 연동 후 변경
-  const page = 0;
   const size = 20;
 
   const order = useMemo(() => mapSortKeyToOrder(sortKey), [sortKey]);
@@ -48,29 +46,28 @@ export default function SearchConcert() {
 
   /* debounce */
   useEffect(() => {
-    setIsLoading(true);
+    setIsTypingLoading(true);
 
     const timer = setTimeout(() => {
       setDebouncedTerm(query);
-      setIsLoading(false);
+      setIsTypingLoading(false);
     }, 400);
 
     return () => clearTimeout(timer);
   }, [query]);
 
-  // API호출
-  const { concerts, error } = useConcertsSearch({
-    order,
-    query: debouncedTerm,
-    page,
-    size,
-    enabled: true,
-  });
+  const { concerts, pageInfo, error, isFetching, isFetchingMore, loadFirstPage, sentinelRef } =
+    useConcertsSearch({
+      order,
+      query: debouncedTerm,
+      size,
+      enabled: true,
+    });
 
   const label =
     sortKey === "recent" ? "업데이트순" : sortKey === "view" ? "조회수 순" : "스크랩순";
 
-  const showSkeleton = isLoading;
+  const showSkeleton = isTypingLoading || (isFetching && pageInfo.page === 0);
 
   return (
     <section className="relative w-full flex flex-col px-[20px] mt-[20px]">
@@ -82,7 +79,8 @@ export default function SearchConcert() {
         onClick={() => {
           setQuery("");
           setDebouncedTerm("");
-          setIsLoading(false);
+          setIsTypingLoading(false);
+          loadFirstPage();
         }}
       />
 
@@ -102,7 +100,7 @@ export default function SearchConcert() {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               setDebouncedTerm(query);
-              setIsLoading(false);
+              setIsTypingLoading(false);
             }
           }}
           placeholder="검색어를 입력하세요"
@@ -153,8 +151,13 @@ export default function SearchConcert() {
       {/* 결과 */}
       <div className="mt-4">
         {showSkeleton ? <SearchCardSkeleton /> : <ConcertGrid concerts={concerts} />}
-      </div>
 
+        {isFetchingMore ? (
+          <div className="mt-3 text-[13px] text-[#8C8888] font-normal">불러오는 중...</div>
+        ) : null}
+
+        <div ref={sentinelRef} className="h-[1px]" />
+      </div>
     </section>
   );
 }

@@ -14,7 +14,7 @@ export default function ArtistCard({ artist }: Props) {
   const img = (artist.artistImage ?? "").trim() || artistDefault;
 
   return (
-    <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px]">
+    <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px] cursor-pointer">
       <div className="relative flex flex-col">
         <ImageTile
           src={img}
