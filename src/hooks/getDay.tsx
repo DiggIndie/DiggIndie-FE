@@ -23,3 +23,19 @@ export function getThisWeekDates(weekOffset: number = 0) {
   }
   return result;
 }
+
+//api에서 xxxx.xx.xx ~ xx로 주는 걍우 (recommendation) 첫날짜 기준으로
+function cutStartDate(period: string) {
+  return period.split('~')[0].trim();
+}
+
+
+export function daysUntilConcert(targetDate: string): number {
+  const today = new Date();
+  const target = new Date(cutStartDate(targetDate));
+
+  const diff = target.getTime() - today.getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
+
+  return Math.ceil(diff / oneDay);
+}

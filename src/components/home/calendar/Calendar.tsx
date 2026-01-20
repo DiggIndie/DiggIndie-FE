@@ -8,6 +8,7 @@ import Image from "next/image";
 type CalendarProps = {
   selectedDates: string[];
   onChangeSelectedDates: (next: string[]) => void;
+  onMonthChange?: (year: number, month: number) => void;
 };
 
 type Cell = {
@@ -15,7 +16,7 @@ type Cell = {
   m: number;
   d: number;
   inMonth: boolean;
-  key: string; // YYYY-MM-DD
+  key: string;
 };
 
 function pad2(n: number) {
@@ -61,8 +62,16 @@ function buildInclusiveRangeKeys(aKey: string, bKey: string) {
   return keys;
 }
 
-export default function SimpleCalendar({ selectedDates, onChangeSelectedDates }: CalendarProps) {
+export default function SimpleCalendar({
+                                         selectedDates,
+                                         onChangeSelectedDates,
+                                         onMonthChange,
+                                       }: CalendarProps) {
   const [current, setCurrent] = useState(new Date());
+
+  useEffect(() => {
+    onMonthChange?.(current.getFullYear(), current.getMonth() + 1);
+  }, [current, onMonthChange]);
 
   const year = current.getFullYear();
   const month = current.getMonth();
@@ -128,16 +137,12 @@ export default function SimpleCalendar({ selectedDates, onChangeSelectedDates }:
 
     startKeyRef.current = cell.key;
     lastKeyRef.current = cell.key;
-
-    if (!cell.inMonth) setCurrent(new Date(cell.y, cell.m, 1));
   }
 
   function enterCellWhileDown(cell: Cell) {
     if (!pointerDownRef.current) return;
 
     if (!didDragRef.current) didDragRef.current = true;
-
-    if (!cell.inMonth) setCurrent(new Date(cell.y, cell.m, 1));
 
     const startKey = startKeyRef.current;
     if (!startKey) return;
@@ -175,7 +180,6 @@ export default function SimpleCalendar({ selectedDates, onChangeSelectedDates }:
     };
   }, []);
 
-  // 캘린더 셀 외부(캘린더 컴포넌트 바깥) 클릭 시 배열 비우기
   useEffect(() => {
     const onDown = (e: PointerEvent) => {
       const el = wrapperRef.current;

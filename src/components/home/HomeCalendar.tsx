@@ -11,7 +11,7 @@ import nextDisabledBtn from '@/assets/icons/nextDisabled.svg';
 import nextGrayBtn from '@/assets/icons/nextGray.svg';
 import Link from 'next/link';
 
-import { useConcertsByDate } from '@/hooks/useConcertsByDate';
+import { useWeeklyConcerts } from '@/hooks/useWeeklyConcerts';
 
 function pad2(n: number) {
   return String(n).padStart(2, '0');
@@ -40,7 +40,7 @@ export default function HomeCalendar() {
 
   const selectedDate = dates[selectedIndex];
 
-  const { concerts: todayConcerts, error } = useConcertsByDate(selectedDate, {
+  const { concerts: todayConcerts, error } = useWeeklyConcerts(selectedDate, {
     size: 2,
     page: 0,
   });
@@ -55,11 +55,10 @@ export default function HomeCalendar() {
   }
 
   return (
-    <div className="flex flex-col justify-center mt-10 bg-black">
-      <div className={'flex mx-[20px]'}>
+    <div className="flex flex-col w-full px-5 justify-center mt-10 bg-black">
+      <div className={'flex'}>
         <div className={'text-[20px] font-semibold'}>공연 위클리 캘린더</div>
-
-        {/* 상단 > : 무조건 "오늘"로 전체 캘린더 진입 */}
+        {/* 상단 >: 금일 날짜로 진입 */}
         <Link
           href={{ pathname: '/calendar', query: { date: todayKey() } }}
           className="ml-auto"
@@ -68,9 +67,9 @@ export default function HomeCalendar() {
         </Link>
       </div>
 
-      <div className={'mx-5 mt-4 text-4 font-medium text-gray-500'}>{yearMonth}</div>
+      <div className={'mt-4 text-4 font-medium text-gray-500'}>{yearMonth}</div>
 
-      <div className={'flex justify-between w-[340px] mx-[17.5px]'}>
+      <div className={'flex justify-between w-full'}>
         <button
           disabled={isThisWeek}
           onClick={() => setWeekOffset((prev) => Math.max(0, prev - 1))}
@@ -79,7 +78,7 @@ export default function HomeCalendar() {
           <Image src={!isThisWeek ? prevBtn : prevDisabledBtn} alt="prevBtn" />
         </button>
 
-        <div className="flex items-center justify-center w-[284px] h-[62px]">
+        <div className="flex items-center justify-center w-full h-[62px]">
           {weekdays.map((day, i) => {
             const isSelected = selectedIndex === i;
             return (
@@ -88,7 +87,7 @@ export default function HomeCalendar() {
                 onClick={() => setSelectedIndex(i)}
                 className={`
                   flex flex-col items-center justify-center cursor-pointer rounded-sm
-                  w-11 h-[62px] transition-all gap-[4px] border-[1px]
+                  w-full h-[62px] transition-all gap-1 border-[1px]
                   ${
                   isSelected
                     ? 'bg-[#880405] font-bold border-[#C31C20]'
@@ -112,47 +111,58 @@ export default function HomeCalendar() {
         </button>
       </div>
 
-      <span className={'w-[334px] ml-[17.5px] mt-[12px] border-b-[1px] border-[#332F2F]'} />
+      <span className={'w-full mt-3 border-b-[1px] border-[#332F2F]'} />
 
       {/* 더보기 : 위클리에서 선택된 날짜로 전체 캘린더 진입 */}
       <Link
         href={{ pathname: '/calendar', query: { date: selectedDate } }}
-        className={'flex items-center text-[14px] font-medium text-gray-500 mt-[12px] ml-auto'}
+        className={'flex items-center text-[14px] font-medium text-gray-500 mt-3 ml-auto'}
       >
         더보기
         <Image
           src={nextGrayBtn}
           alt={'more'}
-          className={'mr-[20px]'}
           width={20}
           height={20}
         />
       </Link>
 
       <div
-        className="flex flex-col w-[334px] min-h-[56px] max-h-[224px]
-        bg-black gap-[12px] mt-[8px] mx-[20px]"
+        className="flex flex-col w-full min-h-[56px] max-h-[224px]
+        bg-black gap-3 mt-2"
       >
         {error ? (
-          <div className="text-[#FF6B6B] text-[14px] break-words">{error}</div>
+          <div className="text-[#FF6B6B] text-3.5 break-words ">{error}</div>
         ) : todayConcerts.length !== 0 ? (
           todayConcerts.map((concert) => (
             <div
-              key={concert.id}
-              className="flex flex-col w[335px] h-[100px] font-semibold bg-[#1F1D1D] rounded-[4px]"
+              key={concert.concertId}
+              className="flex flex-col w-full h-25 font-semibold bg-[#1F1D1D] px-4 py-3
+              border-[1px] border-[#413D3D] rounded-sm"
             >
-              <span className={'mx-[16px] mt-[13px] text-[18px]'}>{concert.time}</span>
-              <div className={'flex mx-[16px] mt-[2px] gap-[4px] font-normal'}>
-                <Image src={ticket} alt={'ticket'} width={20} height={20} />
-                {concert.title}
+              <span className="text-[16px] truncate">
+                {concert.startsAt}
+              </span>
+
+              <div className={'flex gap-1 mt-1'}>
+                <div className="flex gap-1 font-normal min-w-0 pb-8">
+                  <Image src={ticket} alt="ticket" width={20} height={20} />
+                </div>
+
+                <div className="flex flex-col text-[#8C8888] font-normal truncate">
+                <span className="truncate text-white">
+                  {concert.concertName}
+                </span>
+                  {concert.concertHall}
+                </div>
               </div>
-              <div className={'ml-[36px] text-[#8C8888] font-normal'}>{concert.location}</div>
+
             </div>
           ))
         ) : (
           <div
-            className="w-[335px] h-[44px] border-[1px] border-[#413D3D]
-          bg-[#1F1D1D] text-[#8C8888] text-[14px] pt-[10px] px-[12px] rounded-sm"
+            className="w-full border-[1px] border-[#413D3D]
+          bg-[#1F1D1D] text-[#8C8888] text-[14px] py-3 px-4 rounded-sm"
           >
             금일 예정된 공연은 없습니다
           </div>

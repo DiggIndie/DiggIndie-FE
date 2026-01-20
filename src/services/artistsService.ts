@@ -1,10 +1,10 @@
 // src/services/artistsService.ts
 import { fetchArtists } from '@/api/artists';
 import { postOnboardArtist } from '@/api/onboardArtists';
-import type { Artist, PageInfo } from '@/types/artists';
+import type { OnboardArtist, PageInfo } from '@/types/artists';
 
 export async function getOnboardingArtists(): Promise<{
-  artists: Artist[];
+  artists: OnboardArtist[];
   pageInfo: PageInfo;
 }> {
   const res = await fetchArtists({ page: 0, size: 12 });
@@ -23,7 +23,7 @@ export async function getArtistsPage(params: {
   page: number;
   size: number;
   query?: string;
-}): Promise<{ artists: Artist[]; pageInfo: PageInfo }> {
+}): Promise<{ artists: OnboardArtist[]; pageInfo: PageInfo }> {
   const res = await fetchArtists(params);
 
   if (!res.isSuccess) {
