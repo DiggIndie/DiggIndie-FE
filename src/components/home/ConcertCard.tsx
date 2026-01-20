@@ -21,9 +21,7 @@ export default function ConcertCard({ concert }: Props) {
       onClick={() => router.push(`/concert/${concert.concertId}`)}
     >
       <div
-        className={`relative flex flex-col overflow-x-auto ${
-          ended ? "brightness-[0.4]" : ""
-        }`}
+        className={`relative flex flex-col overflow-hidden ${ended ? "brightness-[0.4]" : ""}`}
       >
         <ImageTile
           src={(concert.mainImage ?? "").trim() || concertDefault.src}
@@ -34,31 +32,31 @@ export default function ConcertCard({ concert }: Props) {
         />
 
         {!ended ? (
-          <div className="absolute left-0 right-0 z-10 mt-[134px] text-sm mx-2 flex flex-col">
+          <div className="absolute left-0 right-0 z-10 mt-[134px] mx-2 flex min-w-0 flex-col text-sm">
             <span className="flex w-[41px] h-[17px] bg-[#FF3637] items-center justify-center rounded-xs">
               {dDay}
             </span>
 
             {/* 공연명 */}
-            <span className="text-base mt-1 max-w-[144px] truncate">
-              {concert.concertName}
-            </span>
+            <span className="mt-1 block w-full min-w-0 truncate text-base">
+             {concert.concertName}
+           </span>
 
             {/* 라인업 */}
-            <span className="text-[14px] max-w-[144px] truncate">
+            <span className="block w-full min-w-0 truncate text-[14px]">
               {Array.isArray(concert.lineUp) ? concert.lineUp.join(", ") : ""}
             </span>
 
             {/* 기간 */}
-            <span className="text-sm text-[#8C8888] max-w-[144px] truncate">
+            <span className="block w-full min-w-0 truncate text-sm text-[#8C8888]">
               {concert.period}
             </span>
           </div>
         ) : (
           <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <span className="text-base font-medium text-white brightness-[1.0]">
-              종료된 공연입니다
-            </span>
+      <span className="text-base font-medium text-white brightness-[1.0]">
+        종료된 공연입니다
+      </span>
           </div>
         )}
       </div>

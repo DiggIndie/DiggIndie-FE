@@ -14,12 +14,12 @@ export default function SearchSection({
   onSubmit,
 }: SearchSectionProps) {
   return (
-    <section className="w-full flex bg-gray-700 rounded-sm justify-between px-2 py-3">
+    <section className="w-full flex bg-gray-700 rounded-sm justify-between px-3 py-3">
       <input
         value={searchTerm}
         onChange={(e) => onChange(e.target.value)}
         placeholder="검색어를 입력하세요"
-        className="outline-none text-[#A6A6A6]"
+        className="outline-none placeholder:text-[#A6A6A6] text-white"
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
             onSubmit();

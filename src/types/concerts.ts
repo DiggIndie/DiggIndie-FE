@@ -65,6 +65,27 @@ export type LineUpItem = {
   bandId: number;
   bandName: string;
 };
+export interface ConcertLineUp {
+  bandId: number;
+  bandName: string;
+  bandImage: string;
+}
+export interface ConcertDetail {
+  concertId: number;
+  concertName: string;
+  isScraped: boolean;
+  startDate: string;
+  endDate: string;
+  isFinished: boolean;
+  concertHallName: string;
+  address: string;
+  preorderPrice: number;
+  onsitePrice: number;
+  bookUrl: string;
+  imageUrl: string;
+  description: string;
+  lineUp: ConcertLineUp[];
+}
 
 export type RecConcertItem = {
   concertId: number;

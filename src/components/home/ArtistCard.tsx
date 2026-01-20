@@ -5,6 +5,7 @@ import { ImageTile } from "@/components/home/ImageTile";
 import Image from "next/image";
 import playBtn from "@/assets/common/play.svg";
 import artistDefault from "@/assets/detail/artist_default.svg";
+import { useRouter } from 'next/navigation';
 
 type Props = {
   artist: ArtistItem;
@@ -12,8 +13,13 @@ type Props = {
 
 export default function ArtistCard({ artist }: Props) {
   const img = (artist.artistImage ?? "").trim() || artistDefault;
+  const router = useRouter();
 
   return (
+    <div
+      className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px]"
+      onClick={() => router.push(`/artist/${artist.artistId}`)}
+    >
     <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D] rounded-b-[4px] cursor-pointer">
       <div className="relative flex flex-col">
         <ImageTile
@@ -63,6 +69,7 @@ export default function ArtistCard({ artist }: Props) {
             : ""}
         </div>
       </div>
+    </div>
     </div>
   );
 }

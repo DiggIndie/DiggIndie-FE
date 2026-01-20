@@ -1,8 +1,8 @@
-import { env } from "@/lib/env";
-import { authService } from "@/services/authService";
-import { useAuthStore } from "@/stores/authStore";
-import { ApiResponse } from "@/types/api";
-import { RequestInit } from "next/dist/server/web/spec-extension/request";
+import { env } from '@/lib/env';
+import { authService } from '@/services/authService';
+import { useAuthStore } from '@/stores/authStore';
+import { ApiResponse } from '@/types/api';
+import { RequestInit } from 'next/dist/server/web/spec-extension/request';
 
 function getAccessTokenSafely() {
   try {
@@ -23,7 +23,7 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const { query, useDevAuth, auth, ...init } = options;
 
-  if (!env.BASE_URL) throw new Error("NEXT_PUBLIC_BASE_URL not set");
+  if (!env.BASE_URL) throw new Error('NEXT_PUBLIC_BASE_URL not set');
 
   const url = new URL(path, env.BASE_URL);
 
@@ -40,9 +40,10 @@ export async function apiFetch<T>(
     headers.set("Content-Type", "application/json");
   }
 
+
   if (useDevAuth) {
     const token = process.env.NEXT_PUBLIC_DEV_ACCESS_TOKEN;
-    if (token) headers.set("Authorization", `Bearer ${token}`);
+    if (token) headers.set('Authorization', `Bearer ${token}`);
   }
 
   if (auth) {
@@ -53,11 +54,11 @@ export async function apiFetch<T>(
   const res = await fetch(url.toString(), {
     ...init,
     headers,
-    cache: "no-store",
+    cache: 'no-store',
   });
 
   if (!res.ok) {
-    const text = await res.text().catch(() => "");
+    const text = await res.text().catch(() => '');
     throw new Error(`API Error ${res.status}: ${text || res.statusText}`);
   }
 
@@ -74,7 +75,7 @@ export async function apiFetch<T>(
 
   return JSON.parse(text) as T;
 }
-
+//--------------------------------------------------------
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type FetchOptions = RequestInit & {
