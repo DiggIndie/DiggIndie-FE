@@ -1,10 +1,12 @@
 import Image from 'next/image';
 // import artistData from '@/mocks/mockArtistDetail.json';
 import { ArtistDetail } from '@/types/artists';
+import { useRouter } from 'next/navigation';
 interface ScheduledConcertSectionProps {
   artist: ArtistDetail;
 }
 export default function ScheduledConcertSection({ artist }: ScheduledConcertSectionProps) {
+  const router = useRouter();
   return (
     <section className="px-5 mb-9">
       <span className="font-semibold text-xl mb-3">진행 예정 공연</span>
@@ -12,8 +14,9 @@ export default function ScheduledConcertSection({ artist }: ScheduledConcertSect
         {artist.scheduledConcerts.length > 0 ? (
           artist.scheduledConcerts.map((concert) => (
             <div
-              className="py-4 relative w-[160px] h-[226px] flex-shrink-0"
+              className="py-4 relative w-[160px] h-[226px] flex-shrink-0 cursor-pointer"
               key={concert.concertId}
+              onClick={() => router.push(`/concert/${concert.concertId}`)}
             >
               <Image
                 src={concert.concertImage}
