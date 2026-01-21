@@ -1,18 +1,24 @@
 import Image from 'next/image';
 // import artistData from '@/mocks/mockArtistDetail.json';
 import { ArtistDetail } from '@/types/artists';
+import { useRouter } from 'next/navigation';
 
 interface EndedConcertSectionProps {
   artist: ArtistDetail;
 }
 export default function EndedConcertSection({ artist }: EndedConcertSectionProps) {
+  const router = useRouter();
   return (
     <section className="px-5 pb-6">
       <span className="font-semibold text-xl mb-3">종료된 공연</span>
       <div className="flex gap-3 overflow-x-auto whitespace-nowrap mt-3">
         {artist.endedConcerts.length ? (
           artist.endedConcerts.map((concert) => (
-            <div key={concert.concertId} className="my-4 relative w-40 h-[226px] flex-shrink-0">
+            <div
+              key={concert.concertId}
+              className="my-4 relative w-40 h-[226px] flex-shrink-0 cursor-pointer"
+              onClick={() => router.push(`/concert/${concert.concertId}`)}
+            >
               <Image
                 src={concert.concertImage}
                 alt={concert.concertName}
