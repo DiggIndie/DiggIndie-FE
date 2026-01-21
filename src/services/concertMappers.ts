@@ -19,7 +19,7 @@ export function recToConcertItem(item: RecConcertItem): ConcertItem {
     concertName: item.concertName,
     dDay: item.dDay,
     period: item.duration,
-    mainImage: item.mainImage,
+    mainImage: item.imageUrl,
     lineUp: item.lineUp.map((b) => b.bandName),
   };
 }

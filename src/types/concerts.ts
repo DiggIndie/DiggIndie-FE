@@ -91,7 +91,7 @@ export type RecConcertItem = {
   concertName: string;
   dDay: string;
   lineUp: LineUpItem[];
-  mainImage: string;
+  imageUrl: string;
   duration: string;
 };
 
