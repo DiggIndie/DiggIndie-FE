@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import type { OnboardArtist } from '@/types/artists';
 import { saveSelectedArtists } from '@/services/artistsService';
 import { useOnboardArtists } from '@/hooks/useOnboardArtists';
+import { onBoardKeywordService } from '@/services/onBoardKeyword.service';
 
 export default function OnboardArtistPage() {
   const router = useRouter();
@@ -31,8 +32,20 @@ export default function OnboardArtistPage() {
   } = useOnboardArtists(12);
 
   useEffect(() => {
-    void loadFirstPage(undefined);
-  }, []);
+    const initData = async () => {
+      // 기존에 선택했던 아티스트 정보 가져오기
+      const savedArtists = await onBoardKeywordService.getSelectedArtists();
+
+      if (savedArtists && savedArtists.length > 0) {
+        // 객체 배열에서 bandId 숫자 배열만 뽑아내기
+        const ids = savedArtists.map((artist: OnboardArtist) => artist.bandId);
+        setSelectedIds(ids);
+      }
+      void loadFirstPage(undefined);
+    };
+
+    initData();
+  }, []); // 의존성 배열을 비워 처음에 한 번만 실행
 
   useEffect(() => {
     const el = sentinelRef.current;
@@ -57,6 +70,7 @@ export default function OnboardArtistPage() {
     if (selectedIds.length < 2) return;
 
     try {
+      //키워드 저장
       await saveSelectedArtists(selectedIds);
       router.push('/onboard/genre');
     } catch (err) {

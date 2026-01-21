@@ -1,4 +1,4 @@
-import { Artist } from './artists';
+import { OnboardArtist } from './artists';
 
 export interface ApiResponse<T> {
   statusCode: number;
@@ -16,6 +16,7 @@ export interface KeywordResponse {
   message: string;
   payload: Keyword[];
 }
+
 export interface SelectedArtistsResponse {
-  bands: Artist[];
+  bands: OnboardArtist[];
 }

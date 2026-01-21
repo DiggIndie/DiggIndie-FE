@@ -1,5 +1,5 @@
 'use client';
-import Button from '@/components/common/Button';
+import LinkButton from '@/components/common/LinkButton';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -170,9 +170,9 @@ export default function AgreePage() {
         </div>
       </section>
       <div className="w-[375px] px-5 absolute bottom-5">
-        <Button onClick={handleAgree} disabled={!requiredCheck}>
+        <LinkButton onClick={handleAgree} disabled={!requiredCheck}>
           확인
-        </Button>
+        </LinkButton>
       </div>
     </div>
   );

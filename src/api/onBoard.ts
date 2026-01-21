@@ -2,6 +2,7 @@ import { ApiResponse, Keyword, KeywordResponse, SelectedArtistsResponse } from '
 import { fetchClient } from './client';
 
 export const onBoardApi = {
+  //온보딩 키워드 불러오기
   async getOnboardingKeywords(): Promise<KeywordResponse> {
     const res = await fetchClient<Keyword[]>('/keywords', {
       method: 'GET',
@@ -13,6 +14,7 @@ export const onBoardApi = {
 
     return res;
   },
+  //온보딩 키워드 저장
   async saveOnboardKeywords(keywordIds: number[]) {
     return await fetchClient<void>('/my/keywords', {
       method: 'POST',

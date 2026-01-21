@@ -1,9 +1,7 @@
-
-
 export interface OnboardArtist {
   bandId: number;
-  bandName: string;
   imageUrl: string | null;
+  bandName: string;
 }
 
 export interface PageInfo {
@@ -22,10 +20,8 @@ export interface OnboardArtistsResponse {
   isSuccess: boolean;
 }
 
-
-
 //아티스트 검색용
-export type ArtistOrder = "recent" | "alphabet" | "scrap";
+export type ArtistOrder = 'recent' | 'alphabet' | 'scrap';
 
 export type TopTrack = {
   title: string;
@@ -73,18 +69,18 @@ export type MyArtistsResult = {
 };
 
 //아티스트 추천용
-export type  RecArtistItem = {
+export type RecArtistItem = {
   bandId: number;
   score: number;
   bandName: string;
   imageUrl: string;
   topTrack: TopTrack | null;
   keywords: string[];
-}
+};
 
 export type RecArtistPayload = {
   bands: RecArtistItem[];
-}
+};
 // types/artistDetail.ts
 export interface ArtistDetail {
   artistId: number;
