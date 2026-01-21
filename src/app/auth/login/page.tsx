@@ -106,7 +106,7 @@ export default function LoginPage() {
           회원가입
         </span>
       </div>
-      <section className="mt-15 flex flex-col w-full">
+      <section className="mt-10 flex flex-col w-full">
         <div className="flex gap-1 w-full items-center">
           <div className="flex-1 border-t border-gray-300" />
           <span className="text-gray-300 text-xs">SNS 계정으로 로그인</span>

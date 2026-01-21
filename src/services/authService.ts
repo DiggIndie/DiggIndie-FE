@@ -80,4 +80,27 @@ export const authService = {
       console.log('user id 조회 api 오류', err);
     }
   },
+  async checkEmail(email: string) {
+    if (!email) return null;
+    try {
+      const res = await authApi.checkEmail({ email: email, type: 'SIGNUP' });
+      console.log('email 유효성 검사', res.payload.success);
+      return res.payload.success;
+    } catch (err) {
+      throw err;
+    }
+  },
+  async verifyCode(email: string, code: string) {
+    try {
+      const res = await authApi.verifyCode({
+        email: email,
+        code: code,
+        type: 'SIGNUP',
+        newPassword: 'stringst',
+      });
+      return res.payload.success;
+    } catch (err) {
+      throw err;
+    }
+  },
 };

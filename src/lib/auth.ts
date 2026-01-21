@@ -39,14 +39,20 @@ const passwordSchema = z
       message: '비밀번호는 영문, 숫자, 특수문자 중 2가지 이상을 조합해야 합니다',
     }
   );
-const emailSchema = z.string().min(1, '이메일을 입력하세요').email('올바른 이메일 형식이 아닙니다');
-const emailConfirmSchema = z.string().min(1, '인증번호를 확인하세요');
+const phoneNumberSchema = z.string().min(1, '전화번호를 입력해주세요');
+const emailSchema = z
+  .string()
+  .min(1, '이메일을 입력해주세요')
+  .email('올바른 이메일 형식이 아닙니다');
+const emailConfirmSchema = z.string().min(1, '인증번호를 입력해주세요');
 export const joinSchema = z
   .object({
     id: idSchema,
     password: passwordSchema,
-    phoneNumber: z.string().min(1, '전화번호를 입력해주세요'),
     confirmPassword: z.string(),
+    phoneNumber1: phoneNumberSchema,
+    phoneNumber2: phoneNumberSchema,
+    phoneNumber3: phoneNumberSchema,
     email: emailSchema,
     emailConfirm: emailConfirmSchema,
   })

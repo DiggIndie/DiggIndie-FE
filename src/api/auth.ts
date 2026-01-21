@@ -1,3 +1,4 @@
+import { stringify } from 'querystring';
 import { fetchClient } from './client';
 
 export const authApi = {
@@ -44,6 +45,29 @@ export const authApi = {
     return await fetchClient<{ memberId: string; userId: string }>('/my/user-id', {
       method: 'GET',
       auth: true,
+    });
+  },
+
+  async checkEmail(data: { email: string; type: string }) {
+    return await fetchClient<{
+      message: string;
+      success: boolean;
+      userId: string;
+    }>('/auth/email/send', {
+      method: 'POST',
+      auth: false,
+      body: JSON.stringify(data),
+    });
+  },
+  async verifyCode(data: { email: string; code: string; type: 'SIGNUP'; newPassword: 'stringst' }) {
+    return await fetchClient<{
+      message: string;
+      success: boolean;
+      userId: string;
+    }>('/auth/email/verify', {
+      method: 'POSt',
+      auth: false,
+      body: JSON.stringify(data),
     });
   },
 };
