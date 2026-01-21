@@ -6,7 +6,7 @@ import DetailImgSection from '@/components/detail/DetailImgSection';
 import LineupSection from '@/components/detail/LineupSection';
 import ConcertContentSection from '@/components/detail/ConcertContentSection';
 import ConcertStorySection from '@/components/detail/ConcertStorySection';
-import MyHeader from '@/components/my/MyHeader';
+import DetailHeader from '@/components/detail/DetailHeader';
 import { useEffect, useState } from 'react';
 import { getDetailConcerts, toggleScrapConcert } from '@/services/concertService';
 import { ConcertDetail } from '@/types/concerts';
@@ -37,11 +37,11 @@ export default function ConcertDetailPage() {
     if (!concert || !isLoggedIn) return;
 
     const result = await toggleScrapConcert(concert.concertId);
-    setConcert((prev) => (prev ? { ...prev, isScraped: result } : prev));
+    setConcert((prev) => (prev ? { ...prev, isScrapped: result } : prev));
   };
 
   return (
-    <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 overflow-auto">
+    <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 relative">
       {isLoading ? (
         <DetailSkeleton />
       ) : !concert ? (
@@ -50,7 +50,7 @@ export default function ConcertDetailPage() {
         </div>
       ) : (
         <>
-          <MyHeader title="" />
+          <DetailHeader title="" />
           <DetailImgSection imageSrc={concert.imageUrl} type="concert" />
           <ConcertContentSection
             isLoggedIn={isLoggedIn}

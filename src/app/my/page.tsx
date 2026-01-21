@@ -16,14 +16,29 @@ import type { ConcertItem } from '@/types/concerts';
 import type { ArtistItem } from '@/types/artists';
 import { myConcertToConcertItem } from '@/services/concertMappers';
 import { myArtistToArtistItem } from '@/services/artistMappers';
+import SideTab from '@/components/sideTabDir/SideTab';
 
 export default function MyPage() {
   const router = useRouter();
+  const [isSideTabOpen, setIsSideTabOpen] = useState(false);
 
   const accessToken = useAuthStore((s) => s.accessToken);
   const isLoggedIn = !!accessToken;
   const userId = useAuthStore((s) => s.userId);
+  useEffect(() => {
+    const fetchIdIfNeeded = async () => {
+      // 로그인은 되어 있는데 스토어에 userId가 없다면 (새로고침 상황 등)
+      if (isLoggedIn && !userId) {
+        try {
+          await authService.getUserId();
+        } catch (error) {
+          console.error('사용자 정보를 가져오는 데 실패했습니다.');
+        }
+      }
+    };
 
+    fetchIdIfNeeded();
+  }, [isLoggedIn, userId]);
   const { concerts: myConcerts, isLoading: isMyConcertsLoading } = useMyConcerts({
     enabled: isLoggedIn,
   });
@@ -49,9 +64,10 @@ export default function MyPage() {
 
   return (
     <div className="text-white flex flex-col h-screen bg-black relative">
-      <MyPageHeader />
-
-      <div className="flex flex-col pb-6 bg-black">
+      <div className="sticky">
+        <MyPageHeader onOpenSideTab={() => setIsSideTabOpen(true)} />
+      </div>
+      <div className="flex flex-col pb-6 bg-black mt-13">
         <ProfileSection userId={userId} />
 
         {/* 스크랩한 공연 */}
@@ -110,6 +126,7 @@ export default function MyPage() {
         </span>
         <span className="text-sm font-normal text-gray-500 px-3 cursor-pointer">회원탈퇴</span>
       </p>
+      {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>
   );
 }

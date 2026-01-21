@@ -19,7 +19,7 @@ export default function ConcertContentSection({
   isScrapped,
   onToggleScrap,
 }: ConcertContentSectionProps) {
-  console.log('Concert Data exists:', !!concert, '스크랩 데이터', isScrapped);
+  console.log('스크랩 데이터', isScrapped);
   return (
     <section className="px-5 pt-5 pb-7 border-b-4 border-gray-800">
       <p className="flex justify-between gap-6 pb-1">
