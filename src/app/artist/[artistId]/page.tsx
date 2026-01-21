@@ -30,8 +30,8 @@ export default function ArtistDetailPage() {
   const handleToggleScrap = async () => {
     if (!artist) return;
     try {
-      setIsScrapped((prev) => !prev);
       await scrapArtist(artist.artistId);
+      setIsScrapped((prev) => !prev);
     } catch {
       setIsScrapped((prev) => !prev);
     }

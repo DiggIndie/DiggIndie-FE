@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import diggindie from '@/assets/common/diggindie.svg';
-import Button from '@/components/common/Button';
+import LinkButton from '@/components/common/LinkButton';
 import InputSection from '@/components/auth/InputSection';
 import { useRouter } from 'next/navigation';
 import googleIcon from '@/assets/auth/google.svg';
@@ -58,7 +58,9 @@ export default function LoginPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
         {errors.password && <p className="text-red-400 text-xs">{errors.password}</p>}
-        <Button onClick={handleLogin}>로그인</Button>
+        <LinkButton onClick={handleLogin} disabled={false}>
+          로그인
+        </LinkButton>
       </section>
       <div className="mt-5">
         <span

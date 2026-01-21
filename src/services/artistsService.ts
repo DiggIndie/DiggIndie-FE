@@ -56,6 +56,10 @@ export async function getArtistDetail(artistId: number): Promise<ArtistDetail> {
 }
 
 export async function scrapArtist(artistId: number): Promise<void> {
-  const res = await artistAPI.toggleScrapArtist({ bandIds: [artistId] });
-  console.log('아티스트 스크랩 데이터', res);
+  try {
+    const res = await artistAPI.toggleScrapArtist({ bandIds: [artistId] });
+    console.log('아티스트 스크랩 데이터', res);
+  } catch (err) {
+    throw err;
+  }
 }

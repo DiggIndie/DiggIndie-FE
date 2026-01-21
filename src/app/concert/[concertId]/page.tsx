@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import LinkButton from '@/components/common/LinkButton';
+import Button from '@/components/common/Button';
 import DetailImgSection from '@/components/detail/DetailImgSection';
 import LineupSection from '@/components/detail/LineupSection';
 import ConcertContentSection from '@/components/detail/ConcertContentSection';
@@ -61,9 +61,9 @@ export default function ConcertDetailPage() {
           <LineupSection concert={concert} />
           <ConcertStorySection concert={concert} />
           <div className="px-5 pb-5 fixed bottom-0 w-full max-w-94">
-            <LinkButton href={concert.bookUrl} isFinished={concert.isFinished}>
+            <Button href={concert.bookUrl} isFinished={concert.isFinished}>
               <span>{concert.isFinished ? '공연이 종료되었습니다' : '예매하러 가기'}</span>
-            </LinkButton>
+            </Button>
           </div>
         </>
       )}

@@ -1,40 +1,35 @@
 'use client';
-
-import Link from 'next/link';
+//온보딩, 로그인, 회원가입 때 사용
 
 interface LinkButtonProps {
   disabled?: boolean;
-  href: string | null;
-  isFinished: boolean;
   children: React.ReactNode; // 버튼 텍스트
   onClick?: () => void;
+  href?: string;
 }
 
-export default function LinkButton({
-  disabled,
-  href,
-  isFinished,
-  children,
-  onClick,
-}: LinkButtonProps) {
-  const isDisabled = disabled || !href || isFinished;
+export default function LinkButton({ disabled, children, onClick, href }: LinkButtonProps) {
+  const handleClick = (e: React.MouseEvent) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+
+    // 함수가 존재하면 실제로 실행함
+    if (onClick) {
+      onClick();
+    }
+  };
   return (
-    <Link
-      href={isDisabled ? '#' : href}
+    <a
+      href={href}
       className={`block p-4 h-13 w-full font-semibold text-center rounded-sm ${
-        isDisabled ? 'bg-gray-600 cursor-not-allowed' : 'bg-red cursor-pointer'
+        disabled ? 'bg-gray-600 cursor-not-allowed' : 'bg-red cursor-pointer'
       }`}
-      target={isDisabled ? undefined : '_blank'}
-      rel={isDisabled ? undefined : 'noopener noreferrer'}
-      aria-disabled={isDisabled}
-      onClick={(e) => {
-        if (isDisabled) {
-          e.preventDefault();
-          return;
-        }
-      }}
+      aria-disabled={disabled}
+      onClick={handleClick}
     >
       {children}
-    </Link>
+    </a>
   );
 }

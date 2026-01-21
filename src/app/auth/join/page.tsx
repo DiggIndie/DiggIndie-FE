@@ -1,6 +1,6 @@
 'use client';
 import InputSection from '@/components/auth/InputSection';
-import Button from '@/components/common/Button';
+import LinkButton from '@/components/common/LinkButton';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { joinSchema } from '@/lib/auth';
@@ -192,7 +192,9 @@ export default function JoinPage() {
         {errors.emailConfirm && <p className="text-red-400 text-xs px-3">{errors.emailConfirm}</p>}
       </section>
       <div className="w-[375px] px-5 absolute bottom-5">
-        <Button onClick={handleJoin}>가입하기</Button>
+        <LinkButton onClick={handleJoin} disabled={false}>
+          가입하기
+        </LinkButton>
       </div>
     </div>
   );

@@ -109,15 +109,9 @@ export default function OnboardArtistPage() {
       </div>
 
       <div className="px-5 mb-5">
-        <LinkButton
-          href="/onboard/genre"
-          disabled={selectedIds.length < 2}
-          isFinished={false} // 또는 어떤 상태값
-          onClick={handleComplete}
-        >
+        <LinkButton disabled={selectedIds.length < 2} onClick={handleComplete}>
           선택완료
         </LinkButton>
-
       </div>
     </div>
   );
