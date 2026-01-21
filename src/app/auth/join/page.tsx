@@ -90,7 +90,7 @@ export default function JoinPage() {
     <div className="text-white flex flex-col h-screen items-center gap-6 overflow-y-auto pb-25">
       <JoinHeader />
       {/* 아이디 입력 섹션 */}
-      <section className="flex flex-col gap-2 w-full px-5 mt-9">
+      <section className="flex flex-col gap-2 w-full px-5">
         <span className="text-xs font-medium text-gray-300 px-1 mb-2">아이디</span>
         <div className="flex gap-2 items-center">
           <InputSection
@@ -155,7 +155,6 @@ export default function JoinPage() {
           }}
         />
         {errors.phoneNumber && <p className="text-red-400 text-xs px-3">{errors.phoneNumber}</p>}
-        <span className="text-xs font-medium text-gray-300 px-3">-----</span>
       </section>
       {/* 이메일 입력 섹션 */}
       <section className="flex flex-col gap-4 px-5 w-full">
@@ -176,7 +175,7 @@ export default function JoinPage() {
         </div>
         <div className="flex gap-3">
           <InputSection
-            placeholder="이메일"
+            placeholder="인증번호"
             width="w-[237px] h-11"
             value={form.emailConfirm}
             onChange={(e) => setForm({ ...form, emailConfirm: e.target.value })}
