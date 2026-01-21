@@ -31,7 +31,6 @@ export default function MyPage() {
     enabled: isLoggedIn,
   });
 
-
   const mappedConcerts = useMemo<ConcertItem[]>(
     () => myConcerts.map(myConcertToConcertItem),
     [myConcerts]
@@ -46,7 +45,7 @@ export default function MyPage() {
     await authService.logout();
     router.push('/');
   };
-
+  const handleUserId = async () => {};
   return (
     <div className="text-white flex flex-col h-screen bg-black relative">
       <MyPageHeader />
@@ -75,9 +74,7 @@ export default function MyPage() {
             {isMyArtistsLoading ? (
               <div className="text-[14px] text-[#8C8888] px-5">불러오는 중...</div>
             ) : (
-              mappedArtists.map((artist) => (
-                <ArtistCard key={artist.artistId} artist={artist} />
-              ))
+              mappedArtists.map((artist) => <ArtistCard key={artist.artistId} artist={artist} />)
             )}
           </HorizontalSwipeList>
         </div>

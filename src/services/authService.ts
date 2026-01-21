@@ -62,9 +62,9 @@ export const authService = {
       useAuthStore.getState().logout();
       throw new Error('토큰 재발급 실패');
     }
-    const { accessToken, userId } = res.payload;
+    const { accessToken } = res.payload;
     // 재발급 받은 새 토큰을 스토어에 업데이트
-    useAuthStore.getState().login(accessToken, userId);
+    useAuthStore.getState().login(accessToken);
     return accessToken;
   },
 };
