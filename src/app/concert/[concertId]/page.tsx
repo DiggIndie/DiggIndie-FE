@@ -55,7 +55,7 @@ export default function ConcertDetailPage() {
           <ConcertContentSection
             isLoggedIn={isLoggedIn}
             concert={concert}
-            isScraped={concert.isScraped}
+            isScrapped={concert.isScrapped}
             onToggleScrap={handleToggleScrap}
           />
           <LineupSection concert={concert} />

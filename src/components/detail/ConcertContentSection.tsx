@@ -10,26 +10,27 @@ import { formatConcertDate } from '@/hooks/getDay';
 interface ConcertContentSectionProps {
   concert: ConcertDetail;
   isLoggedIn?: boolean;
-  isScraped: boolean;
+  isScrapped: boolean;
   onToggleScrap: () => void;
 }
 export default function ConcertContentSection({
   concert,
   isLoggedIn,
-  isScraped,
+  isScrapped,
   onToggleScrap,
 }: ConcertContentSectionProps) {
+  console.log('Concert Data exists:', !!concert, '스크랩 데이터', isScrapped);
   return (
     <section className="px-5 pt-5 pb-7 border-b-4 border-gray-800">
       <p className="flex justify-between gap-6 pb-1">
         <span className="font-semibold text-xl">{concert.concertName}</span>
         <BookmarkIcon
-          isActive={isScraped}
+          isActive={isScrapped}
           onClick={isLoggedIn ? onToggleScrap : undefined}
           className={`w-6 h-6 transition-colors
             ${
               isLoggedIn
-                ? isScraped
+                ? isScrapped
                   ? 'text-white scale-110 cursor-pointer'
                   : 'text-white cursor-pointer'
                 : 'text-gray-600 cursor-not-allowed'

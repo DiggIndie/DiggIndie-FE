@@ -33,10 +33,12 @@ export default function LoginBanner({ isLoggedIn }: Props) {
         <div className={'flex w-[248px] h-[36px] text-[12px] gap-[8px]'}>
           <button
             onClick={() => {
-              setVisible(false);
               router.push('/auth/login');
+              setVisible(false);
             }}
-            className={'w-[121px] bg-[#ff3637] rounded-[4px] flex items-center justify-center'}
+            className={
+              'w-[121px] bg-[#ff3637] rounded-[4px] flex items-center justify-center cursor-pointer'
+            }
           >
             로그인 하러 가기
           </button>
