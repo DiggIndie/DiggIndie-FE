@@ -26,9 +26,10 @@ export const authService = {
     if (!res) {
       throw new Error('로그인 응답이 없습니다.');
     }
-    console.log('login', res);
     const { accessToken, userId: responseUserId } = res.payload;
     useAuthStore.getState().login(accessToken, responseUserId);
+    //  곧바로 userId 정보도 가져와서 스토어 완성시키기
+    await this.getUserId();
     return res;
   },
 
@@ -66,5 +67,17 @@ export const authService = {
     // 재발급 받은 새 토큰을 스토어에 업데이트
     useAuthStore.getState().login(accessToken);
     return accessToken;
+  },
+
+  async getUserId() {
+    try {
+      const res = await authApi.getUserId();
+      const { userId } = res.payload;
+      // API 호출 성공 시 스토어의 userId를 업데이트
+      useAuthStore.getState().login(useAuthStore.getState().accessToken!, res.payload.userId);
+      return userId;
+    } catch (err) {
+      console.log('user id 조회 api 오류', err);
+    }
   },
 };

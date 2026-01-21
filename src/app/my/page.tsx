@@ -8,7 +8,7 @@ import MyPageHeader from '@/components/my/MyPageHeader';
 import ProfileSection from '@/components/my/ProfileSection';
 import { authService } from '@/services/authService';
 import { useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useMyConcerts } from '@/hooks/useMyConcerts';
 import { useMyArtists } from '@/hooks/useMyArtists';
 import { useAuthStore } from '@/stores/authStore';
@@ -22,6 +22,7 @@ export default function MyPage() {
 
   const accessToken = useAuthStore((s) => s.accessToken);
   const isLoggedIn = !!accessToken;
+  const userId = useAuthStore((s) => s.userId);
 
   const { concerts: myConcerts, isLoading: isMyConcertsLoading } = useMyConcerts({
     enabled: isLoggedIn,
@@ -45,13 +46,13 @@ export default function MyPage() {
     await authService.logout();
     router.push('/');
   };
-  const handleUserId = async () => {};
+
   return (
     <div className="text-white flex flex-col h-screen bg-black relative">
       <MyPageHeader />
 
       <div className="flex flex-col pb-6 bg-black">
-        <ProfileSection />
+        <ProfileSection userId={userId} />
 
         {/* 스크랩한 공연 */}
         <div onClick={() => router.push('/my/concert')}>

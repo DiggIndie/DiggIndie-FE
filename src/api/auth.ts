@@ -39,8 +39,9 @@ export const authApi = {
     });
   },
 
+  //마이페이지 사용자 id를 띄우기 위함
   async getUserId() {
-    return await fetchClient<>('/my/user-id', {
+    return await fetchClient<{ memberId: string; userId: string }>('/my/user-id', {
       method: 'GET',
       auth: true,
     });
