@@ -40,7 +40,7 @@ export const authApi = {
   },
 
   async getUserId() {
-    return await fetchClient('/my/user-id', {
+    return await fetchClient<>('/my/user-id', {
       method: 'GET',
       auth: true,
     });

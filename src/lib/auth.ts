@@ -1,7 +1,8 @@
 import { z } from 'zod';
 /*
-로그인은 최소 검증만
-id: 4~12자, 영문과 숫자만
+로그인은 최소 검증만: 1자 이상 입력
+회원가입
+id: 4~12자, 영문과 숫자만 가능
 pw: 6~20자, 영문,숫자, 특수문자 중 2가지 이상 조합
 pw 확인: 일치 여부
 phoneNumber: 최소 1자
@@ -9,8 +10,8 @@ e-mail local: @입력
 email confirm: 숫자만, 최소 1자
 */
 export const loginSchema = z.object({
-  id: z.string().min(1, '아이디를 입력해주세요'),
-  password: z.string().min(1, '비밀번호를 입력해주세요'),
+  id: z.string().min(1, '아이디를 입력해 주세요'),
+  password: z.string().min(1, '비밀번호를 입력해 주세요'),
 });
 
 //회원가입스키마
