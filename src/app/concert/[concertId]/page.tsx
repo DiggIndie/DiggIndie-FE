@@ -51,7 +51,7 @@ export default function ConcertDetailPage() {
       ) : (
         <>
           <MyHeader title="" />
-          <DetailImgSection imageSrc={concert.imageUrl} />
+          <DetailImgSection imageSrc={concert.imageUrl} type="concert" />
           <ConcertContentSection
             isLoggedIn={isLoggedIn}
             concert={concert}

@@ -26,8 +26,10 @@ export default function ScheduledConcertSection({ artist }: ScheduledConcertSect
                 <span className="inline-block self-start bg-main-red-2 px-2 font-medium text-white text-sm rounded-xs mb-1">
                   {concert.dDay}
                 </span>
-                <span className="font-medium text-base text-white">{concert.concertName}</span>
-                <span className="font-normal text-sm text-white truncate block w-full">
+                <span className="font-medium text-base text-white line-clamp-2">
+                  {concert.concertName}
+                </span>
+                <span className="font-normal text-sm text-white truncate block w-full line-clamp-2">
                   {concert.lineUp.join(', ')}
                 </span>
                 <span className="font-normal text-sm text-gray-500">{concert.concertDate}</span>

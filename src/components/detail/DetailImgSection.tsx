@@ -7,6 +7,7 @@ import { useState } from 'react';
 interface DetailImgSectionProps {
   imageSrc?: string | null;
   alt?: string;
+  type?: 'artist' | 'concert';
 }
 
 type ImageSrc = string | StaticImageData;
@@ -14,15 +15,17 @@ type ImageSrc = string | StaticImageData;
 export default function DetailImgSection({
   imageSrc,
   alt = 'detail image',
+  type,
 }: DetailImgSectionProps) {
   const [hasError, setHasError] = useState(false);
 
   // 깨진 이미지가 있으면 fallback
   const src: ImageSrc = !hasError && imageSrc ? imageSrc : default_image;
   const showGradient = src !== default_image;
-
+  // type에 따라 높이 클래스 결정
+  const heightClass = type === 'artist' ? 'h-96' : 'h-120';
   return (
-    <section className="h-120 w-full relative">
+    <section className={`${heightClass} w-full relative`}>
       <Image
         src={src}
         alt={alt}

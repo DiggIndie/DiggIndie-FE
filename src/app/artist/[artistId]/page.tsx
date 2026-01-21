@@ -66,8 +66,7 @@ export default function ArtistDetailPage() {
         <>
           <div className="relative">
             <MyHeader title="" />
-
-            <DetailImgSection imageSrc={artistImageSrc} alt={artist.artistName} />
+            <DetailImgSection imageSrc={artistImageSrc} alt={artist.artistName} type="artist" />
           </div>
           <ArtistContentSection
             artist={artist}

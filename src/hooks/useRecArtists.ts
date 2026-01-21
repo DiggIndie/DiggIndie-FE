@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { postUpdateBandRecommendations } from "@/api/artists";
-import type { RecArtistItem } from "@/types/artists";
-import { useAuthStore } from "@/stores/authStore";
-import { authService } from "@/services/authService";
+import { useEffect, useState } from 'react';
+import { postUpdateBandRecommendations } from '@/api/artists';
+import type { RecArtistItem } from '@/types/artists';
+import { useAuthStore } from '@/stores/authStore';
+import { authService } from '@/services/authService';
 
 type State = {
   bands: RecArtistItem[];
@@ -45,21 +45,19 @@ export function useUpdateRecBands(options: Options = {}) {
           try {
             await authService.refreshAccessToken();
           } catch {
-            throw new Error("No refresh cookie / failed to reissue access token");
+            throw new Error('No refresh cookie / failed to reissue access token');
           }
         }
 
         const payload = await postUpdateBandRecommendations();
+        console.log('홈 아티스트 추천 데이터', payload);
         const bands = payload?.bands ?? [];
 
         if (!mounted) return;
         setState({ bands, isLoading: false, error: null });
       } catch (e) {
         if (!mounted) return;
-        const msg =
-          e instanceof Error
-            ? e.message
-            : "Failed to update recommended artists";
+        const msg = e instanceof Error ? e.message : 'Failed to update recommended artists';
 
         setState({ bands: [], isLoading: false, error: msg });
       }

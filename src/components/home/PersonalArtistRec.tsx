@@ -39,9 +39,7 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
   return (
     <section className="mt-6 gap-4 w-full px-5 bg-black flex flex-col">
       <div className="flex items-center">
-        <span className="text-[20px] font-semibold truncate">
-          리스너님을 위한 추천 아티스트
-        </span>
+        <span className="text-[20px] font-semibold truncate">리스너님을 위한 추천 아티스트</span>
       </div>
 
       <div className={`flex overflow-x-auto ${!isLoggedIn ? 'blur-sm' : 'blur-none'}`}>
@@ -64,13 +62,12 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
                   <ArtistCard
                     key={band.bandId}
                     artist={{
-                      id: String(band.bandId),
-                      name: band.bandName,
-                      imageUrl: band.imageUrl,
+                      artistId: Number(band.bandId),
+                      artistName: band.bandName,
                       keywords: band.keywords,
+                      artistImage: band.imageUrl,
                       topTrack: band.topTrack,
-                      score: band.score,
-                    } as any}
+                    }}
                   />
                 ))}
             </>

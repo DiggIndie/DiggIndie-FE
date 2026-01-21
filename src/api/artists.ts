@@ -3,9 +3,13 @@ import { ApiResponse } from '@/types/api';
 import type {
   ArtistDetail,
   ArtistPayload,
-  GetArtistsParams, GetMyArtistsParams,
-  MyArtistsItem, MyArtistsResult,
-  OnboardArtistsResponse, PageInfo, RecArtistPayload,
+  GetArtistsParams,
+  GetMyArtistsParams,
+  MyArtistsItem,
+  MyArtistsResult,
+  OnboardArtistsResponse,
+  PageInfo,
+  RecArtistPayload,
 } from '@/types/artists';
 
 export function fetchArtists(params: { page: number; size: number; query?: string }) {
@@ -47,7 +51,7 @@ export const artistAPI = {
 
 //공연 검색 용
 export async function getArtists(params: GetArtistsParams = {}): Promise<ArtistPayload> {
-  const { order = "recent", query = "", page = 0, size = 20 } = params;
+  const { order = 'recent', query = '', page = 0, size = 20 } = params;
 
   const sp = new URLSearchParams({
     order,
@@ -57,12 +61,12 @@ export async function getArtists(params: GetArtistsParams = {}): Promise<ArtistP
   });
 
   const res = await fetchClient<ArtistPayload>(`/artists/search?${sp.toString()}`, {
-    method: "GET",
+    method: 'GET',
     auth: true,
   });
 
   if (!res.isSuccess) {
-    throw new Error(res.message || "Failed to fetch artists");
+    throw new Error(res.message || 'Failed to fetch artists');
   }
 
   return (
@@ -79,7 +83,6 @@ export async function getArtists(params: GetArtistsParams = {}): Promise<ArtistP
   );
 }
 
-
 // 마이 아티스트 조회
 type MyArtistsRawResponse = ApiResponse<MyArtistsItem[]> & {
   pageInfo?: PageInfo;
@@ -94,48 +97,54 @@ export async function getMyArtists(params: GetMyArtistsParams = {}): Promise<MyA
   });
 
   const res = (await fetchClient<MyArtistsItem[]>(`/my/artists?${sp.toString()}`, {
-    method: "GET",
+    method: 'GET',
     auth: true,
   })) as MyArtistsRawResponse;
 
   if (!res.isSuccess) {
-    throw new Error(res.message || "Failed to fetch my artists");
+    throw new Error(res.message || 'Failed to fetch my artists');
   }
 
   return {
     artists: res.payload ?? [],
-    pageInfo:
-      res.pageInfo ?? {
-        page,
-        size,
-        hasNext: false,
-        totalElements: 0,
-        totalPages: 0,
-      },
+    pageInfo: res.pageInfo ?? {
+      page,
+      size,
+      hasNext: false,
+      totalElements: 0,
+      totalPages: 0,
+    },
   };
 }
-
 
 //아티스트 추천
 const AI_BASE_URL = process.env.NEXT_PUBLIC_AI_BASE_URL;
 
 export async function postUpdateBandRecommendations(): Promise<RecArtistPayload> {
-  const res = await fetchClient<RecArtistPayload>(
-    "/api/bands/recommendations/update",
-    {
-      method: "POST",
-      auth: true,
-      baseUrl: AI_BASE_URL,
-      body: JSON.stringify({}),
-      headers: {
-        "Content-Type": undefined as any, // or delete override
-      },
-    }
-  );
+  const res = await fetchClient<RecArtistPayload>('/api/bands/recommendations/update', {
+    method: 'POST',
+    auth: true,
+    baseUrl: AI_BASE_URL,
+    body: JSON.stringify({}),
+    headers: {
+      'Content-Type': undefined as any, // or delete override
+    },
+  });
 
   if (!res.isSuccess) {
-    throw new Error(res.message || "Failed to update band recommendations");
+    throw new Error(res.message || 'Failed to update band recommendations');
   }
 
+  return res.payload;
+}
+
+export async function getRecommendedArtists() {
+  const res = await fetchClient(`/artists/recommendations/users`, {
+    method: 'GET',
+    auth: true,
+  });
+  if (!res) {
+    throw new Error('홈 아티스트 추천 반환 데이터 null입니다.');
+  }
   return res.payload;
 }
