@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getFreeList } from '@/api/freeBoard';
 import type { FreeListPayload, FreeArticle, GetFreeListParams, FreeCategory } from '@/types/freeBoard';
 
@@ -18,8 +18,15 @@ function mapFreeListToArticles(payload: FreeListPayload): FreeArticle[] {
     title: b.title,
     createdAt: b.createdAt,
     views: b.views,
-    imageCount: b.imageCount
+    imageCount: b.imageCount,
   }));
+}
+
+function uniqByBoardId(prev: FreeArticle[], next: FreeArticle[]) {
+  const map = new Map<number, FreeArticle>();
+  for (const a of prev) map.set(a.boardId, a);
+  for (const a of next) map.set(a.boardId, a);
+  return Array.from(map.values());
 }
 
 export function useFreeList(initial: GetFreeListParams) {
@@ -32,11 +39,21 @@ export function useFreeList(initial: GetFreeListParams) {
     error: null,
   });
 
+  const requestSeq = useRef(0);
+
+  const hasNext = useMemo(() => {
+    return state.pageInfo?.hasNext ?? false;
+  }, [state.pageInfo]);
+
   const refetch = useCallback(async () => {
+    const seq = ++requestSeq.current;
+
     setState((s) => ({ ...s, isLoading: true, error: null }));
 
     try {
       const res = await getFreeList(params);
+
+      if (seq !== requestSeq.current) return;
 
       if (!res.isSuccess) {
         setState((s) => ({
@@ -48,13 +65,21 @@ export function useFreeList(initial: GetFreeListParams) {
       }
 
       const payload = res.payload;
-      setState({
-        articles: mapFreeListToArticles(payload),
-        pageInfo: payload.pageInfo,
-        isLoading: false,
-        error: null,
+      const incoming = mapFreeListToArticles(payload);
+
+      setState((s) => {
+        const isFirstPage = (params.page ?? 0) === 0;
+
+        return {
+          articles: isFirstPage ? incoming : uniqByBoardId(s.articles, incoming),
+          pageInfo: payload.pageInfo,
+          isLoading: false,
+          error: null,
+        };
       });
-    } catch (e) {
+    } catch {
+      if (seq !== requestSeq.current) return;
+
       setState((s) => ({
         ...s,
         isLoading: false,
@@ -79,10 +104,19 @@ export function useFreeList(initial: GetFreeListParams) {
     setParams((p) => ({ ...p, page }));
   };
 
+  const loadMore = () => {
+    if (state.isLoading) return;
+    if (!hasNext) return;
+
+    setParams((p) => ({ ...p, page: (p.page ?? 0) + 1 }));
+  };
+
   return {
     params,
     ...state,
+    hasNext,
     refetch,
+    loadMore,
     setParams,
     setCategory,
     setQuery,

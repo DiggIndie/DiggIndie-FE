@@ -1,8 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getMarketList } from '@/api/marketBoard';
-import type { MarketListPayload, MarketArticle, GetMarketListParams, MarketCategory } from '@/types/marketBoard';
+import type {
+  MarketListPayload,
+  MarketArticle,
+  GetMarketListParams,
+  MarketCategory,
+} from '@/types/marketBoard';
 
 type State = {
   markets: MarketArticle[];
@@ -25,6 +30,13 @@ function mapMarketListToMarkets(payload: MarketListPayload): MarketArticle[] {
   }));
 }
 
+function uniqByMarketId(prev: MarketArticle[], next: MarketArticle[]) {
+  const map = new Map<number, MarketArticle>();
+  for (const a of prev) map.set(a.marketId, a);
+  for (const a of next) map.set(a.marketId, a);
+  return Array.from(map.values());
+}
+
 export function useMarketList(initial: GetMarketListParams) {
   const [params, setParams] = useState<GetMarketListParams>(initial);
 
@@ -35,11 +47,21 @@ export function useMarketList(initial: GetMarketListParams) {
     error: null,
   });
 
+  const requestSeq = useRef(0);
+
+  const hasNext = useMemo(() => {
+    return state.pageInfo?.hasNext ?? false;
+  }, [state.pageInfo]);
+
   const refetch = useCallback(async () => {
+    const seq = ++requestSeq.current;
+
     setState((s) => ({ ...s, isLoading: true, error: null }));
 
     try {
       const res = await getMarketList(params);
+
+      if (seq !== requestSeq.current) return;
 
       if (!res.isSuccess) {
         setState((s) => ({
@@ -51,14 +73,21 @@ export function useMarketList(initial: GetMarketListParams) {
       }
 
       const payload = res.payload;
+      const incoming = mapMarketListToMarkets(payload);
 
-      setState({
-        markets: mapMarketListToMarkets(payload),
-        pageInfo: payload.pageInfo,
-        isLoading: false,
-        error: null,
+      setState((s) => {
+        const isFirstPage = (params.page ?? 0) === 0;
+
+        return {
+          markets: isFirstPage ? incoming : uniqByMarketId(s.markets, incoming),
+          pageInfo: payload.pageInfo,
+          isLoading: false,
+          error: null,
+        };
       });
     } catch {
+      if (seq !== requestSeq.current) return;
+
       setState((s) => ({
         ...s,
         isLoading: false,
@@ -83,10 +112,19 @@ export function useMarketList(initial: GetMarketListParams) {
     setParams((p) => ({ ...p, page }));
   };
 
+  const loadMore = () => {
+    if (state.isLoading) return;
+    if (!hasNext) return;
+
+    setParams((p) => ({ ...p, page: (p.page ?? 0) + 1 }));
+  };
+
   return {
     params,
     ...state,
+    hasNext,
     refetch,
+    loadMore,
     setParams,
     setCategory,
     setQuery,
