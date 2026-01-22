@@ -8,7 +8,7 @@ export interface FreeBoardDetail {
   imageUrls: string[];
   views: number;
   likeCount: number;
-  isLiked: true;
+  isLiked: boolean;
   commentCount: number;
   comments: Comment[];
 }
@@ -18,7 +18,7 @@ export interface Comment {
   createdAt: string;
   content: string;
   likeCount: number;
-  isLiked: true;
+  isLiked: boolean;
   replies: Reply[];
 }
 
@@ -30,7 +30,7 @@ export interface Reply {
   createdAt: string;
   content: string;
   likeCount: number;
-  isLiked: true;
+  isLiked: boolean;
   depth: number;
 }
 

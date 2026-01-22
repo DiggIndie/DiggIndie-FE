@@ -49,7 +49,7 @@ export default function ArticleBody({ content }: ArticleBodyProps) {
       )}
 
       {/* 좋아요, 댓글 수 */}
-      <div className="flex gap-1 text-sm font-normal">
+      <div className="flex gap-1 text-sm font-normal gap-1">
         <p className="flex gap-[3px] justify-center items-center">
           <HeartIcon size={24} active={isLiked} onClick={() => setIsLiked(!isLiked)} />
           <span className="font-normal text-sm text-white">{content?.likeCount}</span>
