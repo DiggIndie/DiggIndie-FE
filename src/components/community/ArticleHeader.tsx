@@ -9,8 +9,9 @@ import HeaderDrowDown from './HeaderDropDown';
 
 interface ArticleHeaderProps {
   title: string;
+  isMine?: boolean;
 }
-export default function ArticleHeader({ title }: ArticleHeaderProps) {
+export default function ArticleHeader({ title, isMine = false }: ArticleHeaderProps) {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
@@ -26,14 +27,18 @@ export default function ArticleHeader({ title }: ArticleHeaderProps) {
         />
 
         <span className="font-semibold text-base text-white">{title}</span>
-        <Image
-          src={communityMore}
-          alt="헤더 더보기 아이콘"
-          className="cursor-pointer"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        />
+        {isMine ? (
+          <Image
+            src={communityMore}
+            alt="헤더 더보기 아이콘"
+            className="cursor-pointer"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          />
+        ) : (
+          <div className="w-6 h-6" />
+        )}
       </div>
-      {isDropdownOpen && <HeaderDrowDown />}
+      {isMine && isDropdownOpen && <HeaderDrowDown />}
     </section>
   );
 }

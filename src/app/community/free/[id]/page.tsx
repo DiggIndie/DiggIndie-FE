@@ -46,7 +46,8 @@ export default function FreeArticleDetailPage() {
   }, [boardId]);
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20 ">
-      <ArticleHeader title="자유 라운지" />
+      {/*추후 수정 예정 반환데이터에 isMine추가 필요 */}
+      <ArticleHeader title="자유 라운지" isMine={true} />
       {!board ? (
         <div className="h-screen flex items-center justify-center">
           <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
