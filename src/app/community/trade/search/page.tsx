@@ -4,15 +4,15 @@ import { useState } from 'react';
 import SearchHeader from '@/components/search/SearchHeader';
 import CommunityTab from '@/components/community/CommunityTab';
 import SideTab from '@/components/sideTabDir/SideTab';
-import SearchFree from '@/components/community/SearchFree';
+import SearchMarket from '@/components/community/SearchMarket';
 
-export default function FreeSearchPage() {
+export default function MarketSearchPage() {
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
 
   return (
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">
       <header className="sticky top-0 z-50 bg-black shrink-0">
-        <SearchHeader title="자유게시판" onHamburgerClick={() => setIsSideTabOpen(true)} />
+        <SearchHeader title="거래/양도 게시판" onHamburgerClick={() => setIsSideTabOpen(true)} />
       </header>
 
       <div className="shrink-0">
@@ -20,7 +20,7 @@ export default function FreeSearchPage() {
       </div>
 
       <main className=" flex-1 min-h-0 overflow-y-auto scrollbar flex flex-col bg-black">
-        <SearchFree />
+        <SearchMarket />
       </main>
 
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}

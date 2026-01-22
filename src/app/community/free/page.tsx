@@ -30,7 +30,7 @@ export default function CommunityFreePage() {
 
   const initialCategory = useMemo(() => headerToCategory[header], [header]);
 
-  const { articles, isLoading, error, setCategory, loadMore, params } = useFreeList({
+  const { articles, isLoading, error, setCategory, loadMore, hasNext, params } = useFreeList({
     category: initialCategory,
     query: '',
     page: 0,
@@ -89,6 +89,7 @@ export default function CommunityFreePage() {
         <div ref={sentinelRef} className="h-[1px]" />
 
         {isLoading && !isFirstPage && <div className="px-5 py-4 text-gray-500">로딩중...</div>}
+
       </main>
 
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}

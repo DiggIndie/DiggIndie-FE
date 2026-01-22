@@ -24,7 +24,7 @@ export default function ArticleList(props: Props) {
   //market
   if (variant === 'trade') {
     return (
-      <div className="flex flex-col">
+      <div className="flex w-full flex-col">
         {props.articles.map((article, index) => (
           <Link
             key={`market-${article.marketId ?? 'none'}-${index}`}
@@ -41,7 +41,7 @@ export default function ArticleList(props: Props) {
 
   // free
   return (
-    <div className="flex flex-col">
+    <div className="flex w-full flex-col">
       {props.articles.map((article, index) => (
         <Link
           key={`free-${article.boardId ?? 'none'}-${index}`}

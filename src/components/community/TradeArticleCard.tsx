@@ -10,7 +10,7 @@ export default function MarketArticleCard({ article }: Props) {
 
 
   return (
-    <div className="w-[min(375px,100%)] mr-auto h-[116px] flex items-center border-b-[1px] border-[#332F2F] py-4 px-5 gap-[18px]">
+    <div className="w-full mr-auto h-[116px] flex items-center border-b-[1px] border-[#332F2F] py-4 px-5 gap-[18px]">
       <div className="relative w-[84px] h-[84px] overflow-hidden">
         <Image
           src={article.thumbnail?.trim() ? article.thumbnail : concertDefault}
