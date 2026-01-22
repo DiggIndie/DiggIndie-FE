@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Checkbox } from '@mui/material';
 
@@ -11,9 +11,10 @@ import TradingLinkArea from '@/components/community/TradingLinkArea';
 import TradingPriceArea from '@/components/community/TradingPriceArea';
 
 import { postFree, editFree } from '@/api/freeBoard';
-import { postMarket } from '@/api/marketBoard';
+import { postMarket, editMarket } from '@/api/marketBoard';
 
 import { boardDetailService } from '@/services/boardDetail.service';
+import type { MarketCategory } from '@/types/marketBoard';
 
 type UiGeneralTag = '없음' | '정보' | '공연 후기' | '추천' | '신보' | '음악 뉴스' | '동행';
 type UiTradeTag = '판매' | '구매';
@@ -59,6 +60,10 @@ function mapFreeCategoryToUi(category: string | null | undefined): UiGeneralTag 
   }
 }
 
+function mapMarketTypeToUi(type: string | null | undefined): UiTradeTag {
+  return type === '구매' ? '구매' : '판매';
+}
+
 export default function Write() {
   const router = useRouter();
   const sp = useSearchParams();
@@ -67,7 +72,8 @@ export default function Write() {
   const board = (sp.get('board') as Board) ?? 'free';
   const id = Number(sp.get('id') ?? '0');
 
-  const isEdit = mode === 'edit' && board === 'free' && Number.isFinite(id) && id > 0;
+  // 수정모드
+  const isEdit = mode === 'edit' && (board === 'free' || board === 'trade') && Number.isFinite(id) && id > 0;
 
   const generalTag: UiGeneralTag[] = ['없음', '정보', '공연 후기', '추천', '신보', '음악 뉴스', '동행'];
   const tradeTag: UiTradeTag[] = ['판매', '구매'];
@@ -92,25 +98,43 @@ export default function Write() {
     if (!isEdit) return;
 
     const run = async () => {
-      //수정 시, 저장 되어있던 기존 글 정보를 불러와서 채워넣음
       setIsPrefilling(true);
       try {
-        const detail = await boardDetailService.getFreeBoardDetail(id);
+        // 수정 시 게시판은 수정 불가
+        if (board === 'free') {
+          //수정 시 저장된 제목, 글 내용 다시 가져오기
+          const detail = await boardDetailService.getFreeBoardDetail(id);
 
-        setBoardType('general');
+          setBoardType('general');
+          setTitle(detail.title ?? '');
+          setContent(detail.content ?? '');
+          setAnonymous(detail.isAnonymous ?? false);
+          setSelectedTag(mapFreeCategoryToUi(detail.category));
+          setPrice(null);
+          setChatUrl('');
+          return;
+        }
+
+        // 거래/양도 게시판
+        const detail = await boardDetailService.getTradeBoardDetail(id);
+
+        setBoardType('trade');
         setTitle(detail.title ?? '');
         setContent(detail.content ?? '');
-        setAnonymous(detail.isAnonymous ?? false);
-        setSelectedTag(mapFreeCategoryToUi(detail.category));
+        setSelectedTag(mapMarketTypeToUi(detail.type));
+        setPrice(typeof detail.price === 'number' ? detail.price : 0);
+        setChatUrl(detail.chatUrl ?? '');
+        setAnonymous(false); // market isAnonymous 추가 후 수정
       } finally {
         setIsPrefilling(false);
       }
     };
 
     run();
-  }, [isEdit, id]);
+  }, [isEdit, id, board]);
 
   const handleBoardTypeChange = (type: 'general' | 'trade') => {
+    // 수정 시 게시판 변경 방지
     if (isEdit) return;
 
     setBoardType(type);
@@ -134,24 +158,46 @@ export default function Write() {
     try {
       setIsSubmitting(true);
 
+      // 수정 게시판분리
       if (isEdit) {
-        const res = await editFree({
-          boardId: id,
+        if (board === 'free') {
+          const res = await editFree({
+            boardId: id,
+            title,
+            content,
+            isAnonymous: annonymous,
+            category: mapFreeCategory(selectedTag as UiGeneralTag),
+            imageUrls,
+          });
+
+          if (res.isSuccess) {
+            router.replace(`/community/free/${id}`);
+          } else {
+            alert(res.message || '게시글 수정에 실패했습니다.');
+          }
+          return;
+        }
+
+        // 거래/양도 수정
+        const res = await editMarket({
+          marketId: id,
           title,
           content,
-          isAnonymous: annonymous,
-          category: mapFreeCategory(selectedTag as UiGeneralTag),
+          price: price ?? 0,
+          chatUrl,
+          type: selectedTag as unknown as MarketCategory,
           imageUrls,
         });
 
         if (res.isSuccess) {
-          router.replace(`/community/free/${id}`);
+          router.replace(`/community/trade/${id}`);
         } else {
           alert(res.message || '게시글 수정에 실패했습니다.');
         }
         return;
       }
 
+      // 작성
       if (boardType === 'general') {
         const res = await postFree({
           title,
@@ -191,11 +237,15 @@ export default function Write() {
     }
   };
 
+  // 수정 시 클릭 방지 (임의, 회의 후 다시 결정)
   const boardLockClass = isEdit ? 'pointer-events-none opacity-60' : '';
 
   return (
     <div className="mb-16">
-      <CommunityWriteHeader disabled={!isFormValid || isSubmitting || isPrefilling} onRightButtonClick={handleSubmit} />
+      <CommunityWriteHeader
+        disabled={!isFormValid || isSubmitting || isPrefilling}
+        onRightButtonClick={handleSubmit}
+      />
 
       <div className="flex justify-between mb-3 px-5">
         <span className="font-medium text-base text-white">게시판 선택</span>
@@ -226,7 +276,9 @@ export default function Write() {
               },
             }}
           />
-          <span className={`text-sm font-medium ${annonymous ? 'text-main-red-2' : 'text-gray-500'}`}>익명</span>
+          <span className={`text-sm font-medium ${annonymous ? 'text-main-red-2' : 'text-gray-500'}`}>
+            익명
+          </span>
         </p>
       </div>
 

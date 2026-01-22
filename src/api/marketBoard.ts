@@ -1,7 +1,7 @@
 import { fetchClient } from "@/api/client";
 
 import type {
-  GetMarketListParams, MarketListPayload, MarketPayload, PostMarketParams,
+  GetMarketListParams, MarketListPayload, MarketPayload, PostMarketParams, EditMarketParams
 }
 from '@/types/marketBoard';
 
@@ -34,12 +34,22 @@ export async function getMarketList(params: GetMarketListParams) {
 }
 
 //게시글 삭제
-export type DeleteMarketParams = { boardId: number };
+export type DeleteMarketParams = { marketId: number };
 export type DeleteMarketPayload = unknown;
 
-export async function deleteFree({ boardId }: DeleteMarketParams) {
-  return fetchClient<DeleteMarketPayload>(`/boards/${boardId}`, {
+export async function deleteMarket({ marketId }: DeleteMarketParams) {
+  return fetchClient<DeleteMarketPayload>(`/markets/${marketId}`, {
     method: 'DELETE',
     auth: true,
+  });
+}
+
+//게시글 수정
+export async function editMarket(params: EditMarketParams) {
+  const { marketId, ...body } = params;
+  return fetchClient<MarketPayload>(`/markets/${marketId}`, {
+    method: 'PUT',
+    auth: true,
+    body: JSON.stringify(body),
   });
 }

@@ -57,3 +57,15 @@ export type GetMarketListParams = {
   page?: number;
   size?: number;
 };
+
+
+//게시글 수정
+export type EditMarketParams = {
+  marketId: number;
+  title: string;
+  content: string;
+  price: number;
+  chatUrl: string;
+  type: MarketCategory;
+  imageUrls: string[];
+};

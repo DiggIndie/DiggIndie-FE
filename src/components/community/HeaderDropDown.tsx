@@ -11,7 +11,7 @@ type Props = {
 
 export default function HeaderDrowDown({ onEdit, onDelete }: Props) {
   return (
-    <section className="bg-BG border border-gray-600 p-2 flex flex-col absolute top-11 right-5 rounded-sm gap-1 w-34">
+    <section className="bg-black border border-gray-600 p-2 flex flex-col absolute top-11 right-5 rounded-sm gap-1 w-34">
       <button
         type="button"
         onClick={onEdit}
