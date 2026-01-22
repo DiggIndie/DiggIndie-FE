@@ -39,7 +39,20 @@ export default function ConcertDetailPage() {
     const result = await toggleScrapConcert(concert.concertId);
     setConcert((prev) => (prev ? { ...prev, isScrapped: result } : prev));
   };
+  //스켈레톤 로딩 이후 높이 계산 문제로 스크롤 안되는 버그 해결
+  useEffect(() => {
+    if (!isLoading) {
+      // 1. body와 html의 overflow 설정을 명시적으로 초기화
+      // 스크롤바를 숨겨놨기 때문에 브라우저가 간혹 스크롤 가능 상태를 놓칩니다.
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
 
+      // 2. 브라우저가 레이아웃을 재계산하도록 아주 미세하게 스크롤 이동
+      // 0에서 1px만 움직여도 브라우저는 스크롤 가능 여부를 다시 체크합니다.
+      window.scrollTo(0, 1);
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
   return (
     <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 relative">
       {isLoading ? (
@@ -61,12 +74,14 @@ export default function ConcertDetailPage() {
           <LineupSection concert={concert} />
           <ConcertStorySection concert={concert} />
           <div className="px-5 pb-5 fixed bottom-0 w-full max-w-94">
-            <Button
-              href={concert.bookUrl}
-              isFinished={concert.isFinished}
-              disabled={concert.isFinished}
-            >
-              <span>{concert.isFinished ? '공연이 종료되었습니다' : '예매하러 가기'}</span>
+            <Button href={concert.bookUrl} isFinished={concert.isFinished}>
+              <span>
+                {concert.isFinished
+                  ? '공연이 종료되었습니다'
+                  : concert.bookUrl
+                    ? '예매하러 가기'
+                    : '예매 링크가 없습니다'}
+              </span>
             </Button>
           </div>
         </>

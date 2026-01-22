@@ -24,7 +24,7 @@ export default function ArtistContentSection({
   const isLoggedIn = useAuthStore((state) => state.isAuthed);
 
   return (
-    <section className="px-5 pt-5 border-b-4 border-gray-850 mb-6">
+    <section className="px-5 pt-5 border-b-4 border-gray-850 mb-6 ">
       <div className="flex flex-col gap-1 pb-3 border-b border-gray-850">
         <p className="flex justify-between items-center gap-6">
           <span className="font-semibold text-xl">{artist.artistName}</span>
