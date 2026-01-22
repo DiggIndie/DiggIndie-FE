@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { getArtistDetail, scrapArtist } from '@/services/artistsService';
 import { ArtistDetail } from '@/types/artists';
 import DetailSkeleton from '@/components/detail/DetailSkeleton';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function ArtistDetailPage() {
   const params = useParams();
@@ -19,7 +20,7 @@ export default function ArtistDetailPage() {
   const [artist, setArtist] = useState<ArtistDetail>();
   const [isLoading, setIsLoading] = useState(true);
   const [isScrapped, setIsScrapped] = useState(false);
-
+  const { isAuthed } = useAuthStore();
   const fetchArtist = async () => {
     if (!artistId || Number.isNaN(artistId)) return;
     const res = await getArtistDetail(artistId);
@@ -85,6 +86,7 @@ export default function ArtistDetailPage() {
             artist={artist}
             onToggleScrap={handleToggleScrap}
             isScrapped={isScrapped}
+            isLogined={isAuthed}
           />
           <ScheduledConcertSection artist={artist} />
           <EndedConcertSection artist={artist} />
