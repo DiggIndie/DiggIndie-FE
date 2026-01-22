@@ -14,6 +14,7 @@ export async function postFree(params: PostFreeParams) {
   });
 }
 
+//게시글 리스트, 검색
 export async function getFreeList(params: GetFreeListParams) {
   const { category = 'none', query = '', page = 0, size = 20 } = params;
 
@@ -26,5 +27,16 @@ export async function getFreeList(params: GetFreeListParams) {
   return fetchClient<FreeListPayload>(`/boards?${qs.toString()}`, {
     method: 'GET',
     auth: false,
+  });
+}
+
+//게시글 삭제
+export type DeleteFreeParams = { boardId: number };
+export type DeleteFreePayload = unknown;
+
+export async function deleteFree({ boardId }: DeleteFreeParams) {
+  return fetchClient<DeleteFreePayload>(`/boards/${boardId}`, {
+    method: 'DELETE',
+    auth: true,
   });
 }

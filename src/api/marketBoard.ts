@@ -32,3 +32,14 @@ export async function getMarketList(params: GetMarketListParams) {
     auth: false,
   });
 }
+
+//게시글 삭제
+export type DeleteMarketParams = { boardId: number };
+export type DeleteMarketPayload = unknown;
+
+export async function deleteFree({ boardId }: DeleteMarketParams) {
+  return fetchClient<DeleteMarketPayload>(`/boards/${boardId}`, {
+    method: 'DELETE',
+    auth: true,
+  });
+}

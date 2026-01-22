@@ -50,3 +50,4 @@ export type GetFreeListParams = {
   page?: number;
   size?: number;
 };
+
