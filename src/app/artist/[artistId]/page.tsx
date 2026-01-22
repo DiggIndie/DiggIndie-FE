@@ -49,6 +49,7 @@ export default function ArtistDetailPage() {
     };
     run();
   }, [artistId]);
+
   //스켈레톤 로딩 이후 높이 계산 문제로 스크롤 안되는 버그 해결
   useEffect(() => {
     if (!isLoading) {

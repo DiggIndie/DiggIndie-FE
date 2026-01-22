@@ -1,4 +1,4 @@
-export interface BoardDetail {
+export interface FreeBoardDetail {
   boardId: number;
   category: string;
   title: string;
@@ -32,4 +32,25 @@ export interface Reply {
   likeCount: number;
   isLiked: true;
   depth: number;
+}
+
+export interface TradeBoardDetail {
+  marketId: number;
+  title: string;
+  content: string;
+  price: number;
+  chatUrl: string;
+  type: string;
+  nickname: string;
+  timeAgo: string;
+  views: number;
+  isScraped: boolean;
+  scrapCount: number;
+  isMine: boolean;
+  images: [
+    {
+      imageUrl: string;
+      imageOrder: number;
+    },
+  ];
 }
