@@ -1,33 +1,45 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 
 import CommunityHeader from '@/components/community/CommunityHeader';
 import CommunityTab from '@/components/community/CommunityTab';
 import ArticleList from '@/components/community/ArticleList';
 import CommunityHeaderFilter from '@/components/community/CommunityHeaderFilter';
-import { MockArticles } from '@/mocks/mockArticles';
 import SideTab from '@/components/sideTabDir/SideTab';
 
-export default function CommunityFreePage() {
-  const headerOptions = useMemo(
-    () => ['전체', '구매', '판매'],
-    []
-  );
+import { useMarketList } from '@/hooks/useMarketList';
+import type { MarketCategory } from '@/types/marketBoard';
 
-  const [header, setHeader] = useState<string>('전체');
+const headerOptions = ['전체', '판매', '구매'] as const;
+type UiHeader = (typeof headerOptions)[number];
 
-  const filteredArticles = useMemo(() => {
-    if (header === '전체') return MockArticles;
-    return MockArticles.filter((a) => a.boardHeader === header);
-  }, [header]);
+const headerToType: Record<UiHeader, MarketCategory> = {
+  전체: '전체',
+  판매: '판매',
+  구매: '구매',
+};
 
+export default function CommunityTradePage() {
+  const [header, setHeader] = useState<UiHeader>('구매');
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
+
+  const { markets, isLoading, error, setCategory } = useMarketList({
+    type: headerToType[header],
+    query: '',
+    page: 0,
+    size: 20,
+  });
+
+  const handleHeaderChange = (next: UiHeader) => {
+    setHeader(next);
+    setCategory(headerToType[next]);
+  };
 
   return (
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">
       <header className="sticky top-0 z-50 h-[52px] bg-black flex items-center shrink-0">
-        <CommunityHeader title={'디깅 라운지'} onHamburgerClick={() => setIsSideTabOpen(true)} />
+        <CommunityHeader title={'중고 거래'} onHamburgerClick={() => setIsSideTabOpen(true)} />
       </header>
 
       <div className="shrink-0">
@@ -38,15 +50,17 @@ export default function CommunityFreePage() {
         <CommunityHeaderFilter
           headers={headerOptions}
           value={header}
-          onChangeAction={setHeader}
+          onChangeAction={handleHeaderChange}
         />
 
-        <ArticleList
-          articles={filteredArticles}
-          basePath="/community/trade"
-          variant="trade"
-        />
+        {isLoading && <div className="px-5 py-4 text-gray-500">로딩중...</div>}
+        {!isLoading && error && <div className="px-5 py-4 text-gray-500">{error}</div>}
+
+        {!isLoading && !error && (
+          <ArticleList articles={markets} basePath="/community/trade" variant="trade" />
+        )}
       </main>
+
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>
   );

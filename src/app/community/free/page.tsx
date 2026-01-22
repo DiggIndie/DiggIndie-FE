@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 
 import CommunityHeader from '@/components/community/CommunityHeader';
 import CommunityTab from '@/components/community/CommunityTab';
@@ -24,6 +24,7 @@ const headerToCategory: Record<UiHeader, FreeCategory> = {
   동행: 'companion',
 };
 
+
 export default function CommunityFreePage() {
   const [header, setHeader] = useState<UiHeader>('전체');
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
@@ -37,9 +38,10 @@ export default function CommunityFreePage() {
     size: 20,
   });
 
-  useEffect(() => {
-    setCategory(headerToCategory[header]);
-  }, [header, setCategory]);
+  const handleHeaderChange = (next: UiHeader) => {
+    setHeader(next);
+    setCategory(headerToCategory[next]);
+  };
 
   return (
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">
@@ -52,7 +54,11 @@ export default function CommunityFreePage() {
       </div>
 
       <main className="flex-1 min-h-0 overflow-y-auto scrollbar flex flex-col bg-black">
-        <CommunityHeaderFilter headers={headerOptions} value={header} onChangeAction={setHeader} />
+        <CommunityHeaderFilter
+          headers={headerOptions}
+          value={header}
+          onChangeAction={handleHeaderChange}
+        />
 
         {isLoading && <div className="px-5 py-4 text-gray-500">로딩중...</div>}
         {!isLoading && error && <div className="px-5 py-4 text-gray-500">{error}</div>}

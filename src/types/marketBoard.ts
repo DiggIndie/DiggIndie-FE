@@ -1,3 +1,5 @@
+import { FreeCategory } from '@/types/freeBoard';
+
 export type PageInfo = {
   page: number;
   size: number;
@@ -12,6 +14,7 @@ export type MarketPayload = {
 }
 
 export type MarketCategory =
+  | "전체"
   | "판매"
   | "구매";
 
@@ -25,3 +28,32 @@ export type PostMarketParams = {
   imageUrls: string[]
 }
 
+
+//게시글 리스트
+export type MarketArticle = {
+  marketId: number;
+  title: string;
+  price: number;
+  type: string;
+  nickname: string;
+  timeAgo: string;
+  views: number;
+  scrapCount: number;
+  thumbnail: string;
+}
+
+export type MarketListPayload = {
+  pageInfo: PageInfo;
+  markets: MarketArticle [];
+  currentPage: number;
+  totalPages: number;
+  totalElements: number
+  hasNext: boolean;
+}
+
+export type GetMarketListParams = {
+  type?: MarketCategory
+  query?: string;
+  page?: number;
+  size?: number;
+};
