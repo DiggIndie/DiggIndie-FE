@@ -11,13 +11,13 @@ import { useParams, useRouter } from 'next/navigation';
 import { boardDetailService } from '@/services/boardDetail.service';
 import { TradeBoardDetail } from '@/types/board';
 import { useAuthStore } from '@/stores/authStore';
-import { deleteMarket } from '@/api/marketBoard';
+import { deleteMarket, scrapMarket } from '@/api/marketBoard';
 
 export default function TradeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
   const router = useRouter();
 
-  const [isScrapped, setIsScrapped] = useState(false);
+  const [isScraped, setIsScrapped] = useState(false);
 
   const params = useParams();
   const boardId = Number(params.id);
@@ -35,8 +35,59 @@ export default function TradeArticleDetailPage() {
     fetchDetail();
   }, [boardId]);
 
-  const handleToggleScrap = () => {
-    setIsScrapped((prev) => !prev);
+  //게시글 스크랩
+  const handleToggleScrap = async () => {
+    if (!board) return;
+
+    const prev = {
+      isScraped: board.isScraped,
+      scrapCount: board.scrapCount,
+    };
+
+    // UI 즉시업데이트
+    setBoard((prevBoard) =>
+      prevBoard
+        ? {
+          ...prevBoard,
+          isScraped: !prevBoard.isScraped,
+          scrapCount: prevBoard.isScraped
+            ? prevBoard.scrapCount - 1
+            : prevBoard.scrapCount + 1,
+        }
+        : prevBoard
+    );
+
+    try {
+      const res = await scrapMarket({ marketId: board.marketId });
+
+      if (!res.isSuccess) {
+        throw new Error(res.message);
+      }
+
+      // 서버 기준 스크랩 수 불러오기
+      setBoard((prevBoard) =>
+        prevBoard
+          ? {
+            ...prevBoard,
+            isScraped: res.payload.isScraped,
+            scrapCount: res.payload.scrapCount,
+          }
+          : prevBoard
+      );
+    } catch {
+      // 실패 시 이전 스크랩수
+      setBoard((prevBoard) =>
+        prevBoard
+          ? {
+            ...prevBoard,
+            isScraped: prev.isScraped,
+            scrapCount: prev.scrapCount,
+          }
+          : prevBoard
+      );
+
+      alert('스크랩 처리에 실패했습니다.');
+    }
   };
 
   const handleEdit = () => {

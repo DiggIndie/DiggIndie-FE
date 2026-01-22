@@ -1,9 +1,10 @@
 import { fetchClient } from "@/api/client";
 
 import type {
-  GetMarketListParams, MarketListPayload, MarketPayload, PostMarketParams, EditMarketParams
+  GetMarketListParams, MarketListPayload, MarketPayload, PostMarketParams, EditMarketParams,
+  ScrapMarketParams, ScrapMarketPayload,
 }
-from '@/types/marketBoard';
+  from '@/types/marketBoard';
 
 export async function postMarket(params: PostMarketParams) {
   return fetchClient<MarketPayload>("/markets", {
@@ -51,5 +52,14 @@ export async function editMarket(params: EditMarketParams) {
     method: 'PUT',
     auth: true,
     body: JSON.stringify(body),
+  });
+}
+
+//게시글 스크랩
+export async function scrapMarket(params: ScrapMarketParams) {
+  const { marketId } = params;
+  return fetchClient<ScrapMarketPayload>(`/markets/${marketId}/scrap`, {
+    method: 'PATCH',
+    auth: true
   });
 }

@@ -1,4 +1,4 @@
-import { FreeCategory } from '@/types/freeBoard';
+
 
 export type PageInfo = {
   page: number;
@@ -69,3 +69,14 @@ export type EditMarketParams = {
   type: MarketCategory;
   imageUrls: string[];
 };
+
+//게시글 스크랩
+export type ScrapMarketParams = {
+  marketId: number;
+}
+
+export type ScrapMarketPayload = {
+  isScraped: boolean;
+  scrapCount: number;
+}
+
