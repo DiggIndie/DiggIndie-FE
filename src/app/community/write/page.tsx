@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Checkbox } from '@mui/material';
 
 import CommunityWriteHeader from '@/components/community/CommunityWriteHeader';
@@ -10,11 +10,16 @@ import TextArea from '@/components/community/TextArea';
 import TradingLinkArea from '@/components/community/TradingLinkArea';
 import TradingPriceArea from '@/components/community/TradingPriceArea';
 
-import { postFree } from '@/api/freeBoard';
+import { postFree, editFree } from '@/api/freeBoard';
 import { postMarket } from '@/api/marketBoard';
+
+import { boardDetailService } from '@/services/boardDetail.service';
 
 type UiGeneralTag = '없음' | '정보' | '공연 후기' | '추천' | '신보' | '음악 뉴스' | '동행';
 type UiTradeTag = '판매' | '구매';
+
+type Mode = 'create' | 'edit';
+type Board = 'free' | 'trade';
 
 function mapFreeCategory(tag: UiGeneralTag) {
   switch (tag) {
@@ -35,7 +40,35 @@ function mapFreeCategory(tag: UiGeneralTag) {
   }
 }
 
+function mapFreeCategoryToUi(category: string | null | undefined): UiGeneralTag {
+  switch (category) {
+    case 'info':
+      return '정보';
+    case 'review':
+      return '공연 후기';
+    case 'recommend':
+      return '추천';
+    case 'release':
+      return '신보';
+    case 'news':
+      return '음악 뉴스';
+    case 'companion':
+      return '동행';
+    default:
+      return '없음';
+  }
+}
+
 export default function Write() {
+  const router = useRouter();
+  const sp = useSearchParams();
+
+  const mode = (sp.get('mode') as Mode) ?? 'create';
+  const board = (sp.get('board') as Board) ?? 'free';
+  const id = Number(sp.get('id') ?? '0');
+
+  const isEdit = mode === 'edit' && board === 'free' && Number.isFinite(id) && id > 0;
+
   const generalTag: UiGeneralTag[] = ['없음', '정보', '공연 후기', '추천', '신보', '음악 뉴스', '동행'];
   const tradeTag: UiTradeTag[] = ['판매', '구매'];
 
@@ -47,12 +80,42 @@ export default function Write() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-  // trade 전용
   const [price, setPrice] = useState<number | null>(null);
   const [chatUrl, setChatUrl] = useState('');
 
-  // 이미지 업로드를 아직 URL로 안 올리니까 일단 빈 배열 유지
   const imageUrls: string[] = [];
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPrefilling, setIsPrefilling] = useState(false);
+
+  useEffect(() => {
+    if (!isEdit) return;
+
+    const run = async () => {
+      //수정 시, 저장 되어있던 기존 글 정보를 불러와서 채워넣음
+      setIsPrefilling(true);
+      try {
+        const detail = await boardDetailService.getFreeBoardDetail(id);
+
+        setBoardType('general');
+        setTitle(detail.title ?? '');
+        setContent(detail.content ?? '');
+        setAnonymous(detail.isAnonymous ?? false);
+        setSelectedTag(mapFreeCategoryToUi(detail.category));
+      } finally {
+        setIsPrefilling(false);
+      }
+    };
+
+    run();
+  }, [isEdit, id]);
+
+  const handleBoardTypeChange = (type: 'general' | 'trade') => {
+    if (isEdit) return;
+
+    setBoardType(type);
+    setSelectedTag(type === 'general' ? '없음' : '판매');
+  };
 
   const isFormValidBase = title.trim().length > 0 && content.trim().length > 0;
 
@@ -65,20 +128,29 @@ export default function Write() {
       price >= 0 &&
       chatUrl.trim().length > 0;
 
-  const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleBoardTypeChange = (type: 'general' | 'trade') => {
-    setBoardType(type);
-    setSelectedTag(type === 'general' ? '없음' : '판매');
-
-  };
-
   const handleSubmit = async () => {
-    if (!isFormValid || isSubmitting) return;
+    if (!isFormValid || isSubmitting || isPrefilling) return;
 
     try {
       setIsSubmitting(true);
+
+      if (isEdit) {
+        const res = await editFree({
+          boardId: id,
+          title,
+          content,
+          isAnonymous: annonymous,
+          category: mapFreeCategory(selectedTag as UiGeneralTag),
+          imageUrls,
+        });
+
+        if (res.isSuccess) {
+          router.replace(`/community/free/${id}`);
+        } else {
+          alert(res.message || '게시글 수정에 실패했습니다.');
+        }
+        return;
+      }
 
       if (boardType === 'general') {
         const res = await postFree({
@@ -97,7 +169,6 @@ export default function Write() {
         return;
       }
 
-      // 거래양도
       const res = await postMarket({
         title,
         content,
@@ -114,15 +185,17 @@ export default function Write() {
       }
     } catch (err) {
       console.error(err);
-      alert('게시글 작성에 실패했습니다.');
+      alert(isEdit ? '게시글 수정에 실패했습니다.' : '게시글 작성에 실패했습니다.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const boardLockClass = isEdit ? 'pointer-events-none opacity-60' : '';
+
   return (
     <div className="mb-16">
-      <CommunityWriteHeader disabled={!isFormValid || isSubmitting} onRightButtonClick={handleSubmit} />
+      <CommunityWriteHeader disabled={!isFormValid || isSubmitting || isPrefilling} onRightButtonClick={handleSubmit} />
 
       <div className="flex justify-between mb-3 px-5">
         <span className="font-medium text-base text-white">게시판 선택</span>
@@ -160,14 +233,14 @@ export default function Write() {
       <div className="flex gap-2 pb-3 px-5">
         <span
           onClick={() => handleBoardTypeChange('general')}
-          className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer
+          className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
             ${boardType === 'general' ? 'border-main-red-1 bg-main-red-4 text-white' : 'border-gray-600 text-gray-600'}`}
         >
           일반
         </span>
         <span
           onClick={() => handleBoardTypeChange('trade')}
-          className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer
+          className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
             ${boardType === 'trade' ? 'border-main-red-1 bg-main-red-4 text-white' : 'border-gray-600 text-gray-600'}`}
         >
           거래/양도

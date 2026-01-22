@@ -11,6 +11,7 @@ export interface FreeBoardDetail {
   isLiked: boolean;
   commentCount: number;
   comments: Comment[];
+  isAnonymous: boolean;
 }
 export interface Comment {
   commentId: number;

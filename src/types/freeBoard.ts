@@ -6,7 +6,7 @@ export type PageInfo = {
   totalPages: number;
 }
 
-//게시글 작성
+//게시글 작성, 수정
 export type FreePayload = {
   boardId: number;
 }
@@ -51,3 +51,12 @@ export type GetFreeListParams = {
   size?: number;
 };
 
+//게시글 수정
+export type EditFreeParams = {
+  boardId: number;
+  title: string;
+  content: string;
+  isAnonymous: boolean;
+  category: FreeCategory;
+  imageUrls: string[];
+};

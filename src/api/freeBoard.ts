@@ -1,11 +1,11 @@
 import { fetchClient } from "@/api/client";
 
 import {
-  FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload
+  FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload, EditFreeParams
 }
   from '@/types/freeBoard';
 
-
+//게시글 작성
 export async function postFree(params: PostFreeParams) {
   return fetchClient<FreePayload>("/boards", {
     method: "POST",
@@ -38,5 +38,15 @@ export async function deleteFree({ boardId }: DeleteFreeParams) {
   return fetchClient<DeleteFreePayload>(`/boards/${boardId}`, {
     method: 'DELETE',
     auth: true,
+  });
+}
+
+//게시글 수정
+export async function editFree(params: EditFreeParams) {
+  const { boardId, ...body } = params;
+  return fetchClient<FreePayload>(`/boards/${boardId}`, {
+    method: 'PUT',
+    auth: true,
+    body: JSON.stringify(body),
   });
 }
