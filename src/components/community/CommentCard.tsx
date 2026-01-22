@@ -31,7 +31,7 @@ export default function CommentCard({ comments }: { comments: Comment[] }) {
           <div key={comment.commentId} className="">
             {/* 부모 댓글 */}
             <div className="px-5 py-4 border-b-1 border-gray-900">
-              <p className="flex gap-2 mb-2 items-end">
+              <p className="flex gap-2 mb-1 items-end">
                 <span className="text-base font-medium text-white">{comment.writerNickname}</span>
                 <span className="text-xs text-gray-600 font-medium">{comment.createdAt}</span>
               </p>
@@ -61,7 +61,7 @@ export default function CommentCard({ comments }: { comments: Comment[] }) {
                   <Image src={reply_arrow} alt="reply arrow" />
 
                   <div className="flex flex-col w-full">
-                    <p className="flex gap-2 items-end">
+                    <p className="flex gap-2 mb-1 items-end">
                       <span className="text-base font-medium text-white">
                         {reply.writerNickname}
                       </span>
@@ -99,7 +99,7 @@ export default function CommentCard({ comments }: { comments: Comment[] }) {
                         <Image src={reply_arrow} alt="reply arrow" />
 
                         <div className="flex flex-col w-full">
-                          <p className="flex gap-2 items-end">
+                          <p className="flex gap-2 items-end mb-1">
                             <span className="text-base font-medium text-white">
                               {child.writerNickname}
                             </span>

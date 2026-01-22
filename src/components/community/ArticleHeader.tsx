@@ -14,7 +14,7 @@ export default function ArticleHeader({ title }: ArticleHeaderProps) {
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
-    <section className="w-full flex flex-col px-5 py-[10px] max-w-[inherit] text-white h-11 fixed top-0 z-10 bg-black relative">
+    <section className="w-full flex flex-col px-5 py-[10px] max-w-[inherit] text-white h-11 fixed top-0 z-10 bg-transparent relative">
       <div className="flex justify-between items-center">
         <Image
           src={backBtn}

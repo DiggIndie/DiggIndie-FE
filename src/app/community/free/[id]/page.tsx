@@ -4,20 +4,16 @@ import CommentCard from '@/components/community/CommentCard';
 import freeDetailData from '@/mocks/community/freeDetailDummy.json';
 import ArticleBody from '@/components/community/ArticleBody';
 import ReplyInputSection from '@/components/community/ReplyInputSection';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { boardDetailService } from '@/services/boardDetail.service';
 import { FreeBoardDetail } from '@/types/board';
 import { useAuthStore } from '@/stores/authStore';
-// import { useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
-type Props = {
-  params: { id: string };
-};
-
-export default function FreeArticleDetailPage({ params }: Props) {
+export default function FreeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
-  const resolvedParams = use(params);
-  const boardId = Number(resolvedParams.id);
+  const params = useParams();
+  const boardId = Number(params.id);
 
   const [comments, setComments] = useState(freeDetailData.comments);
   const [board, setBoard] = useState<FreeBoardDetail>();
@@ -48,11 +44,14 @@ export default function FreeArticleDetailPage({ params }: Props) {
 
     fetchDetail();
   }, [boardId]);
-
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20 ">
       <ArticleHeader title="자유 라운지" />
-      {isAuthed ? (
+      {!board ? (
+        <div className="h-screen flex items-center justify-center">
+          <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
+        </div>
+      ) : isAuthed ? (
         <>
           <div className="pb-20">
             <ArticleBody content={board} />
