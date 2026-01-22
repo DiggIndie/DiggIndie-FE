@@ -82,7 +82,9 @@ export default function ArtistContentSection({
               </span>
             ))
           ) : (
-            <span className="font-bold text-sm text-gray-400 text-sm">1인 아티스트입니다.</span>
+            <span className="font-bold text-sm text-gray-400 text-sm">
+              정보가 존재하지 않습니다.
+            </span>
           )}
         </div>
       </div>

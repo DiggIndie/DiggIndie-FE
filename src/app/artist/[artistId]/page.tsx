@@ -63,6 +63,8 @@ export default function ArtistDetailPage() {
       window.scrollTo(0, 0);
     }
   }, [isLoading]);
+
+  //이미지 반환 안 될 시 디폴트 이미지
   const artistImageSrc =
     artist?.artistImage && artist.artistImage.trim() !== ''
       ? artist.artistImage

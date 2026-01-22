@@ -1,13 +1,19 @@
 import React from 'react';
 
 interface HeartIconProps {
+  firstStroke?: string;
   active?: boolean;
   size?: number;
   onClick?: () => void;
 }
 
-export default function HeartIcon({ active = false, size = 24, onClick }: HeartIconProps) {
-  const strokeColor = active ? '#FF3637' : '#736F6F';
+export default function HeartIcon({
+  active = false,
+  size = 24,
+  onClick,
+  firstStroke = '#F6F6F6',
+}: HeartIconProps) {
+  const strokeColor = active ? '#FF3637' : `${firstStroke}`;
   const fillColor = active ? '#FF3637' : 'none';
 
   return (

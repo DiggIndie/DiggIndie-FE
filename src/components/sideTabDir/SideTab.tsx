@@ -61,16 +61,16 @@ export default function SideTab({ onClose }: SideTabProps) {
           className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
           onClick={() => router.push('/community/free')}
         >
-          <Image src={communityIcon} alt="디깅라운지" />
-          <span className="text-white">디깅라운지</span>
+          <Image src={communityIcon} alt="디깅 라운지" />
+          <span className="text-white">디깅 라운지</span>
         </div>
 
         <div
           className="px-8 py-3 cursor-pointer flex gap-3 hover:bg-gray-800"
           onClick={() => router.push('/indieStory')}
         >
-          <Image src={indieIcon} alt="인디스토리" />
-          <span className="text-white">인디스토리</span>
+          <Image src={indieIcon} alt="인디 스토리" />
+          <span className="text-white">인디 스토리</span>
         </div>
         <div
           className={`px-8 py-3 flex gap-3 items-center ${

@@ -42,7 +42,12 @@ export default function CommentCard({ comments }: { comments: Comment[] }) {
               답글 달기
             </span>
             <p className="flex gap-[3px] pl-3 items-center">
-              <HeartIcon size={16} active={isLiked} onClick={() => setIsLiked(!isLiked)} />
+              <HeartIcon
+                size={16}
+                active={isLiked}
+                onClick={() => setIsLiked(!isLiked)}
+                firstStroke="#736F6F"
+              />
               <span className="text-sm text-gray-600 font-normal">0</span>
             </p>
           </div>
