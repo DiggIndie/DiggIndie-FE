@@ -3,14 +3,15 @@
 import Image from 'next/image';
 import HeartIcon from '@/assets/community/HeartIcon';
 import reply_arrow from '@/assets/community/Arrow Bottom Left 3.svg';
-import { Comment } from '@/types/board';
+import type { Comment } from '@/types/board';
 
 type Props = {
   comments: Comment[];
-  onToggleLike: (commentId: number) => void;
+  onToggleLike?: (commentId: number) => void;
+  onReplyClick?: (parentCommentId: number, nickname: string) => void; //답글 닉네임 자동 채우기 위함
 };
 
-export default function CommentCard({ comments, onToggleLike }: Props) {
+export default function CommentCard({ comments, onToggleLike, onReplyClick }: Props) {
   if (!comments || comments.length === 0) {
     return <div className="py-10 text-center text-gray-600 text-sm">댓글이 없습니다.</div>;
   }
@@ -33,14 +34,18 @@ export default function CommentCard({ comments, onToggleLike }: Props) {
               <p className="text-sm text-gray-300 font-normal">{comment.content}</p>
 
               <div className="flex items-center mt-2">
-                <span className="text-gray-600 text-sm font-medium pr-3 border-r border-gray-800 cursor-pointer">
+                <span
+                  className="text-gray-600 text-sm font-medium pr-3 border-r border-gray-800 cursor-pointer"
+                  onClick={() => onReplyClick?.(comment.commentId, comment.writerNickname)}
+                >
                   답글 달기
                 </span>
+
                 <p className="flex gap-1 pl-3 items-center">
                   <HeartIcon
                     size={16}
                     active={comment.isLiked}
-                    onClick={() => onToggleLike(comment.commentId)}
+                    onClick={() => onToggleLike?.(comment.commentId)}
                     firstStroke="#736F6F"
                   />
                   <span className="text-sm font-normal text-gray-600">{comment.likeCount}</span>
@@ -63,14 +68,18 @@ export default function CommentCard({ comments, onToggleLike }: Props) {
                     <p className="text-xs font-normal text-gray-300">{reply.content}</p>
 
                     <div className="flex items-center mt-2">
-                      <span className="text-gray-600 text-sm pr-3 border-r border-gray-800 cursor-pointer">
+                      <span
+                        className="text-gray-600 text-sm pr-3 border-r border-gray-800 cursor-pointer"
+                        onClick={() => onReplyClick?.(reply.commentId, reply.writerNickname)}
+                      >
                         답글 달기
                       </span>
+
                       <p className="flex gap-1 pl-3 items-center">
                         <HeartIcon
                           size={14}
                           active={reply.isLiked}
-                          onClick={() => onToggleLike(reply.commentId)}
+                          onClick={() => onToggleLike?.(reply.commentId)}
                           firstStroke="#736F6F"
                         />
                         <span className="text-sm text-gray-600">{reply.likeCount}</span>
@@ -83,16 +92,15 @@ export default function CommentCard({ comments, onToggleLike }: Props) {
                 {depth2Replies
                   .filter((r) => r.parentCommentId === reply.commentId)
                   .map((child) => (
-                    <div
-                      key={child.commentId}
-                      className="pl-13 py-4 border-b-1 border-gray-900 px-5"
-                    >
+                    <div key={child.commentId} className="pl-13 py-4 border-b-1 border-gray-900 px-5">
                       <div className="flex gap-2 items-start">
                         <Image src={reply_arrow} alt="reply arrow" />
 
                         <div className="flex flex-col w-full">
                           <p className="flex gap-2 items-end mb-1">
-                            <span className="text-base font-medium text-white">{child.writerNickname}</span>
+                            <span className="text-base font-medium text-white">
+                              {child.writerNickname}
+                            </span>
                             <span className="text-xs text-gray-600 font-medium">{child.createdAt}</span>
                           </p>
 
@@ -109,7 +117,7 @@ export default function CommentCard({ comments, onToggleLike }: Props) {
                             <HeartIcon
                               size={14}
                               active={child.isLiked}
-                              onClick={() => onToggleLike(child.commentId)}
+                              onClick={() => onToggleLike?.(child.commentId)}
                               firstStroke="#736F6F"
                             />
                             <span className="text-sm text-gray-600 ml-1">{child.likeCount}</span>
@@ -126,3 +134,4 @@ export default function CommentCard({ comments, onToggleLike }: Props) {
     </div>
   );
 }
+

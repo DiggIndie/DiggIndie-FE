@@ -76,7 +76,7 @@ export type CommentFreeParams = {
   boardId: number;
   content: string;
   isAnonymous: boolean;
-  parentCommentId: number;
+  parentCommentId: number | null;
 }
 
 export type ChildCommentFree = {
