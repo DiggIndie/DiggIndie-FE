@@ -8,8 +8,38 @@ import type { Comment } from '@/types/board';
 type Props = {
   comments: Comment[];
   onToggleLike?: (commentId: number) => void;
-  onReplyClick?: (parentCommentId: number, nickname: string) => void; //답글 닉네임 자동 채우기 위함
+  onReplyClick?: (parentCommentId: number, nickname: string) => void; // 답글 닉네임 자동 채우기 위함
 };
+
+function splitMention(content: string) {
+  const text = content ?? '';
+  if (!text.startsWith('@')) return { mention: null as string | null, rest: text };
+
+  const spaceIndex = text.indexOf(' ');
+  if (spaceIndex === -1) return { mention: text, rest: '' };
+
+  return {
+    mention: text.slice(0, spaceIndex + 1), // 공백 포함
+    rest: text.slice(spaceIndex + 1),
+  };
+}
+
+function MentionText({
+                       text,
+                       className,
+                     }: {
+  text: string;
+  className: string;
+}) {
+  const { mention, rest } = splitMention(text);
+
+  return (
+    <p className={className}>
+      {mention && <span className="text-[#FF6A46]">{mention}</span>}
+      <span className="text-gray-300">{rest || ' '}</span>
+    </p>
+  );
+}
 
 export default function CommentCard({ comments, onToggleLike, onReplyClick }: Props) {
   if (!comments || comments.length === 0) {
@@ -31,7 +61,7 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                 <span className="text-xs text-gray-600 font-medium">{comment.createdAt}</span>
               </p>
 
-              <p className="text-sm text-gray-300 font-normal">{comment.content}</p>
+              <MentionText text={comment.content} className="text-sm font-normal" />
 
               <div className="flex items-center mt-2">
                 <span
@@ -65,7 +95,7 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                       <span className="text-xs text-gray-600 font-medium">{reply.createdAt}</span>
                     </p>
 
-                    <p className="text-xs font-normal text-gray-300">{reply.content}</p>
+                    <MentionText text={reply.content} className="text-xs font-normal" />
 
                     <div className="flex items-center mt-2">
                       <span
@@ -104,13 +134,19 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                             <span className="text-xs text-gray-600 font-medium">{child.createdAt}</span>
                           </p>
 
-                          <p>
-                            <span className="text-gray-300 text-sm font-normal">
-                              <span className="text-main-red-3 text-xs font-normal">
-                                @{child.replyToNickname}{' '}
-                              </span>
-                              {child.content}
+                          {/*  content에서 @멘션 색칠 */}
+                          <p className="text-sm font-normal">
+                            <span className="text-[#FF6A46] text-xs font-normal">
+                              @{child.replyToNickname}{' '}
                             </span>
+                            {(() => {
+                              const { mention, rest } = splitMention(child.content);
+                              return (
+                                <>
+                                  <span className="text-gray-300">{rest || ' '}</span>
+                                </>
+                              );
+                            })()}
                           </p>
 
                           <div className="flex items-center mt-2">
@@ -134,4 +170,3 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
     </div>
   );
 }
-
