@@ -84,7 +84,7 @@ export const authService = {
     if (!email) return null;
     try {
       const res = await authApi.checkEmail({ email: email, type: type });
-      console.log('email 유효성 검사', res.payload.success);
+      console.log('email 유효성 검사', res.payload);
       return res.payload.success;
     } catch (err) {
       throw err;

@@ -24,7 +24,7 @@ export default function FindId() {
       setIsEmailSent(true);
       setErrors((prev) => ({ ...prev, email: '인증번호가 전송되었습니다.' }));
     } catch (error) {
-      setErrors((prev) => ({ ...prev, email: '이미 가입된 이메일입니다.' }));
+      setErrors((prev) => ({ ...prev, email: '가입되지 않은 이메일입니다.' }));
     }
   };
 
@@ -104,7 +104,10 @@ export default function FindId() {
       </div>
       {/* 아이디 찾기 빨간 버튼 */}
       <Link href="/auth/find/id/result">
-        <button className="w-[335px] h-13 mt-5 rounded-sm bg-main-red-2 text-white font-semibold cursor-pointer">
+        <button
+          className={`${!isEmailVerified ? 'cursor-not allowed bg-gray-600' : 'bg-main-red-2 cursor-pointer'} w-[335px] h-13 mt-5 rounded-sm  text-white font-semibold `}
+          disabled={!isEmailVerified}
+        >
           아이디 찾기
         </button>
       </Link>

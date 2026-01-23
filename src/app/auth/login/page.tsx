@@ -15,7 +15,16 @@ import recentLogin from '@/assets/auth/recentLogin.svg';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [platform, setPlatform] = useState('');
+
+  const [recentPlatform] = useState<string | null>(() => {
+    // 브라우저 환경(window 객체 존재 여부) 확인 후 값 가져오기
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('recent_provider');
+    }
+    return null;
+  });
+  console.log(recentPlatform);
+
   const [form, setForm] = useState({
     id: '',
     password: '',
@@ -56,10 +65,14 @@ export default function LoginPage() {
     }
   };
   const handleSocialLogin = async (platform: 'GOOGLE' | 'NAVER' | 'KAKAO') => {
-    const { authUrl, state } = await authService.getAuthURL(platform);
-    // const authUrl2 =
-    // 'https://accounts.google.com/o/oauth2/v2/auth?client_id=507436851078-7pdn9agkmn8puh2ftjbvtkas7u6vj45j.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/v1/auth/oauth2/callback/google&response_type=code&scope=profile%20email&state=f6d89d04-3461-4680-9f76-50bd6db31555';
-    window.open(authUrl);
+    try {
+      const { authUrl, state } = await authService.getAuthURL(platform);
+      // 백엔드가 준 state(uuid)를 잠시 보관
+      localStorage.setItem('UUID', state);
+      window.location.href = authUrl;
+    } catch (err) {
+      throw err;
+    }
   };
   return (
     <div className="text-white flex flex-col h-screen items-center relative">
