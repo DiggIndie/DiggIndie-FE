@@ -24,7 +24,7 @@ export default function ReplyInputSection({ addReply, disabled, replyTarget, onC
 
     setInput((prev) => {
       const prevTrim = prev.trim();
-      // 사용자가 이미 뭔가 쓰고 있으면 덮어쓰지 않기 (단, 멘션 시작이면 갱신)
+      // 사용자가 이미 뭔가 쓰고 있으면 덮어쓰지 않기
       if (prevTrim.length === 0) return mention;
       if (prev.startsWith('@')) return mention;
       return prev;
