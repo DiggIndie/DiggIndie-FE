@@ -1,7 +1,7 @@
 import { fetchClient } from "@/api/client";
 
 import {
-  FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload, EditFreeParams
+  FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload, EditFreeParams, LikeFreeParams, LikeFreePayload
 }
   from '@/types/freeBoard';
 
@@ -48,5 +48,14 @@ export async function editFree(params: EditFreeParams) {
     method: 'PUT',
     auth: true,
     body: JSON.stringify(body),
+  });
+}
+
+//게시글 좋아요
+export async function likeFree(params: LikeFreeParams) {
+  const { boardId } = params;
+  return fetchClient<LikeFreePayload>(`/boards/${boardId}/like`, {
+    method: 'PATCH',
+    auth: true
   });
 }

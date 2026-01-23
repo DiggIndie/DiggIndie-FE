@@ -60,3 +60,14 @@ export type EditFreeParams = {
   category: FreeCategory;
   imageUrls: string[];
 };
+
+//게시글 좋아요
+export type LikeFreeParams = {
+  boardId: number;
+}
+
+export type LikeFreePayload = {
+  isLiked: boolean;
+  likeCount : number;
+}
+
