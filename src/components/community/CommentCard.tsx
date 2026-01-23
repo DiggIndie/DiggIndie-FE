@@ -76,7 +76,6 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                     size={16}
                     active={comment.isLiked}
                     onClick={() => onToggleLike?.(comment.commentId)}
-                    firstStroke="#736F6F"
                   />
                   <span className="text-sm font-normal text-gray-600">{comment.likeCount}</span>
                 </p>
@@ -110,7 +109,6 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                           size={14}
                           active={reply.isLiked}
                           onClick={() => onToggleLike?.(reply.commentId)}
-                          firstStroke="#736F6F"
                         />
                         <span className="text-sm text-gray-600">{reply.likeCount}</span>
                       </p>
@@ -154,7 +152,6 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                               size={14}
                               active={child.isLiked}
                               onClick={() => onToggleLike?.(child.commentId)}
-                              firstStroke="#736F6F"
                             />
                             <span className="text-sm text-gray-600 ml-1">{child.likeCount}</span>
                           </div>
