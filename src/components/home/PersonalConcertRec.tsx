@@ -75,7 +75,7 @@ export default function PersonalConcertRec({ isLoggedIn }: Props) {
       </div>
 
       <div className={`flex w-full overflow-x-auto ${!isLoggedIn ? 'blur-[3px]' : 'blur-none'}`}>
-        <div className="flex gap-4 w-max">
+        <div className="flex gap-3 w-max">
           {!isLoggedIn ? (
             //로그인 안 했을 시 불러올 임시 사진
             <>

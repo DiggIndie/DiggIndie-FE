@@ -54,7 +54,7 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
   }, [bands]);
 
   return (
-    <section className="mt-6 gap-4 w-full px-5 bg-black flex flex-col">
+    <section className="mt-6 gap-3 w-full px-5 bg-black flex flex-col">
       <div className="flex items-center">
         <span className="text-[20px] font-semibold truncate">리스너님을 위한 추천 아티스트</span>
       </div>
