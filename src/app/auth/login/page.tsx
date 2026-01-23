@@ -59,8 +59,7 @@ export default function LoginPage() {
     const { authUrl, state } = await authService.getAuthURL(platform);
     // const authUrl2 =
     // 'https://accounts.google.com/o/oauth2/v2/auth?client_id=507436851078-7pdn9agkmn8puh2ftjbvtkas7u6vj45j.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/v1/auth/oauth2/callback/google&response_type=code&scope=profile%20email&state=f6d89d04-3461-4680-9f76-50bd6db31555';
-    window.location.href = authUrl;
-    // await authService.socialLogin(,platform,state);
+    window.open(authUrl);
   };
   return (
     <div className="text-white flex flex-col h-screen items-center relative">

@@ -62,14 +62,14 @@ export const authApi = {
     email: string;
     code: string;
     type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID';
-    newPassword: 'stringst';
+    newPassword: string;
   }) {
     return await fetchClient<{
       message: string;
       success: boolean;
       userId: string;
     }>('/auth/email/verify', {
-      method: 'POSt',
+      method: 'POST',
       auth: false,
       body: JSON.stringify(data),
     });
