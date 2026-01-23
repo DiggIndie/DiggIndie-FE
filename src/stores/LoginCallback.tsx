@@ -5,7 +5,7 @@ import { useAuthStore } from './authStore';
 import { useParams, useRouter } from 'next/navigation';
 import Loading from '@/components/auth/Loading';
 
-const LOGIN_ORIGIN = process.env.NEXT_PUBLIC_ORIGIN;
+//const LOGIN_ORIGIN = process.env.NEXT_PUBLIC_ORIGIN;
 const allowed = ['kakao', 'google', 'naver'] as const;
 type Provider = (typeof allowed)[number];
 
@@ -18,6 +18,9 @@ export default function LoginCallback() {
   // URL에서 code 추출
   const code =
     typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('code') : null;
+  const state =
+    typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('state') : null;
+
   const login = useAuthStore((s) => s.login);
 
   useEffect(() => {
@@ -32,9 +35,9 @@ export default function LoginCallback() {
 
         // const redirectUri = `${LOGIN_ORIGIN}/auth/login/callback/${provider}`;
         // code 교환 요청
-        const uuid = localStorage.getItem('UUID');
-        if (!uuid) throw new Error('Session state (UUID) missing');
-        const res = await authService.socialLogin(code, upperProvider, uuid);
+        // const uuid = localStorage.getItem('UUID');
+        // if (!uuid) throw new Error('Session state (UUID) missing');
+        const res = await authService.socialLogin(code, upperProvider, state);
 
         // 토큰은 Zustand(메모리)에만 저장
         login(res.accessToken, String(res.userId));

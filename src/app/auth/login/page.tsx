@@ -65,9 +65,9 @@ export default function LoginPage() {
   };
   const handleSocialLogin = async (platform: 'GOOGLE' | 'NAVER' | 'KAKAO') => {
     try {
-      const { authUrl, state } = await authService.getAuthURL(platform);
+      const { authUrl } = await authService.getAuthURL(platform);
       // 백엔드가 준 state(uuid)를 잠시 보관
-      localStorage.setItem('UUID', state);
+      // localStorage.setItem('UUID', state);
       window.location.href = authUrl;
     } catch (err) {
       throw err;
