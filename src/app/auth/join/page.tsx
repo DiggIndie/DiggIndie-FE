@@ -16,8 +16,8 @@ export default function JoinPage() {
   const [isEmailSent, setIsEmailSent] = useState(false); // 인증번호 전송 버튼 클릭 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 인증번호 확인 성공 여부
 
-  const [isCodeChecked, setISCodeChecked] = useState(false); //인증 번호 확인 버튼 클릭 여부
-  const [isCodeValid, setIsCodeValid] = useState(false); //인증번호 확인 성공 여부
+  // const [isCodeChecked, setISCodeChecked] = useState(false); //인증 번호 확인 버튼 클릭 여부
+  // const [isCodeValid, setIsCodeValid] = useState(false); //인증번호 확인 성공 여부
 
   const [form, setForm] = useState({
     id: '',
@@ -44,7 +44,7 @@ export default function JoinPage() {
   const handleEmailCheck = async () => {
     try {
       // API: 이메일 중복 체크 및 전송 (서버에서 중복이면 에러를 던진다고 가정)
-      await authService.checkEmail(form.email);
+      await authService.checkEmail(form.email, 'SIGNUP');
       setIsEmailSent(true);
       setErrors((prev) => ({ ...prev, email: '인증번호가 전송되었습니다.' }));
     } catch (error) {
@@ -55,7 +55,7 @@ export default function JoinPage() {
   // 2. 인증번호 확인
   const handleVerifyCode = async () => {
     try {
-      const isValid = await authService.verifyCode(form.email, form.emailConfirm);
+      const isValid = await authService.verifyCode(form.email, 'SIGNUP', form.emailConfirm);
       if (isValid) {
         setIsEmailVerified(true);
         setErrors((prev) => ({ ...prev, emailConfirm: '인증되었습니다.' }));

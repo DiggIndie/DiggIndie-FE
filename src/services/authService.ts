@@ -80,25 +80,47 @@ export const authService = {
       console.log('user id 조회 api 오류', err);
     }
   },
-  async checkEmail(email: string) {
+  async checkEmail(email: string, type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID') {
     if (!email) return null;
     try {
-      const res = await authApi.checkEmail({ email: email, type: 'SIGNUP' });
+      const res = await authApi.checkEmail({ email: email, type: type });
       console.log('email 유효성 검사', res.payload.success);
       return res.payload.success;
     } catch (err) {
       throw err;
     }
   },
-  async verifyCode(email: string, code: string) {
+  async verifyCode(
+    email: string,
+    type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID',
+    code: string
+  ) {
     try {
       const res = await authApi.verifyCode({
         email: email,
         code: code,
-        type: 'SIGNUP',
+        type: type,
         newPassword: 'stringst',
       });
       return res.payload.success;
+    } catch (err) {
+      throw err;
+    }
+  },
+  async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
+    try {
+      const res = await authApi.getAuthURL(platform);
+      console.log('auth url 데이터', res.payload);
+      return res.payload;
+    } catch (err) {
+      throw err;
+    }
+  },
+  async socialLogin(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+    try {
+      const res = await authApi.socialLogin(code, platform, state);
+      console.log('소셜 로그인 반환 데이터', res.payload);
+      return res.payload;
     } catch (err) {
       throw err;
     }

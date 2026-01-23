@@ -1,4 +1,3 @@
-import { stringify } from 'querystring';
 import { fetchClient } from './client';
 
 export const authApi = {
@@ -48,7 +47,7 @@ export const authApi = {
     });
   },
 
-  async checkEmail(data: { email: string; type: string }) {
+  async checkEmail(data: { email: string; type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID' }) {
     return await fetchClient<{
       message: string;
       success: boolean;
@@ -59,7 +58,12 @@ export const authApi = {
       body: JSON.stringify(data),
     });
   },
-  async verifyCode(data: { email: string; code: string; type: 'SIGNUP'; newPassword: 'stringst' }) {
+  async verifyCode(data: {
+    email: string;
+    code: string;
+    type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID';
+    newPassword: 'stringst';
+  }) {
     return await fetchClient<{
       message: string;
       success: boolean;
@@ -68,6 +72,31 @@ export const authApi = {
       method: 'POSt',
       auth: false,
       body: JSON.stringify(data),
+    });
+  },
+
+  async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
+    return await fetchClient<{ authUrl: string; state: string }>(`/auth/oauth2/url/${platform}`, {
+      method: 'GET',
+      auth: false,
+    });
+  },
+  async socialLogin(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+    return await fetchClient<{
+      newMember: boolean;
+      externalId: string;
+      userId: string;
+      email: string;
+      platform: 'KAKAO' | 'GOOGLE' | 'NAVER';
+      accessToken: string;
+    }>('/auth/oauth2/login', {
+      method: 'POST',
+      auth: false,
+      body: JSON.stringify({
+        code: code,
+        platform: platform,
+        state: state,
+      }),
     });
   },
 };

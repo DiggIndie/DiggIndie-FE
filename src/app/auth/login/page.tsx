@@ -15,7 +15,7 @@ import recentLogin from '@/assets/auth/recentLogin.svg';
 
 export default function LoginPage() {
   const router = useRouter();
-
+  const [platform, setPlatform] = useState('');
   const [form, setForm] = useState({
     id: '',
     password: '',
@@ -55,11 +55,18 @@ export default function LoginPage() {
       });
     }
   };
+  const handleSocialLogin = async (platform: 'GOOGLE' | 'NAVER' | 'KAKAO') => {
+    const { authUrl, state } = await authService.getAuthURL(platform);
+    // const authUrl2 =
+    // 'https://accounts.google.com/o/oauth2/v2/auth?client_id=507436851078-7pdn9agkmn8puh2ftjbvtkas7u6vj45j.apps.googleusercontent.com&redirect_uri=http://localhost:8080/api/v1/auth/oauth2/callback/google&response_type=code&scope=profile%20email&state=f6d89d04-3461-4680-9f76-50bd6db31555';
+    window.location.href = authUrl;
+    // await authService.socialLogin(,platform,state);
+  };
   return (
     <div className="text-white flex flex-col h-screen items-center relative">
       <MyHeader title="로그인" backUrl="/" />
       <Image src={diggindie} alt="diggindie icon" width={235} className="mt-35" />
-      <section className="flex flex-col gap-3 mt-20">
+      <section className="flex flex-col gap-3 mt-17">
         <InputSection
           placeholder="아이디를 입력해주세요."
           width="w-[335px] h-[52px]"
@@ -120,6 +127,7 @@ export default function LoginPage() {
               width={58}
               height={58}
               className="mt-5 cursor-pointer"
+              onClick={() => handleSocialLogin('GOOGLE')}
             />
             <Image
               src={naverIcon}
@@ -127,6 +135,7 @@ export default function LoginPage() {
               width={58}
               height={58}
               className="mt-5 cursor-pointer"
+              onClick={() => handleSocialLogin('NAVER')}
             />
             <Image
               src={kakaoIcon}
@@ -134,6 +143,7 @@ export default function LoginPage() {
               width={58}
               height={58}
               className="mt-5 cursor-pointer"
+              onClick={() => handleSocialLogin('KAKAO')}
             />
           </p>
           <Image src={recentLogin} alt="최근 로그인 아이콘" />
