@@ -100,3 +100,13 @@ export type CommentFreePayload = {
   isLiked: boolean;
   replies: ChildCommentFree[]
 }
+
+//댓글 좋아요
+export type LikeCommentFreeParams = {
+  commentId: number;
+}
+
+export type LikeCommentFreePayload = {
+  isLiked: boolean;
+  likeCount : number;
+}

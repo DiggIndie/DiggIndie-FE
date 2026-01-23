@@ -20,10 +20,14 @@ export default function FreeArticleDetailPage() {
   const boardId = Number(params.id);
   const [board, setBoard] = useState<FreeBoardDetail | null>(null);
 
-  //대댓글
   const [replyTarget, setReplyTarget] = useState<{ parentCommentId: number; nickname: string } | null>(null);
 
-  const { submitComment, isSubmitting: isCommentSubmitting } = useCommentFree({
+  const {
+    submitComment,
+    toggleCommentLike,
+    isSubmitting: isCommentSubmitting,
+    isLiking: isCommentLiking,
+  } = useCommentFree({
     boardId,
     setBoard,
   });
@@ -82,9 +86,7 @@ export default function FreeArticleDetailPage() {
         if (res.statusCode === 400) {
           alert('자신의 글에는 좋아요를 누를 수 없습니다.');
           setBoard((prevBoard) =>
-            prevBoard
-              ? { ...prevBoard, isLiked: prev.isLiked, likeCount: prev.likeCount }
-              : prevBoard
+            prevBoard ? { ...prevBoard, isLiked: prev.isLiked, likeCount: prev.likeCount } : prevBoard
           );
           return;
         }
@@ -117,20 +119,15 @@ export default function FreeArticleDetailPage() {
     submitComment({
       content,
       isAnonymous,
-      parentCommentId: replyTarget?.parentCommentId ?? null, //대댓글
+      parentCommentId: replyTarget?.parentCommentId ?? null,
     });
 
-    setReplyTarget(null); //전송 후 비우기
+    setReplyTarget(null);
   };
 
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20">
-      <ArticleHeader
-        title="자유 라운지"
-        isMine={true}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      <ArticleHeader title="자유 라운지" isMine={true} onEdit={handleEdit} onDelete={handleDelete} />
 
       {!board ? (
         <div className="h-screen flex items-center justify-center">
@@ -144,10 +141,14 @@ export default function FreeArticleDetailPage() {
         <>
           <div className="pb-20">
             <ArticleBody content={board} onToggleLike={handleToggleLike} />
+
             <CommentCard
               comments={board.comments}
-              onReplyClick={(parentCommentId, nickname) =>
-                setReplyTarget({ parentCommentId, nickname })} //답글 대상 설정
+              onToggleLike={(commentId) => {
+                if (isCommentLiking) return;
+                toggleCommentLike(commentId);
+              }}
+              onReplyClick={(parentCommentId, nickname) => setReplyTarget({ parentCommentId, nickname })}
             />
           </div>
 

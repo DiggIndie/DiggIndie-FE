@@ -2,7 +2,7 @@ import { fetchClient } from "@/api/client";
 
 import {
   FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload, EditFreeParams, LikeFreeParams,
-  LikeFreePayload, CommentFreeParams, CommentFreePayload
+  LikeFreePayload, CommentFreeParams, CommentFreePayload, LikeCommentFreeParams, LikeCommentFreePayload
 }
   from '@/types/freeBoard';
 
@@ -69,4 +69,13 @@ export async function commentFree(params: CommentFreeParams) {
     auth: true,
     body: JSON.stringify(body)
   })
+}
+
+//댓글 좋아요
+export async function likeCommentFree(params: LikeCommentFreeParams) {
+  const { commentId } = params;
+  return fetchClient<LikeCommentFreePayload>(`/boards/comments/${commentId}/like`, {
+    method: 'PATCH',
+    auth: true
+  });
 }
