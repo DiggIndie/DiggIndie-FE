@@ -4,6 +4,7 @@ import searchBtn from '@/assets/common/search.svg'
 import writeBtn from '@/assets/common/write.svg'
 import menuBtn from '@/assets/common/hamburger.svg'
 import { usePathname, useRouter } from 'next/navigation';
+import { useAuthStore } from '@/stores/authStore';
 
 type props = {
   title: string;
@@ -14,6 +15,8 @@ type props = {
 export default function CommunityHeader({ title, onHamburgerClick }: props) {
   const router = useRouter();
   const pathname = usePathname();
+  const { isAuthed } = useAuthStore();
+
 
   const handleSearch = () => {
     if (pathname.includes('/community/free')) {
@@ -30,7 +33,10 @@ export default function CommunityHeader({ title, onHamburgerClick }: props) {
         <div onClick={() => handleSearch()}>
          <Image src={searchBtn} alt={"search"} width={24} height={24} className={'cursor-pointer'} />
         </div>
-        <div onClick={() => router.push('/community/write')}>
+        <div onClick={() => {
+          if (!isAuthed) return;
+          router.push('/community/write')
+        }}>
           <Image src={writeBtn} alt={"write"} width={24} height={24} className={'cursor-pointer'} />
         </div>
         <Image src={menuBtn} alt={"menu"} width={24} height={24} className={'cursor-pointer'} onClick={onHamburgerClick} />

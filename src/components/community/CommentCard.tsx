@@ -8,7 +8,7 @@ import type { Comment } from '@/types/board';
 type Props = {
   comments: Comment[];
   onToggleLike?: (commentId: number) => void;
-  onReplyClick?: (parentCommentId: number, nickname: string) => void; // 답글 닉네임 자동 채우기 위함
+  onReplyClick?: (parentCommentId: number, nickname: string, depth: 0 | 1) => void;
 };
 
 function splitMention(content: string) {
@@ -19,18 +19,12 @@ function splitMention(content: string) {
   if (spaceIndex === -1) return { mention: text, rest: '' };
 
   return {
-    mention: text.slice(0, spaceIndex + 1), // 공백 포함
+    mention: text.slice(0, spaceIndex + 1),
     rest: text.slice(spaceIndex + 1),
   };
 }
 
-function MentionText({
-                       text,
-                       className,
-                     }: {
-  text: string;
-  className: string;
-}) {
+function MentionText({ text, className }: { text: string; className: string }) {
   const { mention, rest } = splitMention(text);
 
   return (
@@ -66,7 +60,7 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
               <div className="flex items-center mt-2">
                 <span
                   className="text-gray-600 text-sm font-medium pr-3 border-r border-gray-800 cursor-pointer"
-                  onClick={() => onReplyClick?.(comment.commentId, comment.writerNickname)}
+                  onClick={() => onReplyClick?.(comment.commentId, comment.writerNickname, 0)}
                 >
                   답글 달기
                 </span>
@@ -94,12 +88,13 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
                       <span className="text-xs text-gray-600 font-medium">{reply.createdAt}</span>
                     </p>
 
-                    <MentionText text={reply.content} className="text-xs font-normal" />
+                    {/* 대댓글은 멘션 하이라이트 제거 */}
+                    <p className="text-xs font-normal text-gray-300">{reply.content}</p>
 
                     <div className="flex items-center mt-2">
                       <span
                         className="text-gray-600 text-sm pr-3 border-r border-gray-800 cursor-pointer"
-                        onClick={() => onReplyClick?.(reply.commentId, reply.writerNickname)}
+                        onClick={() => onReplyClick?.(reply.commentId, reply.writerNickname, 1)}
                       >
                         답글 달기
                       </span>
@@ -126,24 +121,17 @@ export default function CommentCard({ comments, onToggleLike, onReplyClick }: Pr
 
                         <div className="flex flex-col w-full">
                           <p className="flex gap-2 items-end mb-1">
-                            <span className="text-base font-medium text-white">
-                              {child.writerNickname}
-                            </span>
+                            <span className="text-base font-medium text-white">{child.writerNickname}</span>
                             <span className="text-xs text-gray-600 font-medium">{child.createdAt}</span>
                           </p>
 
-                          {/*  content에서 @멘션 색칠 */}
                           <p className="text-sm font-normal">
                             <span className="text-[#FF6A46] text-xs font-normal">
                               @{child.replyToNickname}{' '}
                             </span>
                             {(() => {
-                              const { mention, rest } = splitMention(child.content);
-                              return (
-                                <>
-                                  <span className="text-gray-300">{rest || ' '}</span>
-                                </>
-                              );
+                              const { rest } = splitMention(child.content);
+                              return <span className="text-gray-300">{rest || ' '}</span>;
                             })()}
                           </p>
 

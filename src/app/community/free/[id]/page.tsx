@@ -20,7 +20,11 @@ export default function FreeArticleDetailPage() {
   const boardId = Number(params.id);
   const [board, setBoard] = useState<FreeBoardDetail | null>(null);
 
-  const [replyTarget, setReplyTarget] = useState<{ parentCommentId: number; nickname: string } | null>(null);
+  const [replyTarget, setReplyTarget] = useState<{
+    parentCommentId: number;
+    nickname: string;
+    depth: 0 | 1;
+  } | null>(null);
 
   const {
     submitComment,
@@ -148,7 +152,9 @@ export default function FreeArticleDetailPage() {
                 if (isCommentLiking) return;
                 toggleCommentLike(commentId);
               }}
-              onReplyClick={(parentCommentId, nickname) => setReplyTarget({ parentCommentId, nickname })}
+              onReplyClick={(parentCommentId, nickname, depth) =>
+                setReplyTarget({ parentCommentId, nickname, depth })
+              }
             />
           </div>
 
