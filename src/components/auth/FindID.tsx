@@ -31,10 +31,16 @@ export default function FindId() {
   // 2. 인증번호 확인
   const handleVerifyCode = async () => {
     try {
-      const isValid = await authService.verifyCode(form.email, 'FIND_USER_ID', form.emailConfirm);
+      const isValid = await authService.verifyCode(
+        form.email,
+        form.emailConfirm,
+        'FIND_USER_ID',
+        'stringst'
+      );
       if (isValid) {
         setIsEmailVerified(true);
         setErrors((prev) => ({ ...prev, emailConfirm: '인증되었습니다.' }));
+        sessionStorage.setItem('FOUND_USER_ID', isValid.userId);
       } else {
         setErrors((prev) => ({ ...prev, emailConfirm: '인증번호가 일치하지 않습니다.' }));
       }
@@ -51,8 +57,14 @@ export default function FindId() {
             <input
               type="email"
               placeholder="이메일 입력"
-              className="w-full bg-transparent text-[#8C8787] text-[16px] focus:none
-           px-4 placeholder:text-[#736F6F] border-b-[1px] border-[#4A4747] pb-1 focus:outline-none focus:border-white focus:text-white"
+              className="w-full bg-transparent text-[#8C8787] text-base text-white
+           px-4 placeholder:text-[#736F6F] border-b-[1px] border-[#4A4747] pb-1 focus:outline-none"
+              onChange={(e) => {
+                setIsEmailSent(false);
+                setIsEmailVerified(false);
+                setForm({ ...form, email: e.target.value });
+                //if (errors.id) setErrors({});
+              }}
             />
           </div>
           <button
@@ -72,7 +84,13 @@ export default function FindId() {
               type="text"
               placeholder="인증번호 입력"
               className="w-full bg-transparent text-[#8C8787] placeholder:text-[#736F6F] px-4
-                       border-b-[1px] border-[#4A4747] pb-1 focus:outline-none focus:border-white focus:text-white"
+                       border-b-1 border-[#4A4747] pb-1 text-white"
+              onChange={(e) => {
+                setIsEmailSent(false);
+                setIsEmailVerified(false);
+                setForm({ ...form, emailConfirm: e.target.value });
+                //if (errors.id) setErrors({});
+              }}
             />
           </div>
           <button

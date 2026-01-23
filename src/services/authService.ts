@@ -92,8 +92,8 @@ export const authService = {
   },
   async verifyCode(
     email: string,
-    type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID',
     code: string,
+    type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID',
     newPassword: string
   ) {
     try {
@@ -103,7 +103,7 @@ export const authService = {
         type: type,
         newPassword: newPassword,
       });
-      return res.payload.success;
+      return res.payload;
     } catch (err) {
       throw err;
     }

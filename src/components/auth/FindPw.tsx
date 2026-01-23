@@ -35,8 +35,8 @@ export default function FindPw() {
     try {
       const isValid = await authService.verifyCode(
         form.email,
-        'PASSWORD_RESET',
         form.emailConfirm,
+        'PASSWORD_RESET',
         'stringst'
       );
       if (isValid) {
