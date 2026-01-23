@@ -15,10 +15,6 @@ export default function MarketSearchPage() {
         <SearchHeader title="거래/양도 게시판" onHamburgerClick={() => setIsSideTabOpen(true)} />
       </header>
 
-      <div className="shrink-0">
-        <CommunityTab />
-      </div>
-
       <main className=" flex-1 min-h-0 overflow-y-auto scrollbar flex flex-col bg-black">
         <SearchMarket />
       </main>
