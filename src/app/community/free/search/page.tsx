@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import SearchHeader from '@/components/search/SearchHeader';
-import CommunityTab from '@/components/community/CommunityTab';
 import SideTab from '@/components/sideTabDir/SideTab';
 import SearchFree from '@/components/community/SearchFree';
 

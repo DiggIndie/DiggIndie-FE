@@ -81,7 +81,7 @@ export default function SearchFree() {
       {/* 검색 */}
       <div
         className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white
-        ${draft ? 'w-[307px] ml-[28px] mr-[12px]' : 'w-[335px]'}`}
+        ${draft ? 'w-[307px] ml-auto mr-5' : 'w-[335px]'}`}
       >
         <button
           type="button"
