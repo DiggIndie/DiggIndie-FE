@@ -10,7 +10,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     const restoreLogin = async () => {
       try {
-        if (!isAuthed) return; //로그인 안되어있을 때에는 reissue 호출 안함
+        // if (!isAuthed) return; //로그인 안되어있을 때에는 reissue 호출 안함
         await authService.refreshAccessToken();
         console.log('[Auth] 세션 복구 성공');
       } catch {

@@ -23,7 +23,6 @@ export default function LoginPage() {
     }
     return null;
   });
-  console.log(recentPlatform);
 
   const [form, setForm] = useState({
     id: '',
