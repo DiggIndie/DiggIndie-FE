@@ -1,7 +1,8 @@
 import { fetchClient } from "@/api/client";
 
 import {
-  FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload, EditFreeParams, LikeFreeParams, LikeFreePayload
+  FreePayload, GetFreeListParams, PostFreeParams, FreeListPayload, EditFreeParams, LikeFreeParams,
+  LikeFreePayload, CommentFreeParams, CommentFreePayload
 }
   from '@/types/freeBoard';
 
@@ -58,4 +59,14 @@ export async function likeFree(params: LikeFreeParams) {
     method: 'PATCH',
     auth: true
   });
+}
+
+//댓글 작성
+export async function commentFree(params: CommentFreeParams) {
+  const { boardId, ...body } = params;
+  return fetchClient<CommentFreePayload>(`/boards/${boardId}/comments`, {
+    method: 'POST',
+    auth: true,
+    body: JSON.stringify(body)
+  })
 }

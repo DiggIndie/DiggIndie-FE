@@ -71,3 +71,32 @@ export type LikeFreePayload = {
   likeCount : number;
 }
 
+//댓글 작성
+export type CommentFreeParams = {
+  boardId: number;
+  content: string;
+  isAnonymous: boolean;
+  parentCommentId: number;
+}
+
+export type ChildCommentFree = {
+  commentId: number;
+  parentCommentId: number | null;
+  writerNickname: string;
+  createdAt: string;
+  content: string;
+  likeCount: number;
+  isLiked: boolean;
+  depth: number;
+}
+
+export type CommentFreePayload = {
+  commentId: number;
+  writerNickname: string;
+  replyToNickname?: string;
+  createdAt: string;
+  content: string;
+  likeCount: number;
+  isLiked: boolean;
+  replies: ChildCommentFree[]
+}

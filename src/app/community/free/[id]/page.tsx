@@ -10,6 +10,8 @@ import { FreeBoardDetail } from '@/types/board';
 import { useAuthStore } from '@/stores/authStore';
 import { useParams, useRouter } from 'next/navigation';
 import { deleteFree } from '@/api/freeBoard';
+import { likeFree } from '@/api/freeBoard';
+
 
 export default function FreeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
@@ -51,6 +53,75 @@ export default function FreeArticleDetailPage() {
     router.replace('/community/free');
   };
 
+  //게시글 좋아요
+  const handleToggleLike = async () => {
+    if (!board) return;
+
+    const prev = {
+      isLiked: board.isLiked,
+      likeCount: board.likeCount,
+    };
+
+    // UI 좋아요 수 즉시 반영
+    setBoard((prevBoard) =>
+      prevBoard
+        ? {
+          ...prevBoard,
+          isLiked: !prevBoard.isLiked,
+          likeCount: prevBoard.isLiked
+            ? prevBoard.likeCount - 1
+            : prevBoard.likeCount + 1,
+        }
+        : prevBoard
+    );
+
+    try {
+      const res = await likeFree({ boardId });
+      if (!res.isSuccess) {
+        // 본인 글 좋아요 방지
+        if (res.statusCode === 400) {
+          alert('자신의 글에는 좋아요를 누를 수 없습니다.');
+
+          // 롤백
+          setBoard((prevBoard) =>
+            prevBoard
+              ? {
+                ...prevBoard,
+                isLiked: prev.isLiked,
+                likeCount: prev.likeCount,
+              }
+              : prevBoard
+          );
+          return;
+        }
+      }
+
+      // 서버 기준 좋아요 수
+      setBoard((prevBoard) =>
+        prevBoard
+          ? {
+            ...prevBoard,
+            isLiked: res.payload.isLiked,
+            likeCount: res.payload.likeCount,
+          }
+          : prevBoard
+      );
+    } catch {
+      // 실패 시
+      setBoard((prevBoard) =>
+        prevBoard
+          ? {
+            ...prevBoard,
+            isLiked: prev.isLiked,
+            likeCount: prev.likeCount,
+          }
+          : prevBoard
+      );
+
+      alert('좋아요 처리에 실패했습니다.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20">
       <ArticleHeader title="자유 라운지" isMine={true} onEdit={handleEdit} onDelete={handleDelete} />
@@ -62,7 +133,10 @@ export default function FreeArticleDetailPage() {
       ) : isAuthed ? (
         <>
           <div className="pb-20">
-            <ArticleBody content={board} />
+            <ArticleBody
+              content={board}
+              onToggleLike={handleToggleLike}
+            />
             <CommentCard comments={board.comments} />
           </div>
           <ReplyInputSection addReply={addReply} />
