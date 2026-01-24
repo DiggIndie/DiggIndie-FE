@@ -154,7 +154,7 @@ export default function FindPw() {
                 onChange={(e) => setForm({ ...form, pwConfrim: e.target.value })}
               />
             </div>
-            <button className="px-3 py-2 rounded-sm bg-main-red-2 border border-main-red-1 text-white text-xs font-medium cursor-pointer">
+            <button className="w-22 py-2 rounded-sm bg-main-red-2 border border-main-red-1 text-white text-xs font-medium cursor-pointer">
               확인
             </button>
           </div>
