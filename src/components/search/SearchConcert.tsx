@@ -70,12 +70,12 @@ export default function SearchConcert() {
   const showSkeleton = isTypingLoading || (isFetching && pageInfo.page === 0);
 
   return (
-    <section className="relative w-full flex flex-col px-[20px] mt-[20px]">
+    <section className="relative w-full flex flex-col px-5">
       {/* 검색 초기화 */}
       <Image
         src={searchBack}
         alt="back"
-        className="absolute left-[20px] mt-[10px] cursor-pointer"
+        className="absolute left-5 mt-[10px] cursor-pointer"
         onClick={() => {
           setQuery("");
           setDebouncedTerm("");
@@ -86,13 +86,13 @@ export default function SearchConcert() {
 
       {/* 검색 input */}
       <div
-        className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white 
-        ${query ? "w-[307px] ml-[28px] mr-[12px]" : "w-[335px]"}`}
+        className={`relative flex h-11 ml-auto mb-3 px-3 py-2 rounded-[4px] bg-[#4A4747] text-white 
+        ${query ? "w-[calc(100%-28px)]" : "w-full"}`}
       >
         <Image
           src={query ? searchGrayBtn : searchBtn}
           alt="Search"
-          className="absolute right-[8px] mt-[2px]"
+          className="absolute right-2 mt-[2px]"
         />
         <input
           value={query}
@@ -149,7 +149,7 @@ export default function SearchConcert() {
       {error ? <div className="mt-4 text-[#FF6B6B] text-[14px] break-words">{error}</div> : null}
 
       {/* 결과 */}
-      <div className="mt-4">
+      <div className="flex mt-4 justify-center">
         {showSkeleton ? <SearchCardSkeleton /> : <ConcertGrid concerts={concerts} />}
 
         {isFetchingMore ? (

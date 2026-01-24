@@ -31,7 +31,7 @@ export default function HomeHeader() {
             width={24}
             height={24}
           />
-          <span className={"font-medium text-[16px] text-white"}>
+          <span className={"font-medium text-[16px] text-white truncate"}>
             [머릿글] 잔나비 티켓 양도합니다
           </span>
         </div>
@@ -44,7 +44,7 @@ export default function HomeHeader() {
             width={24}
             height={24}
           />
-          <span className={"font-medium text-[16px] text-white"}>
+          <span className={"font-medium text-[16px] text-white truncate "}>
             [머릿글] 잔나비 티켓 양도합니다
           </span>
         </div>
@@ -57,7 +57,7 @@ export default function HomeHeader() {
             width={24}
             height={24}
           />
-          <span className={"font-medium text-[16px] text-white"}>
+          <span className={"font-medium text-[16px] text-white truncate "}>
             [머릿글] 잔나비 티켓 양도합니다
           </span>
         </div>
