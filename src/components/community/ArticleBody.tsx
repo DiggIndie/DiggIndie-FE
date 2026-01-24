@@ -57,6 +57,7 @@ export default function ArticleBody({ content, onToggleLike }: ArticleBodyProps)
             size={24}
             active={content.isLiked}
             onClick={onToggleLike}
+            firstStroke={content.isMine ? '#736F6F' : 'white'}
           />
           <span className="text-white">{content.likeCount}</span>
         </p>

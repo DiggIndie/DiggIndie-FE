@@ -188,9 +188,9 @@ export default function TradeArticleDetailPage() {
               <span className="flex gap-[3px]">
                 <BookmarkIcon
                   isActive={board.isScraped}
-                  onClick={handleToggleScrap}
+                  onClick={!board.isMine ? handleToggleScrap : undefined}
                   className={`cursor-pointer w-6 h-6 transition-colors 
-            ${board.isScraped ? 'text-white scale-110' : 'text-gray-600'}
+            ${(board.isScraped )? 'text-white scale-110' : 'text-gray-600'}
           `}
                 />
                 <span className="text-gray-300 font-normal text-sm">{board.scrapCount}</span>

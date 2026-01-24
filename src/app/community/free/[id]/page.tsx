@@ -66,7 +66,7 @@ export default function FreeArticleDetailPage() {
   };
 
   const handleToggleLike = async () => {
-    if (!board) return;
+    if ((!board) || (board.isMine)) return;
 
     const prev = {
       isLiked: board.isLiked,
@@ -87,13 +87,6 @@ export default function FreeArticleDetailPage() {
       const res = await likeFree({ boardId });
 
       if (!res.isSuccess) {
-        if (res.statusCode === 400) {
-          alert('자신의 글에는 좋아요를 누를 수 없습니다.');
-          setBoard((prevBoard) =>
-            prevBoard ? { ...prevBoard, isLiked: prev.isLiked, likeCount: prev.likeCount } : prevBoard
-          );
-          return;
-        }
 
         alert(res.message || '좋아요 처리에 실패했습니다.');
         setBoard((prevBoard) =>
