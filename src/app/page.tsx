@@ -7,6 +7,7 @@ import HomeCalendar from '@/components/home/HomeCalendar';
 import PersonalConcertRec from '@/components/home/PersonalConcertRec';
 import IndieStoryRec from '@/components/home/IndieStoryRec';
 import ResetPreference from '@/components/home/ResetPreference';
+import Popular from '@/components/home/Popular';
 
 import { useEffect, useState } from 'react';
 import SideTab from '@/components/sideTabDir/SideTab';
@@ -31,6 +32,7 @@ export default function HomePage() {
           <PersonalConcertRec isLoggedIn={isAuthed} />
           <ResetPreference isLoggedIn={isAuthed} />
           <HomeCalendar />
+          <Popular />
         </main>
       </div>
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
