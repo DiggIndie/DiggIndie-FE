@@ -136,4 +136,25 @@ export const authService = {
       throw err;
     }
   },
+
+  //마이페이지 소셜계정 연동 토글
+  async linkSocialAccount(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+    try {
+      const res = await authApi.linkSocialAccount(code, platform, state);
+      console.log('마이페이지 소셜 계정 연동하기', res.payload);
+      return res.payload;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  //마이페이지 소셜 계정 연동 해제
+  async unlinkSocialAccount(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
+    try {
+      await authApi.unlinkSocailAccount(platform);
+      console.log('소셜로그인 해제 성공');
+    } catch (err) {
+      throw err;
+    }
+  },
 };

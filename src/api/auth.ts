@@ -111,5 +111,19 @@ export const authApi = {
   },
 
   //소셜 계정 연동하기
-  // async,
+  async linkSocialAccount(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+    return fetchClient<{ platform: string; email: string }>('/auth/oauth2/link', {
+      method: 'POST',
+      auth: true,
+      body: JSON.stringify({ code, platform, state }),
+    });
+  },
+
+  //소셜 계정 연동 해제하지
+  async unlinkSocailAccount(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
+    return fetchClient<void>(`/auth/oauth2/unlink/${platform}`, {
+      method: 'DELETE',
+      auth: true,
+    });
+  },
 };

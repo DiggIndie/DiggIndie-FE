@@ -69,13 +69,9 @@ export default function OnboardArtistPage() {
   const handleComplete = async () => {
     if (selectedIds.length < 2) return;
 
-    try {
-      //키워드 저장
-      await saveSelectedArtists(selectedIds);
-      router.push('/onboard/genre');
-    } catch (err) {
-      console.log('키워드 저장에 실패했습니다. 다시 시도해주세요.', err);
-    }
+    //선택 아티스트 저장
+    await saveSelectedArtists(selectedIds);
+    router.push('/onboard/genre');
   };
 
   return (
