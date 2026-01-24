@@ -120,7 +120,17 @@ export const authService = {
   async socialLogin(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
     try {
       const res = await authApi.socialLogin(code, platform, state);
-      console.log('소셜 로그인 반환 데이터', res.payload);
+      // console.log('소셜 로그인 반환 데이터', res.payload);
+      return res.payload;
+    } catch (err) {
+      throw err;
+    }
+  },
+  //마이페이지 연동된 소셜 계정 조회
+  async getSocialAcounts() {
+    try {
+      const res = await authApi.getSocialAccounts();
+      console.log('연동된 소셜계정 조회', res.payload);
       return res.payload;
     } catch (err) {
       throw err;

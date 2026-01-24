@@ -34,28 +34,26 @@ export default function LoginCallback() {
         const upperProvider = provider.toUpperCase() as 'KAKAO' | 'GOOGLE' | 'NAVER';
 
         // const redirectUri = `${LOGIN_ORIGIN}/auth/login/callback/${provider}`;
-        // code 교환 요청
-        // const uuid = localStorage.getItem('UUID');
-        // if (!uuid) throw new Error('Session state (UUID) missing');
+
+        //소셜로그인 api 호출
         const res = await authService.socialLogin(code, upperProvider, state || '');
 
         // 토큰은 Zustand(메모리)에만 저장
         login(res.accessToken, String(res.userId));
-        // console.log('access token', res.accessToken);
+        console.log('access token 저장 완료', res.accessToken);
 
-        // 플랫폼 정보만 로컬 스토리지에 저장 (UI최근 로그인 표시용)
+        // 플랫폼 정보만 로컬 스토리지에 저장 (UI최근 로그인 표시용) 지우지말기
         localStorage.setItem('recent_provider', res.platform);
-        // localStorage.removeItem('UUID');
 
         alert('로그인 성공');
-        router.push('/');
+        router.push('/onboard/artist');
       } catch (e) {
         console.error('Login callback error:', e);
         alert('로그인 실패');
         router.push('/auth/login');
       }
     })();
-  }, [provider, code, login, router]);
+  }, [provider, code, login, router, state]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">

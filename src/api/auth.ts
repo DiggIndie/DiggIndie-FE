@@ -1,3 +1,4 @@
+import { Account } from '@/types/socail';
 import { fetchClient } from './client';
 
 export const authApi = {
@@ -74,13 +75,14 @@ export const authApi = {
       body: JSON.stringify(data),
     });
   },
-
+  //마이페이지 아이디 띄우기
   async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
     return await fetchClient<{ authUrl: string; state: string }>(`/auth/oauth2/url/${platform}`, {
       method: 'GET',
       auth: false,
     });
   },
+  //소셜 로그인
   async socialLogin(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
     return await fetchClient<{
       newMember: boolean;
@@ -97,6 +99,13 @@ export const authApi = {
         platform: platform,
         state: state,
       }),
+    });
+  },
+  //마이페이지 연동된 소셜계정 조회
+  async getSocialAccounts() {
+    return fetchClient<{ accounts: Account[] }>('/auth/oauth2/accounts', {
+      method: 'GET',
+      auth: true,
     });
   },
 };
