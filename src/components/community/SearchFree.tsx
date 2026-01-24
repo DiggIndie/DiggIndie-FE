@@ -6,6 +6,8 @@ import Image from 'next/image';
 import searchBtn from '@/assets/icons/artistSearch.svg';
 import searchBack from '@/assets/icons/searchBack.svg';
 import searchGrayBtn from '@/assets/icons/searchGray.svg';
+import deleteBtn from '@/assets/community/delete.svg';
+import { useRouter } from 'next/navigation';
 
 import ArticleList from '@/components/community/ArticleList';
 import { useFreeList } from '@/hooks/useFreeList';
@@ -14,6 +16,7 @@ import type { FreeCategory } from '@/types/freeBoard';
 export default function SearchFree() {
   const [draft, setDraft] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const router = useRouter()
 
   const {
     articles,
@@ -75,7 +78,7 @@ export default function SearchFree() {
         src={searchBack}
         alt="back"
         className="absolute left-[20px] mt-[10px] cursor-pointer"
-        onClick={clearSearch}
+        onClick={() => router.push('/community/free')}
       />
 
       {/* 검색 */}
@@ -83,13 +86,25 @@ export default function SearchFree() {
         className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white
         ${draft ? 'w-[307px] ml-auto mr-5' : 'w-[335px]'}`}
       >
+        {draft ? (
+          <button
+            type="button"
+            onClick={clearSearch}
+            aria-label="clear search"
+            className="absolute right-[40px] top-1/2 -translate-y-1/2 cursor-pointer"
+          >
+            <Image src={deleteBtn} alt="삭제" />
+          </button>
+        ) : null
+        }
+
         <button
           type="button"
           onClick={runSearch}
           aria-label="search"
-          className="absolute right-[8px] top-1/2 -translate-y-1/2"
+          className="absolute right-[8px] top-1/2 -translate-y-1/2 cursor-pointer"
         >
-          <Image src={draft ? searchGrayBtn : searchBtn} alt="Search" />
+          <Image src={draft ? searchBtn : searchGrayBtn} alt="Search" />
         </button>
 
         <input

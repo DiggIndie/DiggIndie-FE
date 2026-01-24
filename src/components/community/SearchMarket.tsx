@@ -10,10 +10,13 @@ import searchGrayBtn from '@/assets/icons/searchGray.svg';
 import ArticleList from '@/components/community/ArticleList';
 import { useMarketList } from '@/hooks/useMarketList';
 import type { MarketCategory } from '@/types/marketBoard';
+import { useRouter } from 'next/navigation';
+import deleteBtn from '@/assets/community/delete.svg';
 
 export default function SearchMarket() {
   const [draft, setDraft] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const router = useRouter()
 
   const { markets, isLoading, error, setQuery, loadMore, params } = useMarketList({
     type: '전체' as MarketCategory,
@@ -68,7 +71,7 @@ export default function SearchMarket() {
         src={searchBack}
         alt="back"
         className="absolute left-[20px] mt-[10px] cursor-pointer"
-        onClick={clearSearch}
+        onClick={() => router.push('/community/trade')}
       />
 
       {/* 검색 */}
@@ -76,13 +79,25 @@ export default function SearchMarket() {
         className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white
         ${draft ? 'w-[307px] ml-auto mr-5' : 'w-[335px]'}`}
       >
+        {draft ? (
+          <button
+            type="button"
+            onClick={clearSearch}
+            aria-label="clear search"
+            className="absolute right-[40px] top-1/2 -translate-y-1/2 cursor-pointer"
+          >
+            <Image src={deleteBtn} alt="삭제" />
+          </button>
+        ) : null
+        }
+
         <button
           type="button"
           onClick={runSearch}
           aria-label="search"
           className="absolute right-[8px] top-1/2 -translate-y-1/2"
         >
-          <Image src={draft ? searchGrayBtn : searchBtn} alt="Search" />
+          <Image src={draft ? searchBtn : searchGrayBtn} alt="Search" />
         </button>
 
         <input
