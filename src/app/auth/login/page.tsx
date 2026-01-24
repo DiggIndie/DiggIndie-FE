@@ -16,6 +16,7 @@ import recentLogin from '@/assets/auth/recentLogin.svg';
 export default function LoginPage() {
   const router = useRouter();
 
+  //최근 로그인 아이콘 띄우기
   const [recentPlatform] = useState<string | null>(() => {
     // 브라우저 환경(window 객체 존재 여부) 확인 후 값 가져오기
     if (typeof window !== 'undefined') {
@@ -64,14 +65,8 @@ export default function LoginPage() {
     }
   };
   const handleSocialLogin = async (platform: 'GOOGLE' | 'NAVER' | 'KAKAO') => {
-    try {
-      const { authUrl } = await authService.getAuthURL(platform);
-      // 백엔드가 준 state(uuid)를 잠시 보관
-      // localStorage.setItem('UUID', state);
-      window.location.href = authUrl;
-    } catch (err) {
-      throw err;
-    }
+    const { authUrl } = await authService.getAuthURL(platform);
+    window.location.href = authUrl;
   };
   return (
     <div className="text-white flex flex-col h-screen items-center relative">
@@ -130,34 +125,60 @@ export default function LoginPage() {
           <span className="text-gray-300 text-xs">SNS 계정으로 로그인</span>
           <div className="flex-1 border-t border-gray-300"></div>
         </div>
-        <div className="flex flex-col justify-center gap-3 items-center">
-          <p className="flex gap-4 justify-center">
-            <Image
-              src={googleIcon}
-              alt="google login"
-              width={58}
-              height={58}
-              className="mt-5 cursor-pointer"
-              onClick={() => handleSocialLogin('GOOGLE')}
-            />
-            <Image
-              src={naverIcon}
-              alt="naver login"
-              width={58}
-              height={58}
-              className="mt-5 cursor-pointer"
-              onClick={() => handleSocialLogin('NAVER')}
-            />
-            <Image
-              src={kakaoIcon}
-              alt="kakao login"
-              width={58}
-              height={58}
-              className="mt-5 cursor-pointer"
-              onClick={() => handleSocialLogin('KAKAO')}
-            />
-          </p>
-          <Image src={recentLogin} alt="최근 로그인 아이콘" />
+        {/* 소셜 로그인 버튼 영역 */}
+        <div className="flex flex-col justify-center items-center relative">
+          <div className="flex gap-4 justify-center">
+            {/* 구글 */}
+            <div className="flex flex-col items-center relative">
+              <Image
+                src={googleIcon}
+                alt="google login"
+                width={58}
+                height={58}
+                className="mt-5 cursor-pointer"
+                onClick={() => handleSocialLogin('GOOGLE')}
+              />
+              {recentPlatform === 'GOOGLE' && (
+                <div className="absolute -bottom-8 animate-bounce">
+                  <Image src={recentLogin} alt="최근 로그인" />
+                </div>
+              )}
+            </div>
+
+            {/* 네이버 */}
+            <div className="flex flex-col items-center relative">
+              <Image
+                src={naverIcon}
+                alt="naver login"
+                width={58}
+                height={58}
+                className="mt-5 cursor-pointer"
+                onClick={() => handleSocialLogin('NAVER')}
+              />
+              {recentPlatform === 'NAVER' && (
+                <div className="absolute -bottom-8 animate-bounce">
+                  <Image src={recentLogin} alt="최근 로그인" />
+                </div>
+              )}
+            </div>
+
+            {/* 카카오 */}
+            <div className="flex flex-col items-center relative">
+              <Image
+                src={kakaoIcon}
+                alt="kakao login"
+                width={58}
+                height={58}
+                className="mt-5 cursor-pointer"
+                onClick={() => handleSocialLogin('KAKAO')}
+              />
+              {recentPlatform === 'KAKAO' && (
+                <div className="absolute -bottom-8 animate-bounce">
+                  <Image src={recentLogin} alt="최근 로그인" />
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </section>
     </div>

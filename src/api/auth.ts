@@ -35,7 +35,7 @@ export const authApi = {
   async reissue() {
     return await fetchClient<{ accessToken: string; expiresIn: number }>('/auth/reissue', {
       method: 'POST',
-      auth: false, // 만료된 토큰을 헤더에 실어 보내지 않도록 설정
+      auth: true,
     });
   },
 

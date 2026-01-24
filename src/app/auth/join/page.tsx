@@ -190,7 +190,7 @@ export default function JoinPage() {
       {/*전화번호 입력 섹션 */}
       <section className="flex flex-col gap-2">
         <span className="text-xs font-medium text-gray-300 px-1 mb-2">전화번호</span>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 text-gray-300">
           <InputSection
             placeholder="전화번호"
             type="tel"

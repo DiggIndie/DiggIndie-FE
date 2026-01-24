@@ -37,14 +37,15 @@ export default function LoginCallback() {
         // code 교환 요청
         // const uuid = localStorage.getItem('UUID');
         // if (!uuid) throw new Error('Session state (UUID) missing');
-        const res = await authService.socialLogin(code, upperProvider, state);
+        const res = await authService.socialLogin(code, upperProvider, state || '');
 
         // 토큰은 Zustand(메모리)에만 저장
         login(res.accessToken, String(res.userId));
+        // console.log('access token', res.accessToken);
 
         // 플랫폼 정보만 로컬 스토리지에 저장 (UI최근 로그인 표시용)
         localStorage.setItem('recent_provider', res.platform);
-        localStorage.removeItem('UUID');
+        // localStorage.removeItem('UUID');
 
         alert('로그인 성공');
         router.push('/');
