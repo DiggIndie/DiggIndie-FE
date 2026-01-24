@@ -95,12 +95,12 @@ export default function MyArtistsWithSearch() {
 
   return (
     <section className="relative w-full flex flex-col items-center mt-[12px]">
-      {/* 검색 초기화 */}
+      {/* 뒤로가기 */}
       <Image
         src={searchBack}
         alt="back"
         className="absolute left-[20px] mt-[10px] cursor-pointer"
-        onClick={() => router.push('/community/free')}
+        onClick={() => router.push('/')}
       />
 
       {/* 검색 input */}
@@ -108,6 +108,8 @@ export default function MyArtistsWithSearch() {
         className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white
         ${searchTerm ? 'w-[307px] ml-auto mr-5' : 'w-[335px]'}`}
       >
+
+        {/* 검색 지우기 */}
         {searchTerm ? (
           <button
             type="button"
