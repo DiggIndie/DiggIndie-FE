@@ -75,7 +75,13 @@ export default function MyPage() {
           <MenuSection title="스크랩한 공연" />
           <HorizontalSwipeList>
             {isMyConcertsLoading ? (
-              <div className="text-[14px] text-[#8C8888] px-5">불러오는 중...</div>
+              <div className="text-[14px] text-[#8C8888] px-5">
+                불러오는 중...
+              </div>
+            ) : mappedConcerts.length === 0 ? (
+              <div className="py-6 text-[16px] text-[#8C8888]">
+                관심있는 공연을 스크랩해 보세요
+              </div>
             ) : (
               mappedConcerts.map((concert) => (
                 <ConcertCard key={concert.concertId} concert={concert} />
@@ -85,11 +91,17 @@ export default function MyPage() {
         </div>
 
         {/* 스크랩한 아티스트 */}
-        <div onClick={() => router.push('/my/artist')}>
+        <div onClick={() => router.push('/my/artist')} className={"mt-6"}>
           <MenuSection title="스크랩한 아티스트" />
           <HorizontalSwipeList>
             {isMyArtistsLoading ? (
-              <div className="text-[14px] text-[#8C8888] px-5">불러오는 중...</div>
+              <div className="text-[14px] text-[#8C8888] px-5">
+                불러오는 중...
+              </div>
+            ) : mappedArtists.length === 0 ? (
+              <div className="py-6 text-[16px] text-[#8C8888]">
+                좋아하는 아티스트를 스크랩해 보세요
+              </div>
             ) : (
               mappedArtists.map((artist) => <ArtistCard key={artist.artistId} artist={artist} />)
             )}

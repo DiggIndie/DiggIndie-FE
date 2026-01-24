@@ -8,11 +8,11 @@ interface HeartIconProps {
 }
 
 export default function HeartIcon({
-  active = false,
-  size = 24,
-  onClick,
-  firstStroke = '#F6F6F6',
-}: HeartIconProps) {
+                                    active = false,
+                                    size = 24,
+                                    onClick,
+                                    firstStroke = '#F6F6F6',
+                                  }: HeartIconProps) {
   const strokeColor = active ? '#FF3637' : `${firstStroke}`;
   const fillColor = active ? '#FF3637' : 'none';
 
