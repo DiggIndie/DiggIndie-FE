@@ -9,7 +9,7 @@ interface Props {
 }
 export default function ReplyInputSection({ addReply }: Props) {
   const [input, setInput] = useState('');
-
+  const [isChecked, setIsChecked] = useState(false);
   const handleSend = () => {
     if (!input.trim()) return;
     addReply(input);
@@ -22,23 +22,24 @@ export default function ReplyInputSection({ addReply }: Props) {
     <section className="fixed bottom-0 p-5 min-w-[375px] z-30">
       <div className="bg-gray-800 px-4 py-3 rounded-sm">
         <Checkbox
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target.checked)}
+          disableRipple
           sx={{
             width: 20,
             height: 20,
             padding: 0,
             borderRadius: '4px',
-            border: '1px solid #A5A1A1', // gray-700
-            backgroundColor: '#fff',
-            '& .MuiSvgIcon-root': {
-              display: 'none',
-            },
+            border: '1px solid #8C8888', // gray-500
+            backgroundColor: isChecked ? '#ef4444' : '#8C8888',
+
             '&.Mui-checked': {
               backgroundColor: '#ef4444', // 빨간 배경
               borderColor: '#dc2626',
             },
             '&.Mui-checked::after': {
               content: '"✔"',
-              color: '#fff',
+              color: '#fff', //체크 색
               fontSize: 12,
               position: 'absolute',
               inset: 0,
@@ -46,9 +47,19 @@ export default function ReplyInputSection({ addReply }: Props) {
               alignItems: 'center',
               justifyContent: 'center',
             },
+            '&:hover': {
+              backgroundColor: isChecked ? '#ef4444' : '#8C8888',
+            },
+            '& .MuiSvgIcon-root': {
+              display: 'none',
+            },
           }}
         />
-        <span className="text-sm font-medium text-main-red-2 pl-1 pr-2">익명</span>
+        <span
+          className={`text-sm font-medium ${isChecked ? 'text-main-red-2' : 'text-gray-400'} pl-1 pr-2`}
+        >
+          익명
+        </span>
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -63,6 +74,7 @@ export default function ReplyInputSection({ addReply }: Props) {
           width={20}
           height={20}
           className="float-right cursor-pointer"
+          onClick={handleSend}
         />
       </div>
     </section>
