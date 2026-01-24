@@ -131,7 +131,7 @@ export default function FreeArticleDetailPage() {
 
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20">
-      <ArticleHeader title="자유 라운지" isMine={true} onEdit={handleEdit} onDelete={handleDelete} />
+      <ArticleHeader title="자유 라운지" isMine={board?.isMine} onEdit={handleEdit} onDelete={handleDelete} />
 
       {!board ? (
         <div className="h-screen flex items-center justify-center">

@@ -180,8 +180,11 @@ export default function TradeArticleDetailPage() {
               )}
             </p>
 
-            <p className="flex items-center gap-6 mb-1 justify-between">
-              <span className="font-semibold text-xl">{board.title}</span>
+            <div className="flex items-center gap-6 mb-1 justify-between">
+              <div className={"flex gap-1"}>
+                <span className="font-semibold text-xl">[{board.type}]</span>
+                <span className="font-semibold text-xl">{board.title}</span>
+              </div>
               <span className="flex gap-[3px]">
                 <BookmarkIcon
                   isActive={board.isScraped}
@@ -192,7 +195,7 @@ export default function TradeArticleDetailPage() {
                 />
                 <span className="text-gray-300 font-normal text-sm">{board.scrapCount}</span>
               </span>
-            </p>
+            </div>
 
             <span className="text-white font-medium text-xl mb-1">{board.price}원</span>
 

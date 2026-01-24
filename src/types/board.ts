@@ -12,6 +12,7 @@ export interface FreeBoardDetail {
   commentCount: number;
   comments: Comment[];
   isAnonymous: boolean;
+  isMine: boolean;
 }
 export interface Comment {
   commentId: number;

@@ -30,7 +30,7 @@ export default function CommunityFreePage() {
 
   const initialCategory = useMemo(() => headerToCategory[header], [header]);
 
-  const { articles, isLoading, error, setCategory, loadMore, hasNext, params } = useFreeList({
+  const { articles, isLoading, error, setCategory, loadMore, params } = useFreeList({
     category: initialCategory,
     query: '',
     page: 0,
