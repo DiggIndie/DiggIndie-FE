@@ -39,9 +39,8 @@ export default function OnBoardGenrePage() {
   const handleComplete = async () => {
     if (selectedIds.length < 2) return;
 
-      await onBoardKeywordService.saveSelectedKeywords(selectedIds);
-      router.push('/onboard/end');
-    }
+    await onBoardKeywordService.saveSelectedKeywords(selectedIds);
+    router.push('/onboard/end');
   };
 
   return (
@@ -60,7 +59,6 @@ export default function OnBoardGenrePage() {
           }
           min="최소 2개"
         />
-        {isLoading?<></>:<></>}
         <div className="flex flex-wrap gap-4 px-5">
           {keywords.map((item) => (
             <GenreItem
