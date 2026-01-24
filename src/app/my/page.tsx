@@ -99,12 +99,14 @@ export default function MyPage() {
 
       <div className="flex flex-col gap-3 bg-black py-2">
         <MenuSection
-          title="MY 커뮤니티 활동"
+          title="MY 디깅 라운지 활동"
           hasBorder={true}
           onclick={() => router.push('/my/community')}
         />
-        <MenuSection title="MY 인디스토리 활동" hasBorder={true} />
-
+        {/*데모데이까지 미개발 예정 */}
+        <div className="opacity-50 grayscale pointer-events-none cursor-not-allowed">
+          <MenuSection title="MY 인디스토리 활동" hasBorder={true} />
+        </div>
         <MenuSection
           title="약관 및 수신동의"
           hasBorder={true}

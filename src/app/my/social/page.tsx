@@ -46,7 +46,7 @@ export default function MySocailPage() {
   };
   return (
     <div className="text-white flex flex-col h-screen bg-black py-10">
-      <MyHeader title={'연동된 소셜계정'} />
+      <MyHeader title={'소셜계정 연동하기'} />
       <span className="px-5 text-white font-medium text-xl mt-6 mb-6">
         소셜 계정을 연동해 <br />
         간편하게 로그인할 수 있어요.
