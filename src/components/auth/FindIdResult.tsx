@@ -1,5 +1,6 @@
 export default function FindIdResult() {
   const id = sessionStorage.getItem('FOUND_USER_ID');
+  const createdAt = sessionStorage.getItem('SIGNUP_DATE');
   return (
     <div className="w-full flex flex-col items-center gap-4 px-5 mt-7">
       {/* 아이디 박스 */}
@@ -9,9 +10,7 @@ export default function FindIdResult() {
       >
         <p className="text-white text-base text-[14px] font-medium">아이디 : {id}</p>
 
-        <p className="text-white text-base text-[14px] font-medium mt-2">
-          가입일 : 반환 데이터에 없음
-        </p>
+        <p className="text-white text-base text-[14px] font-medium mt-2">가입일 : {createdAt}</p>
       </div>
 
       {/* 안내 문구 */}

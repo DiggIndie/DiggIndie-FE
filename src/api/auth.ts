@@ -69,6 +69,7 @@ export const authApi = {
       message: string;
       success: boolean;
       userId: string;
+      createdAt: string;
     }>('/auth/email/verify', {
       method: 'POST',
       auth: false,
@@ -108,4 +109,7 @@ export const authApi = {
       auth: true,
     });
   },
+
+  //소셜 계정 연동하기
+  // async,
 };

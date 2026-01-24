@@ -41,6 +41,7 @@ export default function FindId() {
         setIsEmailVerified(true);
         setErrors((prev) => ({ ...prev, emailConfirm: '인증되었습니다.' }));
         sessionStorage.setItem('FOUND_USER_ID', isValid.userId);
+        sessionStorage.setItem('SIGNUP_DATE', isValid.createdAt);
       } else {
         setErrors((prev) => ({ ...prev, emailConfirm: '인증번호가 일치하지 않습니다.' }));
       }
