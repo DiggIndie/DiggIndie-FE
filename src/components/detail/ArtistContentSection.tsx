@@ -98,11 +98,13 @@ export default function ArtistContentSection({
             rel="noopener noreferrer"
           >
             <Image src={play} alt="play" width={24} height={24} />
-            <span className="font-medium text-base text-gray-200">
+            <span
+              className={`font-medium text-base text-gray-200 ${artist.topTrack ? 'hover:text-gray-400' : ''}`}
+            >
               {artist.topTrack ? artist.topTrack.title : '대표곡이 없습니다.'}
             </span>
           </a>
-          <span className="font-normal text-sm text-gray-500">response에 없음</span>
+          {/* <span className="font-normal text-sm text-gray-500">response에 없음</span> */}
         </div>
         {/*아티스트 */}
         <div className="flex flex-col gap-2 pb-3 border-b border-gray-850">

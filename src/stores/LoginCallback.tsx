@@ -55,7 +55,6 @@ export default function LoginCallback() {
         router.push('/');
       } catch (e) {
         console.error('Login callback error:', e);
-        alert('로그인 실패');
         router.push('/auth/login');
       }
     })();

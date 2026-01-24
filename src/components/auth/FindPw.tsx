@@ -57,7 +57,7 @@ export default function FindPw() {
   };
   return (
     <div className="w-full bg-black flex flex-col items-center px-5 py-6 gap-3">
-      {/* 아이디 입력, 인증정보 */}
+      {/* 아이디 입력, 인증정보 api 수정 후 수정 예정*/}
       {/* <div className="w-[335px] flex items-end gap-3">
         <div className="flex-1">
           <input
@@ -90,7 +90,7 @@ export default function FindPw() {
             />
           </div>
           <button
-            className="w-[87px] h-[33px] rounded-[4px] bg-[#4B4747] text-[#BEBABA] text-[12px] font-medium cursor-pointer"
+            className="w-22 py-2 rounded-sm bg-main-red-2 border border-main-red-1 text-white text-xs font-medium cursor-pointer"
             onClick={handleEmailCheck}
           >
             인증번호 전송
@@ -114,7 +114,7 @@ export default function FindPw() {
             />
           </div>
           <button
-            className="w-[87px] h-[33px] rounded-[4px] bg-[#4B4747] text-[#D0CBCB] text-[12px] font-medium cursor-pointer"
+            className="px-3 py-2  w-22 h-[33px] rounded-sm bg-main-red-2 border-2 border-main-red-1 text-white text-xs font-medium cursor-pointer"
             onClick={handleVerifyCode}
           >
             확인
@@ -137,7 +137,7 @@ export default function FindPw() {
                 onChange={(e) => setForm({ ...form, pw: e.target.value })}
               />
             </div>
-            <button className="w-[87px] h-[33px] rounded-[4px] bg-[#4B4747] text-[#BEBABA] text-[12px] font-medium cursor-pointer">
+            <button className="w-[87px] h-[33px] rounded-sm bg-main-red-2 border border-main-red-1 text-white text-xs font-medium cursor-pointer">
               확인
             </button>
           </div>
@@ -154,7 +154,7 @@ export default function FindPw() {
                 onChange={(e) => setForm({ ...form, pwConfrim: e.target.value })}
               />
             </div>
-            <button className="w-[87px] h-[33px] rounded-[4px] bg-[#4B4747] text-[#BEBABA] text-[12px] font-medium cursor-pointer">
+            <button className="px-3 py-2 rounded-sm bg-main-red-2 border border-main-red-1 text-white text-xs font-medium cursor-pointer">
               확인
             </button>
           </div>
@@ -163,7 +163,7 @@ export default function FindPw() {
       {/* 아이디 찾기 빨간 버튼 */}
       <Link href="/auth/find/pw/reset/result">
         <button
-          className={`${!isEmailSent || !isEmailVerified ? 'bg-gray-600 cursor-not-allowed' : 'bg-main-red-2 cursor-pointer'} w-[335px] h-14 mt-4 rounded-sm text-white text-base font-semibold `}
+          className={`${!isEmailSent || !isEmailVerified ? 'bg-gray-600 cursor-not-allowed' : 'bg-main-red-2 cursor-pointer'} min w-[335px] h-13 mt-4 rounded-sm text-white text-base font-semibold`}
           disabled={!isEmailSent || !isEmailVerified}
         >
           인증 확인

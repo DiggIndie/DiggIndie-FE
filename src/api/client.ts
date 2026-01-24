@@ -101,12 +101,19 @@ export async function fetchClient<T>(url: string, options: FetchOptions): Promis
 
   let res = await sendRequest(token);
 
+  //access token 만료 시 재발급 시도
   if (res.status === 401 && auth && token && url !== '/auth/reissue') {
     try {
       const newToken = await authService.refreshAccessToken();
       res = await sendRequest(newToken);
     } catch (err) {
       console.log('new access token 재발급 실패', err);
+      const { logout } = useAuthStore.getState();
+      logout();
+
+      if (typeof window !== 'undefined') {
+        window.location.replace('/');
+      }
     }
   }
 
