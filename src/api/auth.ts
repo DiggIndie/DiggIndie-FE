@@ -1,5 +1,6 @@
 import { Account } from '@/types/socail';
 import { fetchClient } from './client';
+import { SocialLoginResponse } from '@/types/api';
 
 export const authApi = {
   async signup(data: { userId: string; email: string; password: string }) {
@@ -76,28 +77,23 @@ export const authApi = {
       body: JSON.stringify(data),
     });
   },
-  //마이페이지 아이디 띄우기
-  async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
-    return await fetchClient<{ authUrl: string; state: string }>(`/auth/oauth2/url/${platform}`, {
-      method: 'GET',
-      auth: false,
-    });
+  //소셜 로그인 위한 인증 URL 반환
+  async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER', purpose: 'login' | 'link') {
+    return await fetchClient<{ authUrl: string; state: string }>(
+      `/auth/oauth2/url/${platform}?purpose=${purpose}`,
+      {
+        method: 'GET',
+        auth: false,
+      }
+    );
   },
-  //소셜 로그인
-  async socialLogin(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
-    return await fetchClient<{
-      newMember: boolean;
-      externalId: string;
-      userId: string;
-      email: string;
-      platform: 'KAKAO' | 'GOOGLE' | 'NAVER';
-      accessToken: string;
-    }>('/auth/oauth2/login', {
+  //소셜 로그인 및 연동 통합
+  async socialLogin(code: string, state: string) {
+    return await fetchClient<SocialLoginResponse>('/auth/oauth2/callback', {
       method: 'POST',
       auth: false,
       body: JSON.stringify({
         code: code,
-        platform: platform,
         state: state,
       }),
     });
@@ -124,6 +120,23 @@ export const authApi = {
     return fetchClient<void>(`/auth/oauth2/unlink/${platform}`, {
       method: 'DELETE',
       auth: true,
+    });
+  },
+
+  //마케팅 동의 여부 조회
+  async getMarketingAgree() {
+    return fetchClient<{ marketingConsent: boolean }>('/my/marketing-consent', {
+      method: 'GET',
+      auth: true,
+    });
+  },
+
+  //마케팅 수신 동의 여부 토글
+  async toggleMarketingAgree(marketingConsent: boolean) {
+    return fetchClient<{ marketingConsent: boolean }>('/my/marketing-consent', {
+      method: 'PATCH',
+      auth: true,
+      body: JSON.stringify(marketingConsent),
     });
   },
 };

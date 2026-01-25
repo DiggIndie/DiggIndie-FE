@@ -29,27 +29,16 @@ export default function LoginCallback() {
         if (!provider || !isProvider(provider as string as Provider))
           throw new Error('Invalid provider');
         if (!code) throw new Error('No code');
+        if (!state) throw new Error('No state');
+        //소셜로그인 & 연동 api 호출
+        const res = await authService.socialLogin(code, state);
+        console.log('콜백 api 응답 데이터', res);
 
-        // 백엔드 전송을 위해 대문자로 변환 (예: 'kakao' -> 'KAKAO')
-        const upperProvider = provider.toUpperCase() as 'KAKAO' | 'GOOGLE' | 'NAVER';
-
-        // 연동 플로우
-        // if (mode === 'link') {
-        //소셜계정 연동하기 api 호출
-        // await authService.linkSocialAccount(code, upperProvider, state || '');
-        // alert(`${upperProvider} 계정이 연동되었습니다.`);
-        // router.push('/my/social');
-        // return;
-        // }
-
-        //소셜로그인 api 호출
-        const res = await authService.socialLogin(code, upperProvider, state || '');
-
-        // 토큰은 Zustand(메모리)에만 저장
-        login(res.accessToken, String(res.userId));
+        // login(res?.accessToken, String(res.payload.loginData.userId));
 
         // 플랫폼 정보만 로컬 스토리지에 저장 (UI최근 로그인 표시용) 지우지말기
-        localStorage.setItem('recent_provider', res.platform);
+        localStorage.setItem('recent_provider', res.loginData.platform);
+        // LINK 처리
 
         alert('로그인 성공');
         router.push('/');

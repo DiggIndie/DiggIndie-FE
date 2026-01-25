@@ -108,20 +108,20 @@ export const authService = {
       throw err;
     }
   },
-  async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
+  async getAuthURL(platform: 'KAKAO' | 'GOOGLE' | 'NAVER', purpose: 'login' | 'link') {
     try {
-      const res = await authApi.getAuthURL(platform);
+      const res = await authApi.getAuthURL(platform, purpose);
       console.log('auth url 데이터', res.payload);
       return res.payload;
     } catch (err) {
       throw err;
     }
   },
-  async socialLogin(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+  async socialLogin(code: string, state: string) {
     try {
-      const res = await authApi.socialLogin(code, platform, state);
-      // console.log('소셜 로그인 반환 데이터', res.payload);
-      return res.payload;
+      const res = await authApi.socialLogin(code, state);
+      console.log('소셜 로그인 반환 데이터', res);
+      return res.payload.payload.loginData;
     } catch (err) {
       throw err;
     }
@@ -153,6 +153,28 @@ export const authService = {
     try {
       await authApi.unlinkSocailAccount(platform);
       console.log('소셜로그인 해제 성공');
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  //마케팅 수신 동의 여부 조회
+  async getMarketingAgree() {
+    try {
+      const res = await authApi.getMarketingAgree();
+      console.log('마케팅 수신 동의 여부 조회', res.payload);
+      return res.payload;
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  //마케팅 수신 동의 여부 토글
+  async toggleMarketingAgree(marketingConsent: boolean) {
+    try {
+      const res = await authApi.toggleMarketingAgree(marketingConsent);
+      console.log('마케팅 수신 동의 여부 토글', res.payload);
+      return res.payload;
     } catch (err) {
       throw err;
     }

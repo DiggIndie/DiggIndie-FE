@@ -20,3 +20,38 @@ export interface KeywordResponse {
 export interface SelectedArtistsResponse {
   bands: OnboardArtist[];
 }
+//소셜로그인 응답
+export type LoginData = {
+  newMember: boolean;
+  externalId: string;
+  userId: string;
+  email: string;
+  platform: 'KAKAO' | 'GOOGLE' | 'NAVER';
+  accessToken: string;
+};
+
+export type LinkData = {
+  success: boolean;
+  platform: 'KAKAO' | 'GOOGLE' | 'NAVER';
+  email: string;
+  message: string;
+};
+
+export type SocialLoginPayload =
+  | {
+      type: 'LOGIN' | string;
+      loginData: LoginData;
+      linkData?: never;
+    }
+  | {
+      type: 'LINK' | string;
+      loginData?: never;
+      linkData: LinkData;
+    };
+
+export type SocialLoginResponse = {
+  statusCode: number;
+  isSuccess: boolean;
+  message: string;
+  payload: SocialLoginPayload;
+};

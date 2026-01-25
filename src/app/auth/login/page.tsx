@@ -65,7 +65,7 @@ export default function LoginPage() {
     }
   };
   const handleSocialLogin = async (platform: 'GOOGLE' | 'NAVER' | 'KAKAO') => {
-    const { authUrl } = await authService.getAuthURL(platform);
+    const { authUrl } = await authService.getAuthURL(platform, 'login');
     window.location.href = authUrl;
   };
   return (
