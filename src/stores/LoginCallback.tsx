@@ -14,7 +14,7 @@ const isProvider = (x: 'kakao' | 'google' | 'naver'): x is Provider =>
 
 export default function LoginCallback() {
   const router = useRouter();
-  const { provider } = useParams<{ provider: string }>();
+  // const { provider } = useParams<{ provider: string }>();
   // URL에서 code 추출
   const code =
     typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('code') : null;
@@ -26,8 +26,8 @@ export default function LoginCallback() {
   useEffect(() => {
     (async () => {
       try {
-        if (!provider || !isProvider(provider as string as Provider))
-          throw new Error('Invalid provider');
+        // if (!provider || !isProvider(provider as string as Provider))
+        //   throw new Error('Invalid provider');
         if (!code) throw new Error('No code');
         if (!state) throw new Error('No state');
         //소셜로그인 & 연동 api 호출
@@ -37,7 +37,7 @@ export default function LoginCallback() {
         // login(res?.accessToken, String(res.payload.loginData.userId));
 
         // 플랫폼 정보만 로컬 스토리지에 저장 (UI최근 로그인 표시용) 지우지말기
-        localStorage.setItem('recent_provider', res.loginData.platform);
+        localStorage.setItem('recent_provider', res?.accessToken);
         // LINK 처리
 
         alert('로그인 성공');
@@ -47,7 +47,7 @@ export default function LoginCallback() {
         router.push('/auth/login');
       }
     })();
-  }, [provider, code, login, router, state]);
+  }, [code, login, router, state]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">

@@ -136,7 +136,7 @@ export const authApi = {
     return fetchClient<{ marketingConsent: boolean }>('/my/marketing-consent', {
       method: 'PATCH',
       auth: true,
-      body: JSON.stringify(marketingConsent),
+      body: JSON.stringify({ marketingConsent: marketingConsent }),
     });
   },
 };
