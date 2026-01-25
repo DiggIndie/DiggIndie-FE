@@ -39,19 +39,12 @@ export type LinkData = {
 
 export type SocialLoginPayload =
   | {
-      type: 'LOGIN' | string;
+      type: 'login';
       loginData: LoginData;
       linkData?: never;
     }
   | {
-      type: 'LINK' | string;
+      type: 'link';
       loginData?: never;
       linkData: LinkData;
     };
-
-export type SocialLoginResponse = {
-  statusCode: number;
-  isSuccess: boolean;
-  message: string;
-  payload: SocialLoginPayload;
-};

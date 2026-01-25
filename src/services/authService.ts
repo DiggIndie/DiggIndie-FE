@@ -117,11 +117,12 @@ export const authService = {
       throw err;
     }
   },
+  //소셜 로그인 및 연동 통합
   async socialLogin(code: string, state: string) {
     try {
       const res = await authApi.socialLogin(code, state);
-      console.log('소셜 로그인 반환 데이터', res);
-      return res.payload.payload.loginData;
+      console.log('소셜 로그인 반환 데이터', res.payload);
+      return res.payload;
     } catch (err) {
       throw err;
     }
@@ -138,15 +139,15 @@ export const authService = {
   },
 
   //마이페이지 소셜계정 연동 토글
-  async linkSocialAccount(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
-    try {
-      const res = await authApi.linkSocialAccount(code, platform, state);
-      console.log('마이페이지 소셜 계정 연동하기', res.payload);
-      return res.payload;
-    } catch (error) {
-      throw error;
-    }
-  },
+  // async linkSocialAccount(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+  //   try {
+  //     const res = await authApi.linkSocialAccount(code, platform, state);
+  //     console.log('마이페이지 소셜 계정 연동하기', res.payload);
+  //     return res.payload;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // },
 
   //마이페이지 소셜 계정 연동 해제
   async unlinkSocialAccount(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {

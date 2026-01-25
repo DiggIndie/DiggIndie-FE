@@ -1,6 +1,6 @@
 import { Account } from '@/types/socail';
 import { fetchClient } from './client';
-import { SocialLoginResponse } from '@/types/api';
+import { SocialLoginPayload } from '@/types/api';
 
 export const authApi = {
   async signup(data: { userId: string; email: string; password: string }) {
@@ -89,7 +89,7 @@ export const authApi = {
   },
   //소셜 로그인 및 연동 통합
   async socialLogin(code: string, state: string) {
-    return await fetchClient<SocialLoginResponse>('/auth/oauth2/callback', {
+    return await fetchClient<SocialLoginPayload>('/auth/oauth2/callback', {
       method: 'POST',
       auth: false,
       body: JSON.stringify({
@@ -107,13 +107,13 @@ export const authApi = {
   },
 
   //소셜 계정 연동하기
-  async linkSocialAccount(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
-    return fetchClient<{ platform: string; email: string }>('/auth/oauth2/link', {
-      method: 'POST',
-      auth: true,
-      body: JSON.stringify({ code, platform, state }),
-    });
-  },
+  // async linkSocialAccount(code: string, platform: 'KAKAO' | 'GOOGLE' | 'NAVER', state: string) {
+  //   return fetchClient<{ platform: string; email: string }>('/auth/oauth2/link', {
+  //     method: 'POST',
+  //     auth: true,
+  //     body: JSON.stringify({ code, platform, state }),
+  //   });
+  // },
 
   //소셜 계정 연동 해제하지
   async unlinkSocailAccount(platform: 'KAKAO' | 'GOOGLE' | 'NAVER') {
