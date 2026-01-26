@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -21,8 +22,10 @@ type Vote = "up" | "down" | null;
 export default function ResetPreference({ isLoggedIn }: Props) {
   const router = useRouter();
   const [selected, setSelected] = useState<Vote>(null);
+  const [dismissed, setDismissed] = useState(false);
 
   if (!isLoggedIn) return null;
+  if (dismissed) return null;
 
   const getUpIcon = () => {
     if (selected === "up") return thumbsUpRedBtn;
@@ -34,9 +37,20 @@ export default function ResetPreference({ isLoggedIn }: Props) {
     return thumbsDownBtn;
   };
 
+  const onClickUp = () => {
+    setSelected((prev) => (prev === "up" ? null : "up"));
+  };
+
+  const onClickDown = () => {
+    setSelected((prev) => (prev === "down" ? null : "down"));
+  };
+
+  const handleSubmitted = () => {
+    setDismissed(true);
+  };
+
   return (
     <div className="relative flex flex-col w-full px-5 min-w-0 items-center justify-center">
-      {/* 취향 재설정 버튼 */}
       <div
         className="flex w-full bg-[#FF3637] mt-10 px-3 py-3 items-center cursor-pointer min-w-0 rounded-[4px]"
         onClick={() => router.push("/onboard/artist")}
@@ -50,7 +64,6 @@ export default function ResetPreference({ isLoggedIn }: Props) {
         </div>
       </div>
 
-      {/* 만족도 영역 */}
       <div className="flex w-full bg-black mt-2 min-w-0 gap-2">
         <span className="min-w-0 flex-1 text-[#736F6F] text-[14px] font-medium truncate">
           추천 결과가 마음에 드시나요?
@@ -60,28 +73,26 @@ export default function ResetPreference({ isLoggedIn }: Props) {
           className="flex px-4 py-2 gap-3 justify-center items-center border-gray-800 border-1
             bg-[#1F1D1D] border-[#413D3D] border-0.25 rounded-[20px] h-[40px] shrink-0"
         >
-          <button
-            type="button"
-            onClick={() => setSelected(selected === "up" ? null : "up")}
-            className="flex items-center justify-center"
-          >
+          <button type="button" onClick={onClickUp} className="flex items-center justify-center">
             <Image src={getUpIcon()} alt="thumbs up" width={24} height={24} />
           </button>
 
-          <button
-            type="button"
-            onClick={() => setSelected(selected === "down" ? null : "down")}
-            className="flex items-center justify-center"
-          >
+          <button type="button" onClick={onClickDown} className="flex items-center justify-center">
             <Image src={getDownIcon()} alt="thumbs down" width={24} height={24} />
           </button>
         </div>
       </div>
 
-      {/* down 선택시 불만족 이유 선택창 */}
+      {/*선택 완료 후 창 닫기*/}
       {selected === "down" && (
         <div className="absolute right-5 top-full mt-2 z-50">
-          <RecSatisfaction />
+          <RecSatisfaction mode="down" onSubmitted={handleSubmitted} />
+        </div>
+      )}
+
+      {selected === "up" && (
+        <div className="absolute right-5 top-full mt-2 z-50">
+          <RecSatisfaction mode="up" onSubmitted={handleSubmitted} />
         </div>
       )}
     </div>
