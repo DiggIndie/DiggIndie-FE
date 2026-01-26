@@ -185,7 +185,7 @@ export default function SimpleCalendar({
           <Image src={prevBtn} alt="prev" width={24} height={24} />
         </button>
 
-        {/* 연/월 + hover 안내 */}
+        {/* 연/월, hover 안내 */}
         <div
           className="relative"
           onMouseEnter={() => setIsMonthHover(true)}
