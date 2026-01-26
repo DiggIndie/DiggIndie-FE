@@ -99,21 +99,10 @@ export default function MyArtistsWithSearch() {
         : "스크랩순";
 
   return (
-    <section className="relative w-full flex flex-col items-center mt-[12px]">
-      {/* 뒤로가기 */}
-      <Image
-        src={searchBack}
-        alt="back"
-        className="absolute left-[20px] mt-[10px] cursor-pointer"
-        onClick={() => router.push('/')}
-      />
+    <section className="relative w-full flex flex-col items-center mt-[12px] px-3">
 
       {/* 검색 input */}
-      <div
-        className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white
-        ${searchTerm ? 'w-[307px] ml-auto mr-5' : 'w-[335px]'}`}
-      >
-
+      <div className={"relative flex w-full h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white"}>
         {/* 검색 지우기 */}
         {searchTerm ? (
           <button
@@ -148,7 +137,7 @@ export default function MyArtistsWithSearch() {
       </div>
 
       {/* 드롭다운 */}
-      <div className="relative w-fit self-start ml-5 " ref={dropdownRef}>
+      <div className="relative w-fit self-start" ref={dropdownRef}>
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}

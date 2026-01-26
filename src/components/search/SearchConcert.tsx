@@ -77,20 +77,10 @@ export default function SearchConcert() {
   const showSkeleton = isTypingLoading || (isFetching && pageInfo.page === 0);
 
   return (
-    <section className="relative w-full flex flex-col items-center mt-[12px]">
-      {/* 뒤로가기 */}
-      <Image
-        src={searchBack}
-        alt="back"
-        className="absolute left-[20px] mt-[10px] cursor-pointer"
-        onClick={() => router.push('/')}
-      />
+    <section className="relative w-full flex flex-col items-center mt-[12px] px-3">
 
       {/* 검색 input */}
-      <div
-        className={`relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white
-        ${query ? 'w-[307px] ml-auto mr-5' : 'w-[335px]'}`}
-      >
+      <div className={"w-full relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white"}>
         {/* 검색 지우기 */}
         {query ? (
           <button
@@ -124,7 +114,7 @@ export default function SearchConcert() {
       </div>
 
       {/* 드롭다운 */}
-      <div className="relative w-fit self-start ml-5" ref={dropdownRef}>
+      <div className="relative w-fit self-start" ref={dropdownRef}>
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}
@@ -164,7 +154,6 @@ export default function SearchConcert() {
       {/* 결과 */}
       <div className="flex mt-4 justify-center">
         {showSkeleton ? <SearchCardSkeleton /> : <ConcertGrid concerts={concerts} />}
-        {isFetchingMore ? <div className="mt-3 text-[13px] text-[#8C8888] font-normal">불러오는 중...</div> : null}
       </div>
       <div ref={sentinelRef} className="h-[1px]" />
     </section>
