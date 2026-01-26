@@ -38,6 +38,7 @@ export const authApi = {
     return await fetchClient<{ accessToken: string; expiresIn: number }>('/auth/reissue', {
       method: 'POST',
       auth: true,
+      credentials: 'include',
     });
   },
 

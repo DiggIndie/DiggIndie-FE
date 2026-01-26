@@ -5,23 +5,24 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const refreshToken = request.cookies.get('refreshToken')?.value;
-  // console.log('refresh token', refreshToken);
+  console.log('refresh token', refreshToken);
 
   // 로그인 상태인데 로그인/회원가입 페이지에 접근하는 경우 (차단)
   // if (refreshToken && pathname.startsWith('/auth')) {
+  //   if (pathname.includes('/callback')) {
+  //     return NextResponse.next();
+  //   }
+  //   console.log('로그인 상태이므로 메인으로 리다이렉트');
   //   return NextResponse.redirect(new URL('/', request.url));
   // }
 
   // 로그인 안 됐는데 마이페이지, 글쓰기 페이지에 접근하는 경우
-  const protectedRoutes = ['/my', '/community/write'];
-  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
-
-  // if (!refreshToken && (pathname.startsWith('/my') || pathname.startsWith('/community/write'))) {
-  //   // 접근을 막고 로그인 페이지로 보냄 (원래 가려던 주소를 쿼리로 남기면 더 좋음)
-  //   const loginUrl = new URL('/auth/login', request.url);
-  //   // loginUrl.searchParams.set('callbackUrl', pathname); // 나중에 로그인 후 되돌려보낼 때 유용
-  //   return NextResponse.redirect(loginUrl);
-  // }
+  if (!refreshToken && (pathname.startsWith('/my') || pathname.startsWith('/community/write'))) {
+    console.log('미로그인 상태이므로 로그인 페이지로 리다이렉트');
+    const loginUrl = new URL('/auth/login', request.url);
+    loginUrl.searchParams.set('callbackUrl', pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
   return NextResponse.next();
 }
