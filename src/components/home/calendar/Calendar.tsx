@@ -1,23 +1,20 @@
+
 "use client";
 
-import prevBtn from "@/assets/icons/prev.svg";
-import nextBtn from "@/assets/common/next.svg";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
-import { pad2 } from "@/hooks/calendarHooks";
-import { makeKey } from "@/hooks/calendarHooks";
-import { uniqSorted } from "@/hooks/calendarHooks";
-import { buildInclusiveRangeKeys } from "@/hooks/calendarHooks";
-import { addDaysKey } from "@/hooks/calendarHooks";
+import prevBtn from "@/assets/icons/prev.svg";
+import nextBtn from "@/assets/common/next.svg";
+
+import CalendarNotice from "@/components/home/calendar/CalendarNotice";
+
+import { pad2, makeKey, uniqSorted, buildInclusiveRangeKeys, addDaysKey } from "@/hooks/calendarHooks";
 
 type CalendarProps = {
   selectedDates: string[];
   onChangeSelectedDates: (next: string[]) => void;
   onMonthChange?: (year: number, month: number) => void;
-
-  //  공연 있는 날짜
-  datesWithConcerts?: string[];
 };
 
 type Cell = {
@@ -28,12 +25,7 @@ type Cell = {
   key: string; // YYYY-MM-DD
 };
 
-export default function SimpleCalendar({
-                                         selectedDates,
-                                         onChangeSelectedDates,
-                                         onMonthChange,
-                                         datesWithConcerts = [],
-                                       }: CalendarProps) {
+export default function SimpleCalendar({ selectedDates, onChangeSelectedDates, onMonthChange }: CalendarProps) {
   const [current, setCurrent] = useState(new Date());
 
   useEffect(() => {
@@ -44,9 +36,6 @@ export default function SimpleCalendar({
   const month = current.getMonth();
 
   const selectedSet = useMemo(() => new Set(selectedDates), [selectedDates]);
-
-  // 공연 날짜
-  const concertSet = useMemo(() => new Set(datesWithConcerts), [datesWithConcerts]);
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -104,7 +93,6 @@ export default function SimpleCalendar({
   function beginPointer(cell: Cell) {
     pointerDownRef.current = true;
     didDragRef.current = false;
-
     startKeyRef.current = cell.key;
     lastKeyRef.current = cell.key;
   }
@@ -151,6 +139,9 @@ export default function SimpleCalendar({
 
   const HALF_GAP = 5.415;
 
+  // hover시 안내 표시
+  const [isMonthHover, setIsMonthHover] = useState(false);
+
   return (
     <div
       ref={wrapperRef}
@@ -169,34 +160,40 @@ export default function SimpleCalendar({
       }}
     >
       <div className={"flex w-[295px] ml-[10px] gap-[75px]"}>
-        <button
-          onClick={() => setCurrent(new Date(year, month - 1, 1))}
-          className={"cursor-pointer"}
-          type="button"
-        >
+        <button onClick={() => setCurrent(new Date(year, month - 1, 1))} className={"cursor-pointer"} type="button">
           <Image src={prevBtn} alt="prev" width={24} height={24} />
         </button>
 
+        {/* hover시 오버랩 */}
         <div
-          className={"text-white text-[20px] font-semibold cursor-pointer"}
-          onPointerDown={(e) => {
-            e.stopPropagation();
-          }}
-          onClick={() => onChangeSelectedDates([])}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") onChangeSelectedDates([]);
-          }}
+          className="relative"
+          onMouseEnter={() => setIsMonthHover(true)}
+          onMouseLeave={() => setIsMonthHover(false)}
         >
-          {year}. {pad2(month + 1)}
+          <div
+            className={"text-white text-[20px] font-semibold cursor-pointer"}
+            onPointerDown={(e) => {
+              e.stopPropagation();
+            }}
+            onClick={() => onChangeSelectedDates([])}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") onChangeSelectedDates([]);
+            }}
+          >
+            {year}. {pad2(month + 1)}
+          </div>
+
+
+          {isMonthHover && (
+            <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 mt-2 z-50">
+              <CalendarNotice />
+            </div>
+          )}
         </div>
 
-        <button
-          onClick={() => setCurrent(new Date(year, month + 1, 1))}
-          className={"cursor-pointer"}
-          type="button"
-        >
+        <button onClick={() => setCurrent(new Date(year, month + 1, 1))} className={"cursor-pointer"} type="button">
           <Image src={nextBtn} alt="next" width={24} height={24} />
         </button>
       </div>
@@ -230,10 +227,6 @@ export default function SimpleCalendar({
           const hasPrevInRow = hasPrevGlobal && canHavePrev;
           const hasNextInRow = hasNextGlobal && canHaveNext;
 
-          // 선택된 날짜 중 공연이 없는 날
-          const hasConcert = concertSet.has(cell.key);
-          const shouldGraySelectedText = isSelected && !hasConcert;
-
           return (
             <div
               key={`${cell.key}-${i}`}
@@ -265,10 +258,7 @@ export default function SimpleCalendar({
                 <div className="pointer-events-none absolute inset-0 z-10 rounded-[4px] bg-[#880405] border-[#C31C20] border-[0.5px]" />
               )}
 
-              {/* 공연 없을 시 회색 날짜 */}
-              <span className="relative z-20" style={shouldGraySelectedText ? { color: "#736F6F" } : undefined}>
-                {pad2(cell.d)}
-              </span>
+              <span className="relative z-20">{pad2(cell.d)}</span>
             </div>
           );
         })}
