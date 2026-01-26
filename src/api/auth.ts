@@ -91,7 +91,7 @@ export const authApi = {
   async socialLogin(code: string, state: string) {
     return await fetchClient<SocialLoginPayload>('/auth/oauth2/callback', {
       method: 'POST',
-      auth: false,
+      auth: true,
       body: JSON.stringify({
         code: code,
         state: state,

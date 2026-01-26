@@ -83,7 +83,7 @@ export default function MySocailPage() {
           </span>
           <ToggleSwitch
             checked={isConnected('KAKAO')}
-            disabled={loadingPlatform === 'KAKAO'}
+            disabled={loadingPlatform === 'KAKAO' || (isConnected('KAKAO') && connectedCount === 1)}
             onChange={(_, checked) => handleToggle('KAKAO', checked)}
           />
         </p>

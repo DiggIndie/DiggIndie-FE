@@ -40,7 +40,14 @@ export default function LoginCallback() {
           router.push('/my/social');
           return;
         }
-      } catch (e) {
+      } catch (e: unknown) {
+        const err = e as any;
+        if (err?.response?.data?.statusCode === 409) {
+          router.push(`/my/social?error=${encodeURIComponent(err.response.data.message)}`);
+          return;
+        }
+
+        // 진짜 예외만 로그인으로
         console.error('Login callback error:', e);
         router.push('/auth/login');
       }
