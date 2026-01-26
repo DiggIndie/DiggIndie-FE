@@ -10,6 +10,8 @@ import thumbsDownBtn from "@/assets/icons/thumbsDown.svg";
 import thumbsUpRedBtn from "@/assets/icons/thumbsUpRed.svg";
 import thumbsDownRedBtn from "@/assets/icons/thumbsDownRed.svg";
 
+import RecSatisfaction from "@/components/home/RecSatisfaction";
+
 type Props = {
   isLoggedIn: boolean;
 };
@@ -33,8 +35,7 @@ export default function ResetPreference({ isLoggedIn }: Props) {
   };
 
   return (
-    <div className="flex flex-col w-full px-5 min-w-0 items-center justify-center">
-
+    <div className="relative flex flex-col w-full px-5 min-w-0 items-center justify-center">
       {/* 취향 재설정 버튼 */}
       <div
         className="flex w-full bg-[#FF3637] mt-10 px-3 py-3 items-center cursor-pointer min-w-0 rounded-[4px]"
@@ -76,6 +77,13 @@ export default function ResetPreference({ isLoggedIn }: Props) {
           </button>
         </div>
       </div>
+
+      {/* down 선택시 불만족 이유 선택창 */}
+      {selected === "down" && (
+        <div className="absolute right-5 top-full mt-2 z-50">
+          <RecSatisfaction />
+        </div>
+      )}
     </div>
   );
 }
