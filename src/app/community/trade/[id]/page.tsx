@@ -213,10 +213,11 @@ export default function TradeArticleDetailPage() {
                   <span className="shrink-0 flex items-center gap-[3px]">
                   <BookmarkIcon
                     isActive={board.isScraped}
+                    isMine={board.isMine}
                     onClick={!board.isMine ? handleToggleScrap : undefined}
-                    className={`cursor-pointer w-6 h-6 transition-colors ${
+                    className={`w-6 h-6 transition-colors ${
                       board.isScraped ? 'text-white scale-110' : 'text-gray-600'
-                    }`}
+                    } ${board.isMine ? '' : 'cursor-pointer'}`}
                   />
                   <span className="text-gray-300 font-normal text-sm">{board.scrapCount}</span>
                 </span>
