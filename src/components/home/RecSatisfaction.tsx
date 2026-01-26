@@ -40,7 +40,7 @@ export default function RecSatisfaction({ mode, onSubmitted }: Props) {
   if (mode === "up") {
     return (
       <div
-        className="w-[235px] h-[40px] flex flex-col justify-between p-2 bg-black font-normal
+        className="w-[235px] h-[80px] flex flex-col justify-between p-2 bg-black font-normal
       text-[14px] text-white border-[1px] border-[#413D3D] rounded-[4px]"
       >
         <button
@@ -64,7 +64,7 @@ export default function RecSatisfaction({ mode, onSubmitted }: Props) {
 
   return (
     <div
-      className="w-[235px] h-[172px] flex flex-col justify-between p-2 bg-black font-normal
+      className="w-[235px] h-[188px] flex flex-col justify-between p-2 bg-black font-normal
       text-[14px] text-white border-[1px] border-[#413D3D] rounded-[4px]"
     >
       <button
