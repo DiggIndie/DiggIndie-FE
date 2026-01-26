@@ -5,17 +5,19 @@ import nextBtn from "@/assets/common/next.svg";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
-import { pad2 } from '@/hooks/calendarHooks'
-import { makeKey } from '@/hooks/calendarHooks'
-import { uniqSorted } from '@/hooks/calendarHooks'
-import { buildInclusiveRangeKeys } from '@/hooks/calendarHooks'
-import { addDaysKey } from '@/hooks/calendarHooks'
-
+import { pad2 } from "@/hooks/calendarHooks";
+import { makeKey } from "@/hooks/calendarHooks";
+import { uniqSorted } from "@/hooks/calendarHooks";
+import { buildInclusiveRangeKeys } from "@/hooks/calendarHooks";
+import { addDaysKey } from "@/hooks/calendarHooks";
 
 type CalendarProps = {
   selectedDates: string[];
   onChangeSelectedDates: (next: string[]) => void;
   onMonthChange?: (year: number, month: number) => void;
+
+  //  공연 있는 날짜
+  datesWithConcerts?: string[];
 };
 
 type Cell = {
@@ -30,6 +32,7 @@ export default function SimpleCalendar({
                                          selectedDates,
                                          onChangeSelectedDates,
                                          onMonthChange,
+                                         datesWithConcerts = [],
                                        }: CalendarProps) {
   const [current, setCurrent] = useState(new Date());
 
@@ -41,6 +44,9 @@ export default function SimpleCalendar({
   const month = current.getMonth();
 
   const selectedSet = useMemo(() => new Set(selectedDates), [selectedDates]);
+
+  // 공연 날짜
+  const concertSet = useMemo(() => new Set(datesWithConcerts), [datesWithConcerts]);
 
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
@@ -195,15 +201,9 @@ export default function SimpleCalendar({
         </button>
       </div>
 
-      <div
-        className="grid grid-cols-7 text-center text-white gap-[6.5px]
-        text-[12px] font-medium mt-[16px]"
-      >
+      <div className="grid grid-cols-7 text-center text-white gap-[6.5px] text-[12px] font-medium mt-[16px]">
         {["m", "t", "w", "t", "f", "s", "s"].map((d, idx) => (
-          <div
-            key={`${d}-${idx}`}
-            className={"w-[34px] h-[35px] text-center pt-[7px] text-gray-100"}
-          >
+          <div key={`${d}-${idx}`} className={"w-[34px] h-[35px] text-center pt-[7px] text-gray-100"}>
             {d}
           </div>
         ))}
@@ -220,7 +220,6 @@ export default function SimpleCalendar({
           const canHavePrev = i % 7 !== 0;
           const canHaveNext = i % 7 !== 6;
 
-          //연속 선택
           const hasPrevGlobal = isSelected && selectedSet.has(prevKey);
           const hasNextGlobal = isSelected && selectedSet.has(nextKey);
 
@@ -228,10 +227,12 @@ export default function SimpleCalendar({
           const isEnd = isSelected && !hasNextGlobal;
           const isEdge = isStart || isEnd;
 
-          //같은 줄에서만 이어붙이기. 배경색 조정
           const hasPrevInRow = hasPrevGlobal && canHavePrev;
           const hasNextInRow = hasNextGlobal && canHaveNext;
 
+          // 선택된 날짜 중 공연이 없는 날
+          const hasConcert = concertSet.has(cell.key);
+          const shouldGraySelectedText = isSelected && !hasConcert;
 
           return (
             <div
@@ -264,8 +265,10 @@ export default function SimpleCalendar({
                 <div className="pointer-events-none absolute inset-0 z-10 rounded-[4px] bg-[#880405] border-[#C31C20] border-[0.5px]" />
               )}
 
-
-              <span className="relative z-20">{pad2(cell.d)}</span>
+              {/* 공연 없을 시 회색 날짜 */}
+              <span className="relative z-20" style={shouldGraySelectedText ? { color: "#736F6F" } : undefined}>
+                {pad2(cell.d)}
+              </span>
             </div>
           );
         })}
