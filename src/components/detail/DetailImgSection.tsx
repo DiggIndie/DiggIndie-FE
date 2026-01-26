@@ -12,6 +12,9 @@ interface DetailImgSectionProps {
 
 type ImageSrc = string | StaticImageData;
 
+
+
+
 export default function DetailImgSection({
   imageSrc,
   alt = 'detail image',

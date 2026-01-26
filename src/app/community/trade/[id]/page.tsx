@@ -90,6 +90,23 @@ export default function TradeArticleDetailPage() {
     }
   };
 
+  //key를 url로 가공
+  const S3_BASE = "https://diggindie-imgs.s3.ap-northeast-2.amazonaws.com";
+
+  function toS3ImageUrl(raw?: string | null): string | null {
+    if (!raw) return null;
+
+    const v = raw.trim();
+    if (!v) return null;
+
+    // 이미 URL이면 그대로
+    if (v.startsWith("http://") || v.startsWith("https://")) {
+      return v;
+    }
+
+    // fileKey → URL
+    return `${S3_BASE}/${encodeURIComponent(v)}`;
+  }
   const handleEdit = () => {
     if (!boardId) return;
     router.push(`/community/write?mode=edit&board=trade&id=${boardId}`);
@@ -151,11 +168,18 @@ export default function TradeArticleDetailPage() {
               className="flex overflow-x-auto mb-3 snap-x snap-mandatory scrollbar-hide "
               onScroll={handleScroll}
             >
-              {board.images.map((url, index) => (
-                <div key={index} className="w-full flex-shrink-0 snap-center">
-                  <DetailImgSection imageSrc={url.imageUrl} alt={url.imageUrl} />
-                </div>
-              ))}
+              {board.images.map((img, index) => {
+                const imageSrc = toS3ImageUrl(img.imageUrl);
+
+                return (
+                  <div key={index} className="w-full flex-shrink-0 snap-center">
+                    <DetailImgSection
+                      imageSrc={imageSrc}
+                      alt={img.imageUrl}
+                    />
+                  </div>
+                );
+              })}
             </section>
           </div>
 
