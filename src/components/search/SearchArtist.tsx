@@ -13,7 +13,7 @@ import SearchCardSkeleton from "@/components/search/SearchCardSkeleton";
 import { useArtistSearch } from "@/hooks/useArtistSearch";
 import { useRouter } from 'next/navigation';
 
-type SortKey = "updated" | "korean";
+type SortKey = "updated" | "korean" | "scrap";
 
 export default function MyArtistsWithSearch() {
   const [isOpen, setIsOpen] = useState(false);
@@ -91,7 +91,12 @@ export default function MyArtistsWithSearch() {
     };
   }, [debouncedTerm]);
 
-  const label = sortKey === "updated" ? "업데이트순" : "가나다순";
+  const label =
+    sortKey === "updated"
+      ? "업데이트순"
+      : sortKey === "korean"
+        ? "가나다순"
+        : "스크랩순";
 
   return (
     <section className="relative w-full flex flex-col items-center mt-[12px]">
@@ -143,13 +148,13 @@ export default function MyArtistsWithSearch() {
       </div>
 
       {/* 드롭다운 */}
-      <div className="relative w-fit self-start ml-5" ref={dropdownRef}>
+      <div className="relative w-fit self-start ml-5 " ref={dropdownRef}>
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}
           className="w-[100px] h-[28px] border border-[#736F6F] rounded-[4px] flex items-center gap-[4px]"
         >
-          <span className="ml-[10.5px] text-[14px] tracking-[-0.42px] font-medium text-white">
+          <span className="ml-[10.5px] text-[14px] tracking-[-0.42px] font-medium text-white cursor-pointer">
             {label}
           </span>
           <div className="w-[16px] h-[16px]">
@@ -169,13 +174,13 @@ export default function MyArtistsWithSearch() {
                 setSortKey("updated" as SortKey);
                 setIsOpen(false);
               }}
-              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] ${
+              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] cursor-pointer${
                 sortKey === "updated"
                   ? "bg-[#332F2F] text-white"
                   : "text-[#8C8888]"
               }`}
             >
-              <span className="ml-[8px] mt-[3px]">업데이트순</span>
+              <span className="ml-[8px] mt-[3px] cursor-pointer">업데이트순</span>
             </button>
 
             <button
@@ -184,20 +189,29 @@ export default function MyArtistsWithSearch() {
                 setSortKey("korean" as SortKey);
                 setIsOpen(false);
               }}
-              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] ${
+              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] cursor-pointer${
                 sortKey === "korean"
                   ? "bg-[#332F2F] text-white"
                   : "text-[#8C8888]"
               }`}
             >
-              <span className="ml-[8px] mt-[3px]">가나다순</span>
+              <span className="ml-[8px] mt-[3px] cursor-pointer">가나다순</span>
             </button>
 
-            <div className="flex w-[84px] h-[28px] rounded-[4px] text-[14px]">
-              <span className="ml-[8px] mt-[3px] text-[#8C8888]">
-                스크랩순
-              </span>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setSortKey("scrap" as SortKey);
+                setIsOpen(false);
+              }}
+              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] cursor-pointer${
+                sortKey === "scrap"
+                  ? "bg-[#332F2F] text-white"
+                  : "text-[#8C8888]"
+              }`}
+            >
+              <span className="ml-[8px] mt-[3px] cursor-pointer">스크랩순</span>
+            </button>
           </div>
         )}
       </div>
