@@ -21,6 +21,7 @@ export interface Comment {
   content: string;
   likeCount: number;
   isLiked: boolean;
+  isMine: boolean;
   replies: Reply[];
 }
 
@@ -30,6 +31,7 @@ export interface Reply {
   writerNickname: string;
   replyToNickname: string;
   createdAt: string;
+  isMine: boolean;
   content: string;
   likeCount: number;
   isLiked: boolean;
