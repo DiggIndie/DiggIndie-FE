@@ -34,36 +34,24 @@ export default function IndieStoryPage() {
       return [...filtered].sort((a, b) => b.views - a.views);
     }
 
-    // 업데이트순, API 연결 후 수정필요
+    // 업데이트순
     return filtered;
   }, [query, sortKey]);
 
   return (
-    <div className="text-white flex flex-col h-screen bg-black relative overflow-auto">
+    <div className="text-white flex flex-col h-screen bg-black relative overflow-auto px-5">
       <div className="flex flex-col">
         <div className="sticky top-0 z-50">
           <SearchHeader title={'인디스토리'} onHamburgerClick={() => setIsSideTabOpen(true)} />
         </div>
 
         {/* 검색 input */}
-        <div className="flex items-center ml-5 mb-3">
-          {/* query 있을 때*/}
-          {query && (
-            <button
-              type="button"
-              className="w-[28px] h-[44px] flex items-center justify-start cursor-pointer"
-              onClick={() => setQuery('')}
-            >
-              <Image src={backBtn} alt="back" width={24} height={24} />
-            </button>
-          )}
+        <div className="flex items-center mb-3">
 
           <div
-            className={`
-               h-[44px] rounded-[4px] bg-[#4A4747] text-[16px] text-[#A6A6A6]
-               flex items-center
-              ${query ? 'w-[307px]' : 'w-[335px]'}
-            `}
+            className={
+               "w-full h-[44px] rounded-[4px] bg-[#4A4747] text-[16px] text-[#A6A6A6] flex items-center"
+            }
           >
             <input
               value={query}
