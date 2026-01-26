@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
+        protocol: "https",
+        hostname: "diggindie-imgs.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
         protocol: 'https',
         hostname: 's3.amazonaws.com',
         pathname: '/**',
