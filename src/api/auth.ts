@@ -69,7 +69,7 @@ export const authApi = {
     return await fetchClient<{
       message: string;
       success: boolean;
-      userId: string;
+      maskedUserId: string;
       createdAt: string;
     }>('/auth/email/verify', {
       method: 'POST',

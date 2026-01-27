@@ -9,7 +9,7 @@ export default function FindIdResult() {
   useEffect(() => {
     // 만약 결과 데이터 없이 이 페이지에 직접 접속했다면 이전 페이지로 돌려보냄
     if (!result) {
-      router.replace('/find-id');
+      router.replace('/auth/find/id');
     }
 
     // 페이지를 떠날 때 데이터를 지우고 싶다면 언마운트 시점에 clearResult 호출
@@ -33,6 +33,12 @@ export default function FindIdResult() {
 
       {/* 안내 문구 */}
       <p className="text-white text-xs text-center">이메일 정보와 일치하는 아이디입니다.</p>
+      <a
+        className="w-full h-14 mt-4 rounded-sm bg-main-red-2 text-white text-base font-semibold cursor-pointer text-center p-4"
+        href="/auth/login"
+      >
+        로그인 페이지 가기
+      </a>
     </div>
   );
 }
