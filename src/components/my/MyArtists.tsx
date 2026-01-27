@@ -45,7 +45,7 @@ export default function MyArtists() {
   return (
     <section className="w-full flex flex-col px-[20px] mt-[20px]">
       {/* 드롭다운 */}
-      <div className="relative w-fit" ref={dropdownRef}>
+      <div className="relative w-fit " ref={dropdownRef}>
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}

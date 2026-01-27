@@ -118,7 +118,7 @@ export default function SearchConcert() {
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}
-          className="w-[100px] h-[28px] border border-[#736F6F] rounded-[4px] flex items-center gap-[4px]"
+          className="w-[100px] h-[28px] border justify-between border-[#736F6F] rounded-[4px] flex items-center pr-[10.5px]"
         >
           <span className="ml-[10.5px] text-[14px] tracking-[-0.42px] font-medium text-white">{label}</span>
           <Image src={downBtn} alt="open dropdown" />
@@ -127,7 +127,7 @@ export default function SearchConcert() {
         {isOpen && (
           <div
             className="absolute left-0 mt-[8px] w-[100px] h-[108px] rounded-[4px]
-                       border border-[#736F6F] flex flex-col items-center
+                       border border-[#736F6F] flex flex-col items-start
                        py-[8px] gap-[4px] bg-black shadow-lg z-50"
           >
             {(["recent", "view", "scrap"] as SortKey[]).map((key) => (
@@ -137,11 +137,11 @@ export default function SearchConcert() {
                   setSortKey(key);
                   setIsOpen(false);
                 }}
-                className={`w-full h-[28px] text-[14px] ${
+                className={`w-full h-[28px] px-2 text-left text-[14px] ${
                   sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
                 }`}
               >
-                {key === "recent" ? "업데이트순" : key === "view" ? "조회수 순" : "스크랩순"}
+                {key === "recent" ? "업데이트순" : key === "view" ? "조회수순" : "스크랩순"}
               </button>
             ))}
           </div>

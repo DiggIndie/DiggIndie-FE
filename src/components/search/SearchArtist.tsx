@@ -141,7 +141,7 @@ export default function MyArtistsWithSearch() {
         <button
           type="button"
           onClick={() => setIsOpen((v) => !v)}
-          className="w-[100px] h-[28px] border border-[#736F6F] rounded-[4px] flex items-center gap-[4px]"
+          className="w-[100px] h-[28px] border justify-between border-[#736F6F] rounded-[4px] flex items-center pr-[10.5px]"
         >
           <span className="ml-[10.5px] text-[14px] tracking-[-0.42px] font-medium text-white cursor-pointer">
             {label}
@@ -157,50 +157,20 @@ export default function MyArtistsWithSearch() {
                        border border-[#736F6F] flex flex-col items-center
                        py-[8px] gap-[4px] bg-black shadow-lg z-50"
           >
-            <button
-              type="button"
-              onClick={() => {
-                setSortKey("updated" as SortKey);
-                setIsOpen(false);
-              }}
-              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] cursor-pointer${
-                sortKey === "updated"
-                  ? "bg-[#332F2F] text-white"
-                  : "text-[#8C8888]"
-              }`}
-            >
-              <span className="ml-[8px] mt-[3px] cursor-pointer">업데이트순</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                setSortKey("korean" as SortKey);
-                setIsOpen(false);
-              }}
-              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] cursor-pointer${
-                sortKey === "korean"
-                  ? "bg-[#332F2F] text-white"
-                  : "text-[#8C8888]"
-              }`}
-            >
-              <span className="ml-[8px] mt-[3px] cursor-pointer">가나다순</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                setSortKey("scrap" as SortKey);
-                setIsOpen(false);
-              }}
-              className={`flex w-[84px] h-[28px] rounded-[4px] text-[14px] cursor-pointer${
-                sortKey === "scrap"
-                  ? "bg-[#332F2F] text-white"
-                  : "text-[#8C8888]"
-              }`}
-            >
-              <span className="ml-[8px] mt-[3px] cursor-pointer">스크랩순</span>
-            </button>
+            {(["updated", "korean", "scrap"] as SortKey[]).map((key) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setSortKey(key);
+                  setIsOpen(false);
+                }}
+                className={`w-full h-[28px] px-2 text-left text-[14px] ${
+                  sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
+                }`}
+              >
+                {key === "updated" ? "업데이트순" : key === "korean" ? "가나다순" : "스크랩순"}
+              </button>
+              ))}
           </div>
         )}
       </div>
