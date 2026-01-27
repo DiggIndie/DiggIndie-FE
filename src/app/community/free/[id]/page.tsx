@@ -11,12 +11,13 @@ import { useAuthStore } from '@/stores/authStore';
 import { useParams, useRouter } from 'next/navigation';
 import { deleteFree, likeFree } from '@/api/freeBoard';
 import { useCommentFree } from '@/hooks/useCommentFree';
+import FreeDetailSkeleton from '@/components/community/FreeDetailSkeleton';
 
 export default function FreeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
   const params = useParams();
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(true);
   const boardId = Number(params.id);
   const [board, setBoard] = useState<FreeBoardDetail | null>(null);
 
@@ -42,6 +43,7 @@ export default function FreeArticleDetailPage() {
     const fetchDetail = async () => {
       const content = await boardDetailService.getFreeBoardDetail(boardId);
       setBoard(content);
+      setIsLoading(false);
     };
 
     fetchDetail();
@@ -66,7 +68,7 @@ export default function FreeArticleDetailPage() {
   };
 
   const handleToggleLike = async () => {
-    if ((!board) || (board.isMine)) return;
+    if (!board || board.isMine) return;
 
     const prev = {
       isLiked: board.isLiked,
@@ -76,10 +78,10 @@ export default function FreeArticleDetailPage() {
     setBoard((prevBoard) =>
       prevBoard
         ? {
-          ...prevBoard,
-          isLiked: !prevBoard.isLiked,
-          likeCount: prevBoard.isLiked ? prevBoard.likeCount - 1 : prevBoard.likeCount + 1,
-        }
+            ...prevBoard,
+            isLiked: !prevBoard.isLiked,
+            likeCount: prevBoard.isLiked ? prevBoard.likeCount - 1 : prevBoard.likeCount + 1,
+          }
         : prevBoard
     );
 
@@ -87,7 +89,6 @@ export default function FreeArticleDetailPage() {
       const res = await likeFree({ boardId });
 
       if (!res.isSuccess) {
-
         alert(res.message || '좋아요 처리에 실패했습니다.');
         setBoard((prevBoard) =>
           prevBoard ? { ...prevBoard, isLiked: prev.isLiked, likeCount: prev.likeCount } : prevBoard
@@ -98,10 +99,10 @@ export default function FreeArticleDetailPage() {
       setBoard((prevBoard) =>
         prevBoard
           ? {
-            ...prevBoard,
-            isLiked: res.payload.isLiked,
-            likeCount: res.payload.likeCount,
-          }
+              ...prevBoard,
+              isLiked: res.payload.isLiked,
+              likeCount: res.payload.likeCount,
+            }
           : prevBoard
       );
     } catch {
@@ -124,15 +125,24 @@ export default function FreeArticleDetailPage() {
 
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20">
-      <ArticleHeader title="자유 라운지" isMine={board?.isMine} onEdit={handleEdit} onDelete={handleDelete} />
+      <ArticleHeader
+        title="자유 라운지"
+        isMine={board?.isMine}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
 
-      {!board ? (
+      {!isAuthed ? (
+        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)]">
+          <span className="text-base font-normal text-[#A6A6A6]">
+            로그인 후 가능한 페이지입니다
+          </span>
+        </div>
+      ) : isLoading ? (
+        <FreeDetailSkeleton />
+      ) : !board ? (
         <div className="h-screen flex items-center justify-center">
           <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
-        </div>
-      ) : !isAuthed ? (
-        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)]">
-          <span className="text-base font-normal text-[#A6A6A6]">로그인 후 가능한 페이지입니다</span>
         </div>
       ) : (
         <>

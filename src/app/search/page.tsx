@@ -133,7 +133,7 @@ export default function HomeSearch() {
           alt="이전으로"
           width={24}
           height={24}
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/home')}
           className="cursor-pointer"
         />
         <SearchSection
@@ -146,6 +146,7 @@ export default function HomeSearch() {
             loadRecentSearches();
           }}
           onSubmit={handleSubmit}
+          placeholder="아티스트, 공연을 검색해보세요"
         />
       </div>
 
@@ -154,7 +155,11 @@ export default function HomeSearch() {
           {isRecentLoading ? (
             <SearchCardSkeleton />
           ) : (
-            <RecentSearchSection searches={recentSearches} onDelete={handleDelete} onClearAll={handleClearAll} />
+            <RecentSearchSection
+              searches={recentSearches}
+              onDelete={handleDelete}
+              onClearAll={handleClearAll}
+            />
           )}
         </>
       )}
@@ -173,7 +178,9 @@ export default function HomeSearch() {
                 <div className="flex gap-1 mb-4 px-5">
                   <Image src={mikeIcon} alt="마이크" />
                   <span className="text-xl font-semibold text-white">아티스트</span>
-                  <span className="font-medium text-sm text-white px-2 py-1 ml-2">{artistCount}개</span>
+                  <span className="font-medium text-sm text-white px-2 py-1 ml-2">
+                    {artistCount}개
+                  </span>
                 </div>
 
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
@@ -187,7 +194,9 @@ export default function HomeSearch() {
                 <div className="flex gap-1 mb-4 px-5">
                   <Image src={calendarIcon} alt="달력" />
                   <span className="text-xl font-semibold text-white">공연</span>
-                  <span className="font-medium text-sm text-white px-2 py-1 ml-2">{concertCount}개</span>
+                  <span className="font-medium text-sm text-white px-2 py-1 ml-2">
+                    {concertCount}개
+                  </span>
                 </div>
 
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
