@@ -17,7 +17,9 @@ export default function CommunityTab() {
       border-b-[1px] border-[#413D3D] mb-[12px]"
     >
       <span
-        onClick={() => router.push(isFree ? "/community/free" : "/community/free/search")}
+        onClick={() =>
+          router.push(isTradeSearch ? "/community/free/search" : "/community/free")
+        }
         className={`relative w-[44px] pt-2 cursor-pointer ${
           (isFree || isFreeSearch) ? 'text-white' : 'text-[#736F6F]'
         }`}
@@ -29,7 +31,9 @@ export default function CommunityTab() {
       </span>
 
       <span
-        onClick={() => router.push(isTrade ? "/community/trade" : "/community/trade/search")}
+        onClick={() =>
+          router.push(isFreeSearch ? "/community/trade/search" : "/community/trade")
+        }
         className={`relative w-[68px] pt-2 cursor-pointer ${
           (isTrade || isTradeSearch) ? 'text-white' : 'text-[#736F6F]'
         }`}
