@@ -21,7 +21,8 @@ export default function OnboardArtistPage() {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const [isloading, setIsLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(true);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const {
     artists,
     searchTerm,
@@ -30,6 +31,7 @@ export default function OnboardArtistPage() {
     onClearSearch,
     loadFirstPage,
     loadNextPage,
+    isFetching,
   } = useOnboardArtists(12);
 
   useEffect(() => {
@@ -51,17 +53,25 @@ export default function OnboardArtistPage() {
   }, []); // 의존성 배열을 비워 처음에 한 번만 실행
 
   useEffect(() => {
+    if (isloading) return;
     const el = sentinelRef.current;
-    if (!el) return;
+    const rootEl = scrollRef.current;
+    if (!el || !rootEl) return;
 
-    const observer = new IntersectionObserver(async ([entry]) => {
-      if (!entry.isIntersecting) return;
-      await loadNextPage();
-    });
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (!entry.isIntersecting) return;
+        await loadNextPage();
+      },
+      {
+        root: rootEl,
+        threshold: 0.1,
+      }
+    );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [loadNextPage]);
+  }, [loadNextPage, isloading]);
 
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) =>
@@ -109,7 +119,10 @@ export default function OnboardArtistPage() {
         {isloading ? (
           <ArtistSkeletonGrid />
         ) : artists.length > 0 ? (
-          <div className="overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5">
+          <div
+            className="flex-1 overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5"
+            ref={scrollRef}
+          >
             {artists.map((artist: OnboardArtist) => (
               <OnboardArtistItem
                 key={artist.bandId}
@@ -118,6 +131,11 @@ export default function OnboardArtistPage() {
                 toggleSelect={toggleSelect}
               />
             ))}
+            {isFetching && (
+              <>
+                <ArtistSkeletonGrid count={6} />
+              </>
+            )}
             <div ref={sentinelRef} className="col-span-3 h-1" />
           </div>
         ) : (
