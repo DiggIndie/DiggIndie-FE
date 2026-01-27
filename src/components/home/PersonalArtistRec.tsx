@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
+import ArtistConcertSkeleton from '@/components/home/calendar/ArtistConcertSkeleton';
 import ArtistCard from '@/components/home/ArtistCard';
 import Image from 'next/image';
 import playBtn from '@/assets/common/play.svg'
@@ -12,15 +13,18 @@ type Props = {
   isLoggedIn: boolean;
 };
 
-function GuestArtistCard() {
+type GuestProps = {
+  firstImage: boolean
+}
+
+function GuestArtistCard({ firstImage }: GuestProps): ReactElement {
   return (
     <div className="relative shrink-0 w-[160px] h-[200px] rounded-[8px] overflow-hidden">
       <Image
-        src="/mocks/mockArtistImage.png"
-        alt="mock artist"
+        src={firstImage ? "/mocks/mockArtistImage1.png" : "/mocks/mockArtistImage2.png"}
+        alt="artist"
         fill
         className="object-cover"
-        priority={false}
       />
       <div className="absolute inset-0 bg-[#0B0F1499]" />
 
@@ -63,18 +67,16 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
         <div className="flex w-full gap-4">
           {!isLoggedIn ? (
             <>
-              <GuestArtistCard />
-              <GuestArtistCard />
-              <GuestArtistCard />
-              <GuestArtistCard />
+              <GuestArtistCard firstImage={true}/>
+              <GuestArtistCard firstImage={false}/>
             </>
           ) : (
             <>
-              {isLoading && <div className="text-[14px] text-[#8C8888]">불러오는 중...</div>}
-              {!isLoading && error && <div className="text-[14px] text-[#8C8888]">{error}</div>}
-
-              {!isLoading &&
-                !error &&
+              {isLoading ? (
+                <ArtistConcertSkeleton />
+              ) : error ? (
+                <div className="text-[14px] text-[#8C8888]">{error}</div>
+              ) : (
                 visibleBands.map((band) => (
                   <ArtistCard
                     key={band.bandId}
@@ -86,7 +88,9 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
                       topTrack: band.topTrack,
                     }}
                   />
-                ))}
+                ))
+              )}
+
             </>
           )}
         </div>

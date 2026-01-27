@@ -122,6 +122,7 @@ export async function getMyArtists(params: GetMyArtistsParams = {}): Promise<MyA
 //아티스트 추천
 const AI_BASE_URL = process.env.NEXT_PUBLIC_AI_BASE_URL;
 
+
 export async function postUpdateBandRecommendations(): Promise<RecArtistPayload> {
   const res = await fetchClient<RecArtistPayload>('/api/bands/recommendations/update', {
     method: 'POST',

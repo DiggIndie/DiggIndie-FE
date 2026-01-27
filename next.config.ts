@@ -33,6 +33,11 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
+        protocol: "https",
+        hostname: "i.scdn.co",
+        pathname: "/image/**",
+      },
+      {
         protocol: 'https',
         hostname: 'i.scdn.co',
         pathname: '/**',
