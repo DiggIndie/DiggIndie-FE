@@ -117,10 +117,12 @@ export default function OnboardArtistPage() {
           />
         </div>
         {isloading ? (
-          <ArtistSkeletonGrid />
+          <div className="grid grid-cols-3 gap-4 px-5 pt-5">
+            <ArtistSkeletonGrid />
+          </div>
         ) : artists.length > 0 ? (
           <div
-            className="flex-1 overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 pt-5"
+            className="flex-1 overflow-y-scroll scroll-hidden grid grid-cols-3 gap-4 px-5 "
             ref={scrollRef}
           >
             {artists.map((artist: OnboardArtist) => (
@@ -131,11 +133,7 @@ export default function OnboardArtistPage() {
                 toggleSelect={toggleSelect}
               />
             ))}
-            {isFetching && (
-              <>
-                <ArtistSkeletonGrid count={6} />
-              </>
-            )}
+            {isFetching && <ArtistSkeletonGrid count={6} />}
             <div ref={sentinelRef} className="col-span-3 h-1" />
           </div>
         ) : (
