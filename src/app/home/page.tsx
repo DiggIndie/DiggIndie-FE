@@ -12,11 +12,13 @@ import Popular from '@/components/home/Popular';
 import { useEffect, useState } from 'react';
 import SideTab from '@/components/sideTabDir/SideTab';
 import { useAuthStore } from '@/stores/authStore';
+import Feedback from '@/components/home/Feedback';
 
 export default function HomePage() {
   const { isAuthed } = useAuthStore();
 
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
+
   useEffect(() => {
     document.body.style.overflow = isSideTabOpen ? 'hidden' : 'auto';
   }, [isSideTabOpen]);
@@ -33,6 +35,7 @@ export default function HomePage() {
           <PersonalArtistRec isLoggedIn={isAuthed} />
           <PersonalConcertRec isLoggedIn={isAuthed} />
           <ResetPreference isLoggedIn={isAuthed} />
+          <Feedback isLoggedIn={isAuthed} />
           <HomeCalendar />
           <Popular />
         </main>

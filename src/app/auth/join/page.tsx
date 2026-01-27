@@ -55,12 +55,7 @@ export default function JoinPage() {
   // 2. 인증번호 확인
   const handleVerifyCode = async () => {
     try {
-      const isValid = await authService.verifyCode(
-        form.email,
-        form.emailConfirm,
-        'SIGNUP',
-        'stringst'
-      );
+      const isValid = await authService.verifyCode(form.email, form.emailConfirm, 'SIGNUP');
       if (isValid) {
         setIsEmailVerified(true);
         setErrors((prev) => ({ ...prev, emailConfirm: '인증되었습니다.' }));

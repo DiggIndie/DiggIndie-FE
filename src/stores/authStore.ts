@@ -42,3 +42,19 @@ export const useFindIdStore = create<FindIdState>((set) => ({
   setResult: (data) => set({ result: data }),
   clearResult: () => set({ result: null }),
 }));
+
+interface PasswordResetState {
+  email: string;
+  resetToken: string;
+  // 데이터를 저장하는 함수
+  setResetInfo: (email: string, token: string) => void;
+  // 초기화 함수 (재설정 완료 후 사용)
+  clearResetInfo: () => void;
+}
+
+export const usePasswordResetStore = create<PasswordResetState>((set) => ({
+  email: '',
+  resetToken: '',
+  setResetInfo: (email, token) => set({ email, resetToken: token }),
+  clearResetInfo: () => set({ email: '', resetToken: '' }),
+}));
