@@ -59,9 +59,9 @@ export default function ReplyInputSection({ addReply, disabled, replyTarget, onC
   };
 
   return (
-    <section className="fixed bottom-0 p-5 w-full z-30">
+    <section className="fixed bottom-0 py-5 z-30">
       <div className="flex items-center bg-gray-800 px-4 py-4 rounded-sm">
-        <div className="flex items-center flex-1 min-w-0">
+        <div className="flex items-center min-w-0">
           <Checkbox
             checked={isChecked}
             onChange={(e) => setIsChecked(e.target.checked)}

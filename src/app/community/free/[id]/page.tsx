@@ -151,12 +151,15 @@ export default function FreeArticleDetailPage() {
             />
           </div>
 
-          <ReplyInputSection
-            addReply={addReply}
-            disabled={isCommentSubmitting}
-            replyTarget={replyTarget}
-            onCancelReply={() => setReplyTarget(null)}
-          />
+          <div className={"flex justify-center"}>
+
+            <ReplyInputSection
+              addReply={addReply}
+              disabled={isCommentSubmitting}
+              replyTarget={replyTarget}
+              onCancelReply={() => setReplyTarget(null)}
+            />
+          </div>
         </>
       )}
     </div>

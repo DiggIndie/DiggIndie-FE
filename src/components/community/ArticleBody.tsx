@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import commentsIcon from '@/assets/sideTab/Chat 2.svg';
 import HeartIcon from '@/assets/community/HeartIcon';
+import { useState } from "react";
 import { FreeBoardDetail } from '@/types/board';
 
 interface ArticleBodyProps {
@@ -37,6 +38,23 @@ function normalizeBoardImageSrc(raw: unknown): string | null {
   }
 }
 
+//이미지 실패 대비
+function SingleImage({ src }: { src: string }) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  return (
+    <div className="w-[200px] h-[200px] relative mb-3">
+      <Image
+        src={imgSrc}
+        alt="article-image-1"
+        fill
+        className="object-cover"
+        onError={() => setImgSrc("/mocks/concertDefault.png")}
+      />
+    </div>
+  );
+}
+
 
 export default function ArticleBody({ content, onToggleLike }: ArticleBodyProps) {
 
@@ -62,11 +80,7 @@ export default function ArticleBody({ content, onToggleLike }: ArticleBodyProps)
       </div>
 
       {/* 이미지 */}
-      {imageSrcs.length === 1 && (
-        <div className="w-[200px] h-[200px] relative mb-3">
-          <Image src={imageSrcs[0]} alt="article-image-1" fill className="object-cover" />
-        </div>
-      )}
+      {imageSrcs.length === 1 && <SingleImage src={imageSrcs[0]} />}
 
       {imageSrcs.length > 1 && (
         <div className="flex gap-3 overflow-x-auto mb-3">
