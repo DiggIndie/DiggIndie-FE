@@ -65,7 +65,11 @@ export default function CommunityTradePage() {
   return (
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">
       <header className="sticky top-0 z-50 h-[52px] bg-black flex items-center shrink-0">
-        <CommunityHeader title="디깅 라운지" onHamburgerClick={() => setIsSideTabOpen(true)} />
+        <CommunityHeader
+          title="디깅 라운지"
+          onHamburgerClick={() => setIsSideTabOpen(true)}
+          isLoggedIn={isAuthed}
+        />
       </header>
 
       <div className="shrink-0">
