@@ -93,15 +93,13 @@ export const authService = {
   async verifyCode(
     email: string,
     code: string,
-    type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID',
-    newPassword: string
+    type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID'
   ) {
     try {
       const res = await authApi.verifyCode({
         email: email,
         code: code,
         type: type,
-        newPassword: newPassword,
       });
       return res.payload;
     } catch (err) {

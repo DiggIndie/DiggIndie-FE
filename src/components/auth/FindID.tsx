@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { authService } from '@/services/authService';
+import { useFindIdStore } from '@/stores/authStore';
 
 export default function FindId() {
+  const setResult = useFindIdStore((state) => state.setResult);
   const [form, setForm] = useState({
     email: '',
     emailConfirm: '',
@@ -31,17 +33,15 @@ export default function FindId() {
   // 2. 인증번호 확인
   const handleVerifyCode = async () => {
     try {
-      const isValid = await authService.verifyCode(
-        form.email,
-        form.emailConfirm,
-        'FIND_USER_ID',
-        'stringst'
-      );
+      const isValid = await authService.verifyCode(form.email, form.emailConfirm, 'FIND_USER_ID');
+
       if (isValid) {
+        setResult({
+          userId: isValid.userId,
+          createdAt: isValid.createdAt,
+        });
         setIsEmailVerified(true);
         setErrors((prev) => ({ ...prev, emailConfirm: '인증되었습니다.' }));
-        sessionStorage.setItem('FOUND_USER_ID', isValid.userId);
-        sessionStorage.setItem('SIGNUP_DATE', isValid.createdAt);
       } else {
         setErrors((prev) => ({ ...prev, emailConfirm: '인증번호가 일치하지 않습니다.' }));
       }

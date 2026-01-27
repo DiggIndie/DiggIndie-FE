@@ -25,3 +25,20 @@ export const useAuthStore = create<AuthState>()((set) => ({
       isAuthed: false,
     }),
 }));
+
+interface FindIdResult {
+  userId: string;
+  createdAt: string;
+}
+
+type FindIdState = {
+  result: FindIdResult | null;
+  setResult: (data: FindIdResult) => void;
+  clearResult: () => void;
+};
+
+export const useFindIdStore = create<FindIdState>((set) => ({
+  result: null,
+  setResult: (data) => set({ result: data }),
+  clearResult: () => set({ result: null }),
+}));

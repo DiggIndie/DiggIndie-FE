@@ -65,7 +65,6 @@ export const authApi = {
     email: string;
     code: string;
     type: 'SIGNUP' | 'PASSWORD_RESET' | 'FIND_USER_ID';
-    newPassword: string;
   }) {
     return await fetchClient<{
       message: string;
