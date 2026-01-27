@@ -123,6 +123,7 @@ export default function FreeArticleDetailPage() {
     setReplyTarget(null);
   };
 
+
   return (
     <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20">
       <ArticleHeader
@@ -146,7 +147,8 @@ export default function FreeArticleDetailPage() {
         </div>
       ) : (
         <>
-          <div className="pb-20">
+          {/* 스크롤 영역 */}
+          <div className="flex-1 overflow-y-auto pb-20">
             <ArticleBody content={board} onToggleLike={handleToggleLike} />
 
             <CommentCard
@@ -161,12 +163,14 @@ export default function FreeArticleDetailPage() {
             />
           </div>
 
-          <ReplyInputSection
-            addReply={addReply}
-            disabled={isCommentSubmitting}
-            replyTarget={replyTarget}
-            onCancelReply={() => setReplyTarget(null)}
-          />
+          <div className="flex justify-center">
+            <ReplyInputSection
+              addReply={addReply}
+              disabled={isCommentSubmitting}
+              replyTarget={replyTarget}
+              onCancelReply={() => setReplyTarget(null)}
+            />
+          </div>
         </>
       )}
     </div>

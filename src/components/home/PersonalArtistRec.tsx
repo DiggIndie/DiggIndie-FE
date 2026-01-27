@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo } from 'react';
+import { ReactElement, useMemo } from 'react';
+import ArtistConcertSkeleton from '@/components/home/ArtistConcertSkeleton';
 import ArtistCard from '@/components/home/ArtistCard';
 import Image from 'next/image';
 import playBtn from '@/assets/common/play.svg';
@@ -13,15 +14,18 @@ type Props = {
   isLoggedIn: boolean;
 };
 
-function GuestArtistCard() {
+type GuestProps = {
+  firstImage: boolean
+}
+
+function GuestArtistCard({ firstImage }: GuestProps): ReactElement {
   return (
     <div className="relative shrink-0 w-[160px] h-[200px] rounded-[8px] overflow-hidden">
       <Image
-        src="/mocks/mockArtistImage.png"
-        alt="mock artist"
+        src={firstImage ? "/mocks/mockArtistImage1.png" : "/mocks/mockArtistImage2.png"}
+        alt="artist"
         fill
         className="object-cover"
-        priority={false}
       />
       <div className="absolute inset-0 bg-[#0B0F1499]" />
 
