@@ -14,6 +14,7 @@ import { useCommentFree } from '@/hooks/useCommentFree';
 
 export default function FreeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
+  const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
   const router = useRouter();
 
@@ -38,7 +39,7 @@ export default function FreeArticleDetailPage() {
 
   useEffect(() => {
     if (!boardId) return;
-
+    setIsLoading(true);
     const fetchDetail = async () => {
       const content = await boardDetailService.getFreeBoardDetail(boardId);
       setBoard(content);
@@ -122,6 +123,14 @@ export default function FreeArticleDetailPage() {
     setReplyTarget(null);
   };
 
+  useEffect(() => {
+    if (!isLoading) {
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+      window.scrollTo(0, 1);
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
   return (
     <div className="min-h-screen bg-black text-white relative bottom-0 pb-20">
       <ArticleHeader title="자유 라운지" isMine={board?.isMine} onEdit={handleEdit} onDelete={handleDelete} />

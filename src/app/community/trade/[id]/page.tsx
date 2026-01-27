@@ -16,8 +16,7 @@ import { deleteMarket, scrapMarket } from '@/api/marketBoard';
 export default function TradeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
   const router = useRouter();
-
-  const [isScraped, setIsScrapped] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const params = useParams();
   const boardId = Number(params.id);
@@ -26,7 +25,7 @@ export default function TradeArticleDetailPage() {
 
   useEffect(() => {
     if (!boardId) return;
-
+    setIsLoading(true);
     const fetchDetail = async () => {
       const content = await boardDetailService.getTradeBoardDetail(boardId);
       setBoard(content);
@@ -141,7 +140,14 @@ export default function TradeArticleDetailPage() {
   };
 
   const safeChatUrl = getSafeUrl(board?.chatUrl);
-
+  useEffect(() => {
+    if (!isLoading) {
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
+      window.scrollTo(0, 1);
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
   return (
     <div className="min-h-screen bg-black text-white relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
       <ArticleHeader
