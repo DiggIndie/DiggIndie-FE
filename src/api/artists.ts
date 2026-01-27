@@ -152,7 +152,7 @@ export async function getRecommendedArtists() {
   return res.payload;
 }
 
-// 추천 아티스트 만족도 추가
+// 추천 아티스트 만족도
 export async function postRecSatisfaction(
   params: RecSatisfactionParams
 ): Promise<ApiResponse<RecSatisfactionPayload>> {
