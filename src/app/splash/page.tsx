@@ -11,6 +11,7 @@ export default function SplashPage() {
   const [fade, setFade] = useState(true);
 
   useEffect(() => {
+    sessionStorage.setItem('hasSeenSplash', 'true');
     // 1초 후 첫 텍스트 → 두 번째 텍스트로 페이드전환 시작
     const timer1 = setTimeout(() => {
       setFade(false); // fade-out
