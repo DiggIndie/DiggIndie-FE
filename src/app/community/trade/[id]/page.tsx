@@ -12,11 +12,12 @@ import { boardDetailService } from '@/services/boardDetail.service';
 import { TradeBoardDetail } from '@/types/board';
 import { useAuthStore } from '@/stores/authStore';
 import { deleteMarket, scrapMarket } from '@/api/marketBoard';
+import TradeDetailSkeleton from '@/components/community/TradeDetailSkeleton';
 
 export default function TradeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [isScraped, setIsScrapped] = useState(false);
 
   const params = useParams();
@@ -30,6 +31,7 @@ export default function TradeArticleDetailPage() {
     const fetchDetail = async () => {
       const content = await boardDetailService.getTradeBoardDetail(boardId);
       setBoard(content);
+      setIsLoading(false);
     };
 
     fetchDetail();
@@ -48,12 +50,10 @@ export default function TradeArticleDetailPage() {
     setBoard((prevBoard) =>
       prevBoard
         ? {
-          ...prevBoard,
-          isScraped: !prevBoard.isScraped,
-          scrapCount: prevBoard.isScraped
-            ? prevBoard.scrapCount - 1
-            : prevBoard.scrapCount + 1,
-        }
+            ...prevBoard,
+            isScraped: !prevBoard.isScraped,
+            scrapCount: prevBoard.isScraped ? prevBoard.scrapCount - 1 : prevBoard.scrapCount + 1,
+          }
         : prevBoard
     );
 
@@ -68,10 +68,10 @@ export default function TradeArticleDetailPage() {
       setBoard((prevBoard) =>
         prevBoard
           ? {
-            ...prevBoard,
-            isScraped: res.payload.isScraped,
-            scrapCount: res.payload.scrapCount,
-          }
+              ...prevBoard,
+              isScraped: res.payload.isScraped,
+              scrapCount: res.payload.scrapCount,
+            }
           : prevBoard
       );
     } catch {
@@ -79,10 +79,10 @@ export default function TradeArticleDetailPage() {
       setBoard((prevBoard) =>
         prevBoard
           ? {
-            ...prevBoard,
-            isScraped: prev.isScraped,
-            scrapCount: prev.scrapCount,
-          }
+              ...prevBoard,
+              isScraped: prev.isScraped,
+              scrapCount: prev.scrapCount,
+            }
           : prevBoard
       );
 
@@ -155,6 +155,8 @@ export default function TradeArticleDetailPage() {
         <div className="flex-1 flex items-center justify-center">
           <span className="text-base font-normal text-[#A6A6A6]">로그인 후 가능한 페이지입니다</span>
         </div>
+      ) : isLoading ? (
+        <TradeDetailSkeleton />
       ) : !board ? (
         <div className="flex-1 flex items-center justify-center">
           <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
