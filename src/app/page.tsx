@@ -10,7 +10,7 @@ export default function HomeEntry() {
     const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
 
     if (!hasSeenSplash) {
-      router.replace('/splash');
+      router.replace('/splash?next=/home');
     } else {
       router.replace('/home');
     }

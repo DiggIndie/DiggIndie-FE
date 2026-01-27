@@ -97,7 +97,6 @@ export default function JoinPage() {
 
     // 3️. 회원가입
     await authService.signup(form.id, form.password, form.email);
-
     router.push('/auth/agree');
   };
 
