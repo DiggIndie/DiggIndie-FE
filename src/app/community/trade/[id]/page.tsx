@@ -143,7 +143,7 @@ export default function TradeArticleDetailPage() {
   const safeChatUrl = getSafeUrl(board?.chatUrl);
 
   return (
-    <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
+    <div className="min-h-screen bg-black text-white relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
       <ArticleHeader
         title="거래/양도"
         isMine={board?.isMine}

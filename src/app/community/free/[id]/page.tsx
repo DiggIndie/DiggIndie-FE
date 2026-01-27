@@ -123,7 +123,7 @@ export default function FreeArticleDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white max-w-[375px] relative bottom-0 pb-20">
+    <div className="min-h-screen bg-black text-white relative bottom-0 pb-20">
       <ArticleHeader title="자유 라운지" isMine={board?.isMine} onEdit={handleEdit} onDelete={handleDelete} />
 
       {!board ? (

@@ -115,7 +115,10 @@ export default function MyArtists() {
         </div>
       )}
 
-      {!isLoading && !error && <ArtistGrid artists={sortedArtists} />}
+      {!isLoading && !error &&
+        <div className={"flex justify-center"}>
+        <ArtistGrid artists={sortedArtists} />
+        </div>}
     </section>
   );
 }
