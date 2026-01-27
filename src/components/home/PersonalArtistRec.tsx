@@ -79,8 +79,8 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
           </div>
         )}
         {isLoggedIn && !isNotOnboarded && (
-          <div>
-            {isLoading && <div className="text-[14px] text-[#8C8888]">불러오는 중...</div>}
+          <div className="flex w-full overflow-x-auto gap-4 scrollbar-hide">
+            {isLoading && <div className="text-[14px] text-[#8C8888] ">불러오는 중...</div>}
             {!isLoading && error && <div className="text-[14px] text-[#8C8888]">{error}</div>}
 
             {!isLoading &&
