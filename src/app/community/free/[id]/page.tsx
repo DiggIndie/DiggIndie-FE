@@ -14,7 +14,6 @@ import { useCommentFree } from '@/hooks/useCommentFree';
 
 export default function FreeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(true);
   const params = useParams();
   const router = useRouter();
 
@@ -39,7 +38,7 @@ export default function FreeArticleDetailPage() {
 
   useEffect(() => {
     if (!boardId) return;
-    setIsLoading(true);
+
     const fetchDetail = async () => {
       const content = await boardDetailService.getFreeBoardDetail(boardId);
       setBoard(content);
@@ -123,29 +122,23 @@ export default function FreeArticleDetailPage() {
     setReplyTarget(null);
   };
 
-  useEffect(() => {
-    if (!isLoading) {
-      document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
-      window.scrollTo(0, 1);
-      window.scrollTo(0, 0);
-    }
-  }, [isLoading]);
+
   return (
-    <div className="min-h-screen bg-black text-white relative bottom-0 pb-20">
+    <div className="h-dvh bg-black text-white flex flex-col">
       <ArticleHeader title="자유 라운지" isMine={board?.isMine} onEdit={handleEdit} onDelete={handleDelete} />
 
       {!board ? (
-        <div className="h-screen flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center">
           <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
         </div>
       ) : !isAuthed ? (
-        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)]">
+        <div className="flex-1 flex items-center justify-center">
           <span className="text-base font-normal text-[#A6A6A6]">로그인 후 가능한 페이지입니다</span>
         </div>
       ) : (
         <>
-          <div className="pb-20">
+          {/* 스크롤 영역 */}
+          <div className="flex-1 overflow-y-auto pb-20">
             <ArticleBody content={board} onToggleLike={handleToggleLike} />
 
             <CommentCard
@@ -160,8 +153,7 @@ export default function FreeArticleDetailPage() {
             />
           </div>
 
-          <div className={"flex justify-center"}>
-
+          <div className="flex justify-center">
             <ReplyInputSection
               addReply={addReply}
               disabled={isCommentSubmitting}

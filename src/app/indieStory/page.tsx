@@ -17,11 +17,11 @@ export default function IndieStoryPage() {
   const [query, setQuery] = useState('');
 
   return (
-    <div className="text-white flex flex-col h-screen bg-black relative overflow-auto px-5">
-      <div className="flex flex-col">
-        <div className="sticky top-0 z-50">
-          <SearchHeader title={'매거진'} onHamburgerClick={() => setIsSideTabOpen(true)} />
-        </div>
+    <div className="text-white flex flex-col h-screen bg-black relative overflow-auto ">
+      <div className="sticky top-0 z-50">
+        <SearchHeader title={'매거진'} onHamburgerClick={() => setIsSideTabOpen(true)} />
+      </div>
+      <div className="flex flex-col px-5">
 
         {/* 검색 input */}
         <div className="flex items-center mb-3">

@@ -16,7 +16,8 @@ import { deleteMarket, scrapMarket } from '@/api/marketBoard';
 export default function TradeArticleDetailPage() {
   const { isAuthed } = useAuthStore();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+
+  const [isScraped, setIsScrapped] = useState(false);
 
   const params = useParams();
   const boardId = Number(params.id);
@@ -25,7 +26,7 @@ export default function TradeArticleDetailPage() {
 
   useEffect(() => {
     if (!boardId) return;
-    setIsLoading(true);
+
     const fetchDetail = async () => {
       const content = await boardDetailService.getTradeBoardDetail(boardId);
       setBoard(content);
@@ -140,16 +141,9 @@ export default function TradeArticleDetailPage() {
   };
 
   const safeChatUrl = getSafeUrl(board?.chatUrl);
-  useEffect(() => {
-    if (!isLoading) {
-      document.body.style.overflow = 'unset';
-      document.documentElement.style.overflow = 'unset';
-      window.scrollTo(0, 1);
-      window.scrollTo(0, 0);
-    }
-  }, [isLoading]);
+
   return (
-    <div className="min-h-screen bg-black text-white relative bottom-0 left-1/2 -translate-x-1/2 pb-20">
+    <div className="h-dvh bg-black text-white flex flex-col">
       <ArticleHeader
         title="거래/양도"
         isMine={board?.isMine}
@@ -158,20 +152,18 @@ export default function TradeArticleDetailPage() {
       />
 
       {!isAuthed ? (
-        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)]">
-          <span className="text-base font-normal text-[#A6A6A6]">
-            로그인 후 가능한 페이지입니다
-          </span>
+        <div className="flex-1 flex items-center justify-center">
+          <span className="text-base font-normal text-[#A6A6A6]">로그인 후 가능한 페이지입니다</span>
         </div>
       ) : !board ? (
-        <div className="h-screen flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center">
           <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
         </div>
       ) : (
-        <>
+        <div className="flex-1 overflow-y-auto pb-20">
           <div className="relative">
             <section
-              className="flex overflow-x-auto mb-3 snap-x snap-mandatory scrollbar-hide "
+              className="flex overflow-x-auto mb-3 snap-x snap-mandatory scrollbar-hide"
               onScroll={handleScroll}
             >
               {board.images.map((img, index) => {
@@ -179,10 +171,7 @@ export default function TradeArticleDetailPage() {
 
                 return (
                   <div key={index} className="w-full flex-shrink-0 snap-center">
-                    <DetailImgSection
-                      imageSrc={imageSrc}
-                      alt={img.imageUrl}
-                    />
+                    <DetailImgSection imageSrc={imageSrc} alt={img.imageUrl} />
                   </div>
                 );
               })}
@@ -194,7 +183,7 @@ export default function TradeArticleDetailPage() {
           </div>
 
           <section className="px-5">
-            <p className="bg-gray-900 border border-gray-850 rounded-sm px-[10px] px-2 py-3 mb-7 flex gap-1">
+            <p className="bg-gray-900 border border-gray-850 rounded-sm px-2 py-3 mb-7 flex gap-1">
               <Image src={linkIcon} height={24} width={24} alt="링크아이콘" />
               {safeChatUrl ? (
                 <a
@@ -213,22 +202,19 @@ export default function TradeArticleDetailPage() {
             <div className="flex w-full items-center gap-6 mb-1 justify-between">
               <div className="flex items-center gap-1 w-full h-7 min-w-0">
                 <span className="shrink-0 font-semibold text-xl">[{board.type}]</span>
-                  <span className="min-w-0 flex-1 font-semibold text-xl truncate">
-                    {board.title}
-                  </span>
-                  <span className="shrink-0 flex items-center gap-[3px]">
-                  <BookmarkIcon
-                    isActive={board.isScraped}
-                    isMine={board.isMine}
-                    onClick={!board.isMine ? handleToggleScrap : undefined}
-                    className={`w-6 h-6 transition-colors ${
-                      board.isScraped ? 'text-white scale-110' : 'text-gray-600'
-                    } ${board.isMine ? '' : 'cursor-pointer'}`}
-                  />
-                  <span className="text-gray-300 font-normal text-sm">{board.scrapCount}</span>
-                </span>
+                <span className="min-w-0 flex-1 font-semibold text-xl truncate">{board.title}</span>
+                <span className="shrink-0 flex items-center gap-[3px]">
+                <BookmarkIcon
+                  isActive={board.isScraped}
+                  isMine={board.isMine}
+                  onClick={!board.isMine ? handleToggleScrap : undefined}
+                  className={`w-6 h-6 transition-colors ${
+                    board.isScraped ? 'text-white scale-110' : 'text-gray-600'
+                  } ${board.isMine ? '' : 'cursor-pointer'}`}
+                />
+                <span className="text-gray-300 font-normal text-sm">{board.scrapCount}</span>
+              </span>
               </div>
-
             </div>
 
             <span className="text-white font-medium text-xl mb-1">{board.price}원</span>
@@ -242,7 +228,7 @@ export default function TradeArticleDetailPage() {
               {board.content}
             </p>
           </section>
-        </>
+        </div>
       )}
     </div>
   );
