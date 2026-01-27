@@ -108,7 +108,7 @@ export default function OnboardArtistPage() {
           min="최소 2팀"
         />
 
-        <div className="px-5 pt-5">
+        <div className="px-5 my-5">
           <SearchSection
             searchTerm={searchTerm}
             onChange={onChangeSearch}
