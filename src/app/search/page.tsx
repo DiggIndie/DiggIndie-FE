@@ -212,7 +212,7 @@ export default function HomeSearch() {
 
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
                   {magazines.map((magazine) => (
-                    <MagazineCard key={magazine.magazineId} magazine={magazine} />
+                    <MagazineCard rounded={false} key={magazine.magazineId} magazine={magazine} />
                   ))}
                 </div>
               </section>

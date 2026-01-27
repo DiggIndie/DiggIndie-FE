@@ -81,13 +81,13 @@ export default function MagazineList({ sortKey, onSortChangeAction, query, size 
       <div className="flex gap-[15px] justify-center">
         <div className="flex flex-col gap-[16px] w-[160px]">
           {leftColumn.map((m) => (
-            <MagazineCard key={m.magazineId} magazine={m} />
+            <MagazineCard rounded={true} key={m.magazineId} magazine={m} />
           ))}
         </div>
 
         <div className="flex flex-col gap-[16px] w-[160px]">
           {rightColumn.map((m) => (
-            <MagazineCard key={m.magazineId} magazine={m} />
+            <MagazineCard rounded={true} key={m.magazineId} magazine={m} />
           ))}
         </div>
       </div>
