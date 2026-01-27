@@ -146,6 +146,7 @@ export default function HomeSearch() {
             loadRecentSearches();
           }}
           onSubmit={handleSubmit}
+          placeholder="아티스트, 공연을 검색해보세요"
         />
       </div>
 
