@@ -17,7 +17,7 @@ export default function Feedback({ isLoggedIn }: Props) {
   const [selected, setSelected] = useState<Vote>(null);
 
   // URL 파라미터 체크: ?reset=success 가 있을 때만 노출
-  const isResetSuccess = searchParams.get('reset') === 'success';
+  const isResetSuccess = searchParams.get('reset') === 'true';
   // 노출 조건 필터링
   if (!isLoggedIn || dismissed || !isResetSuccess) return null;
   const getUpIcon = () => {
