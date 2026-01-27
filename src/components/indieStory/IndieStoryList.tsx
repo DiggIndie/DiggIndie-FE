@@ -47,8 +47,8 @@ export default function MagazineList({ sortKey, onSortChangeAction, query, size 
         <button
           type="button"
           onClick={() => setOpen((p) => !p)}
-          className="border border-[#736F6F] rounded-[4px] w-[100px] h-[28px] px-1 py-1
-            text-[14px] flex items-center gap-1 bg-black justify-center"
+          className="border border-[#736F6F] rounded-[4px] w-[100px] h-[28px] px-2 py-1
+            text-[14px] flex gap-1 bg-black items-center justify-between"
         >
           {sortKey}
           <Image src={downBtn} alt="open" width={16} height={16} />

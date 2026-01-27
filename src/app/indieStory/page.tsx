@@ -40,7 +40,7 @@ export default function IndieStoryPage() {
               </button>
             )}
 
-            {/* 검색 버튼 (UI 유지용) */}
+            {/* 검색 버튼 */}
             <div className="mr-[8px] flex-shrink-0">
               <Image src={searchBtn} alt="search" width={24} height={24} />
             </div>
