@@ -8,7 +8,6 @@ import ConcertGrid from "@/components/my/ConcertGrid";
 import SearchCardSkeleton from "@/components/search/SearchCardSkeleton";
 
 import searchBtn from "@/assets/icons/artistSearch.svg";
-import searchBack from "@/assets/icons/searchBack.svg";
 import searchGrayBtn from "@/assets/icons/searchGray.svg";
 import deleteBtn from '@/assets/community/delete.svg';
 import { useRouter } from 'next/navigation';

@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactElement, useMemo } from 'react';
-import ArtistConcertSkeleton from '@/components/home/calendar/ArtistConcertSkeleton';
+import ArtistConcertSkeleton from '@/components/home/ArtistConcertSkeleton';
 import ArtistCard from '@/components/home/ArtistCard';
 import Image from 'next/image';
 import playBtn from '@/assets/common/play.svg'

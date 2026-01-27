@@ -86,6 +86,7 @@ export default function SearchMarket() {
               aria-label="clear search"
               className="absolute right-[40px] top-1/2 -translate-y-1/2 cursor-pointer"
             >
+
               <Image src={deleteBtn} alt="삭제" />
             </button>
           ) : null
@@ -95,7 +96,7 @@ export default function SearchMarket() {
             type="button"
             onClick={runSearch}
             aria-label="search"
-            className="absolute right-[8px] top-1/2 -translate-y-1/2"
+            className="absolute right-[8px] top-1/2 cursor-pointer -translate-y-1/2"
           >
             <Image src={draft ? searchBtn : searchGrayBtn} alt="Search" />
           </button>

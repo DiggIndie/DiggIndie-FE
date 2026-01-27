@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import ConcertCard from '@/components/home/ConcertCard';
-import ArtistConcertSkeleton from '@/components/home/calendar/ArtistConcertSkeleton';
+import ArtistConcertSkeleton from '@/components/home/ArtistConcertSkeleton';
 import Image from 'next/image';
 
 import { useRecConcerts } from '@/hooks/useRecConcerts';

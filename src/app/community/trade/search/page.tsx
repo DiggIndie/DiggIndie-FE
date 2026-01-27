@@ -5,9 +5,11 @@ import SearchHeader from '@/components/search/SearchHeader';
 import SideTab from '@/components/sideTabDir/SideTab';
 import SearchMarket from '@/components/community/SearchMarket';
 import CommunityTab from '@/components/community/CommunityTab';
+import { useAuthStore } from '@/stores/authStore';
 
 export default function MarketSearchPage() {
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
+  const { isAuthed } = useAuthStore();
 
   return (
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">

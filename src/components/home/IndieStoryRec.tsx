@@ -2,7 +2,7 @@
 
 import { useMagazines } from "@/hooks/useMagazines";
 import MagazineCard from "@/components/indieStory/IndieStoryCard";
-import ArtistConcertSkeleton from '@/components/home/calendar/ArtistConcertSkeleton';
+import ArtistConcertSkeleton from '@/components/home/ArtistConcertSkeleton';
 
 export default function IndieStoryRec() {
   const { magazines, isLoading } = useMagazines({

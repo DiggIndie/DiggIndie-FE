@@ -7,6 +7,7 @@ type Props = {
 
 export default function MagazineCard({ magazine }: Props) {
   const img = magazine?.imageUrls?.[0] ?? "";
+  const externalUrl = magazine?.externalUrl
 
   return (
     <div className="flex flex-col flex-none w-[160px] bg-[#1F1D1D]">
