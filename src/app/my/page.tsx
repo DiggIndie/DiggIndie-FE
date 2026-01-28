@@ -84,7 +84,9 @@ export default function MyPage() {
               </div>
             ) : (
               mappedConcerts.map((concert) => (
-                <ConcertCard key={concert.concertId} concert={concert} />
+                <div key={concert.concertId} className="flex-none w-[160px]">
+                  <ConcertCard concert={concert} />
+                </div>
               ))
             )}
           </HorizontalSwipeList>
@@ -103,7 +105,11 @@ export default function MyPage() {
                 좋아하는 아티스트를 스크랩해 보세요
               </div>
             ) : (
-              mappedArtists.map((artist) => <ArtistCard key={artist.artistId} artist={artist} />)
+              mappedArtists.map((artist) => (
+                <div key={artist.artistId} className="flex-none w-[160px]">
+                  <ArtistCard artist={artist} />
+                </div>
+              ))
             )}
           </HorizontalSwipeList>
         </div>
