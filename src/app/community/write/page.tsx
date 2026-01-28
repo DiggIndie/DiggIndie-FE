@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Checkbox } from '@mui/material';
 
@@ -72,7 +72,11 @@ export default function Write() {
   const board = (sp.get('board') as Board) ?? 'free';
   const id = Number(sp.get('id') ?? '0');
 
-  const isEdit = mode === 'edit' && (board === 'free' || board === 'trade') && Number.isFinite(id) && id > 0;
+  const isEdit =
+    mode === 'edit' &&
+    (board === 'free' || board === 'trade') &&
+    Number.isFinite(id) &&
+    id > 0;
 
   const generalTag: UiGeneralTag[] = ['없음', '정보', '공연 후기', '추천', '신보', '음악 뉴스', '동행'];
   const tradeTag: UiTradeTag[] = ['판매', '구매'];
@@ -88,23 +92,26 @@ export default function Write() {
   const [price, setPrice] = useState<number | null>(null);
   const [chatUrl, setChatUrl] = useState('');
 
+  // imageUrls는 "서버에 보내는 값"으로만 유지 (대부분 fileKey)
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [isUploadingImages, setIsUploadingImages] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPrefilling, setIsPrefilling] = useState(false);
 
-  const S3_BASE = "https://diggindie-imgs.s3.ap-northeast-2.amazonaws.com";
+  const S3_BASE =
+    process.env.NEXT_PUBLIC_MARKET_IMAGE_BASE_URL ||
+    'https://diggindie-imgs.s3.ap-northeast-2.amazonaws.com';
 
   function toS3Url(raw?: string | null) {
     if (!raw) return null;
     const v = raw.trim();
     if (!v) return null;
-    if (v.startsWith("http://") || v.startsWith("https://")) return v;
+    if (v.startsWith('http://') || v.startsWith('https://')) return v;
     return `${S3_BASE}/${encodeURIComponent(v)}`;
   }
 
-
+  // 수정 모드 프리필
   useEffect(() => {
     if (!isEdit) return;
 
@@ -119,9 +126,11 @@ export default function Write() {
           setContent(detail.content ?? '');
           setAnonymous(detail.isAnonymous ?? false);
           setSelectedTag(mapFreeCategoryToUi(detail.category));
+
           setPrice(null);
           setChatUrl('');
-          setImageUrls((detail.imageUrls ?? []).map((u) => toS3Url(u)).filter(Boolean) as string[]);
+
+          setImageUrls(detail.imageUrls ?? []);
           return;
         }
 
@@ -134,6 +143,7 @@ export default function Write() {
         setPrice(typeof detail.price === 'number' ? detail.price : 0);
         setChatUrl(detail.chatUrl ?? '');
         setAnonymous(false);
+
         setImageUrls(detail.imageUrls ?? []);
       } finally {
         setIsPrefilling(false);
@@ -178,11 +188,8 @@ export default function Write() {
             imageUrls,
           });
 
-          if (res.isSuccess) {
-            router.replace(`/community/free/${id}`);
-          } else {
-            alert(res.message || '게시글 수정에 실패했습니다.');
-          }
+          if (res.isSuccess) router.replace(`/community/free/${id}`);
+          else alert(res.message || '게시글 수정에 실패했습니다.');
           return;
         }
 
@@ -196,11 +203,8 @@ export default function Write() {
           imageUrls,
         });
 
-        if (res.isSuccess) {
-          router.replace(`/community/trade/${id}`);
-        } else {
-          alert(res.message || '게시글 수정에 실패했습니다.');
-        }
+        if (res.isSuccess) router.replace(`/community/trade/${id}`);
+        else alert(res.message || '게시글 수정에 실패했습니다.');
         return;
       }
 
@@ -213,11 +217,8 @@ export default function Write() {
           imageUrls,
         });
 
-        if (res.isSuccess) {
-          router.push(`/community/free/${res.payload.boardId}`);
-        } else {
-          alert(res.message || '게시글 작성에 실패했습니다.');
-        }
+        if (res.isSuccess) router.push(`/community/free/${res.payload.boardId}`);
+        else alert(res.message || '게시글 작성에 실패했습니다.');
         return;
       }
 
@@ -230,17 +231,18 @@ export default function Write() {
         imageUrls,
       });
 
-      if (res.isSuccess) {
-        router.push(`/community/trade/${res.payload.marketId}`);
-      } else {
-        alert(res.message || '게시글 작성에 실패했습니다.');
-      }
+      if (res.isSuccess) router.push(`/community/trade/${res.payload.marketId}`);
+      else alert(res.message || '게시글 작성에 실패했습니다.');
     } catch (err) {
       console.error(err);
       alert(isEdit ? '게시글 수정에 실패했습니다.' : '게시글 작성에 실패했습니다.');
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleAnonymousToggle = () => {
+    setAnonymous((v) => !v);
   };
 
   const boardLockClass = isEdit ? 'pointer-events-none opacity-60' : '';
@@ -252,10 +254,11 @@ export default function Write() {
         onRightButtonClick={handleSubmit}
       />
 
-      <div className={["flex-1 overflow-y-auto", boardType === "trade" ? "pb-24" : "pb-16"].join(" ")}>
+      <div className={['flex-1 overflow-y-auto', boardType === 'trade' ? 'pb-24' : 'pb-16'].join(' ')}>
         <div className="flex justify-between mb-3 px-5">
           <span className="font-medium text-base text-white">게시판 선택</span>
-          <p className="flex gap-2" onClick={() => setAnonymous(!annonymous)}>
+
+          <p className="flex gap-2" onClick={handleAnonymousToggle}>
             <Checkbox
               checked={annonymous}
               sx={{
@@ -283,26 +286,34 @@ export default function Write() {
               }}
             />
             <span className={`text-sm font-medium ${annonymous ? 'text-main-red-2' : 'text-gray-500'}`}>
-            익명
-          </span>
+              익명
+            </span>
           </p>
         </div>
 
         <div className="flex gap-2 pb-3 px-5">
-        <span
-          onClick={() => handleBoardTypeChange('general')}
-          className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
-            ${boardType === 'general' ? 'border-main-red-1 bg-main-red-4 text-white' : 'border-gray-600 text-gray-600'}`}
-        >
-          일반
-        </span>
+          <span
+            onClick={() => handleBoardTypeChange('general')}
+            className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
+            ${
+              boardType === 'general'
+                ? 'border-main-red-1 bg-main-red-4 text-white'
+                : 'border-gray-600 text-gray-600'
+            }`}
+          >
+            일반
+          </span>
           <span
             onClick={() => handleBoardTypeChange('trade')}
             className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
-            ${boardType === 'trade' ? 'border-main-red-1 bg-main-red-4 text-white' : 'border-gray-600 text-gray-600'}`}
+            ${
+              boardType === 'trade'
+                ? 'border-main-red-1 bg-main-red-4 text-white'
+                : 'border-gray-600 text-gray-600'
+            }`}
           >
-          거래/양도
-        </span>
+            거래/양도
+          </span>
         </div>
 
         <div className="flex justify-between mb-3 px-5">
@@ -315,15 +326,20 @@ export default function Write() {
               key={tag}
               onClick={() => setSelectedTag(tag)}
               className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer
-              ${selectedTag === tag ? 'border-main-red-1 bg-main-red-4 text-white' : 'border-gray-600 text-gray-600'}`}
+              ${
+                selectedTag === tag
+                  ? 'border-main-red-1 bg-main-red-4 text-white'
+                  : 'border-gray-600 text-gray-600'
+              }`}
             >
-            {tag}
-          </span>
+              {tag}
+            </span>
           ))}
         </div>
 
         <ImageUploadSection
           required={boardType === 'trade'}
+          value={imageUrls}
           onChangeImageUrls={setImageUrls}
           onUploadingChange={setIsUploadingImages}
         />
