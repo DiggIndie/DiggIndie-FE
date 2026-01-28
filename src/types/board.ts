@@ -12,7 +12,7 @@ export interface FreeBoardDetail {
   comments: Comment[];
   isAnonymous: boolean;
   isMine: boolean;
-  imageUrls?: string[] | undefined;
+  imageUrls?: string[] ;
 }
 export interface Comment {
   commentId: number;

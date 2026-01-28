@@ -114,6 +114,7 @@ export default function SearchMarket() {
 
       </div>
 
+
         {/* 리스트 */}
         <div className="w-full max-w-[375px] ">
           {!error && (

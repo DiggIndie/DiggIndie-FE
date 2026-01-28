@@ -94,6 +94,17 @@ export default function Write() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPrefilling, setIsPrefilling] = useState(false);
 
+  const S3_BASE = "https://diggindie-imgs.s3.ap-northeast-2.amazonaws.com";
+
+  function toS3Url(raw?: string | null) {
+    if (!raw) return null;
+    const v = raw.trim();
+    if (!v) return null;
+    if (v.startsWith("http://") || v.startsWith("https://")) return v;
+    return `${S3_BASE}/${encodeURIComponent(v)}`;
+  }
+
+
   useEffect(() => {
     if (!isEdit) return;
 
@@ -110,7 +121,7 @@ export default function Write() {
           setSelectedTag(mapFreeCategoryToUi(detail.category));
           setPrice(null);
           setChatUrl('');
-          setImageUrls(detail.imageUrls ?? []);
+          setImageUrls((detail.imageUrls ?? []).map((u) => toS3Url(u)).filter(Boolean) as string[]);
           return;
         }
 

@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import searchBtn from '@/assets/common/search.svg';
 import writeBtn from '@/assets/common/write.svg';
+import homeBtn from '@/assets/common/homeBtn.svg'
 import writeGrayBtn from '@/assets/common/writeGray.svg';
 import menuBtn from '@/assets/common/hamburger.svg';
 import { usePathname, useRouter } from 'next/navigation';
@@ -18,27 +19,11 @@ export default function CommunityHeader({ title, onHamburgerClick, isLoggedIn }:
   const pathname = usePathname();
   const { isAuthed } = useAuthStore();
 
-  const handleSearch = () => {
-    if (pathname.includes('/community/free')) {
-      router.push('/community/free/search');
-    } else {
-      router.push('/community/trade/search');
-    }
-  };
 
   return (
     <div className="bg-black w-full h-[52px] flex items-center px-5 py-3 top-0 z-50 justify-between">
       <span className="text-[20px] font-semibold">{title}</span>
       <div className={'flex gap-[10px]'}>
-        <div onClick={() => handleSearch()}>
-          <Image
-            src={searchBtn}
-            alt={'search'}
-            width={24}
-            height={24}
-            className={'cursor-pointer'}
-          />
-        </div>
         <div
           onClick={() => {
             if (!isAuthed) return;
@@ -48,6 +33,19 @@ export default function CommunityHeader({ title, onHamburgerClick, isLoggedIn }:
           <Image
             src={isLoggedIn ? writeBtn : writeGrayBtn}
             alt={'write'}
+            width={24}
+            height={24}
+            className={'cursor-pointer'}
+          />
+        </div>
+        <div
+          onClick={() => {
+            router.push('/');
+          }}
+        >
+          <Image
+            src={homeBtn}
+            alt={'home'}
             width={24}
             height={24}
             className={'cursor-pointer'}
