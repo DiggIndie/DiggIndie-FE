@@ -14,12 +14,14 @@ import SideTab from '@/components/sideTabDir/SideTab';
 import { useAuthStore } from '@/stores/authStore';
 import Feedback from '@/components/home/Feedback';
 import { authService } from '@/services/authService';
+import { boardDetailService } from '@/services/boardDetail.service';
+import { HotArticle } from '@/types/board';
 
 export default function HomePage() {
   const { isAuthed } = useAuthStore();
   const userId = useAuthStore((s) => s.userId);
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);
-
+  const [hotContent, setHotContent] = useState<HotArticle[]>([]);
   useEffect(() => {
     document.body.style.overflow = isSideTabOpen ? 'hidden' : 'auto';
   }, [isSideTabOpen]);
@@ -37,6 +39,13 @@ export default function HomePage() {
     };
     fetchIdIfNeeded();
   });
+  useEffect(() => {
+    const fetchHotArticle = async () => {
+      const content = await boardDetailService.getHotArticle();
+      setHotContent(content);
+    };
+    fetchHotArticle();
+  });
   return (
     <div className="text-white min-h-screen bg-black relative scrollbar-x-hide">
       <div className="relative w-full max-w-[375px] bg-black text-white min-h-screen ">
@@ -51,7 +60,7 @@ export default function HomePage() {
           <ResetPreference isLoggedIn={isAuthed} />
           <Feedback isLoggedIn={isAuthed} />
           <HomeCalendar />
-          <Popular />
+          <Popular content={hotContent} />
         </main>
       </div>
       {/* 사이드탭은 viewport 기준이지만 위치는 앱 기준 */}
