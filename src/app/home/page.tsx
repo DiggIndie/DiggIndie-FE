@@ -47,10 +47,10 @@ export default function HomePage() {
     fetchHotArticle();
   });
   return (
-    <div className="text-white min-h-screen bg-black relative scrollbar-x-hide">
-      <div className="relative w-full max-w-[375px] bg-black text-white min-h-screen ">
+    <div className="text-white min-h-screen bg-black relative">
+      <div className="relative mx-auto w-full max-w-[375px] min-h-screen bg-black">
         <HomeHeader onHamburgerClick={() => setIsSideTabOpen(true)} userId={userId} />
-        <main className="mx-auto flex w-full max-w-[375px] flex-col items-center bg-black pb-20 pt-13">
+        <main className="mx-auto flex w-full flex-col items-center bg-black pb-20 pt-13">
           <IndieStoryRec />
           <div className="px-5 w-full">
             <LoginBanner isLoggedIn={isAuthed} />

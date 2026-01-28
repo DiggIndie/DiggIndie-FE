@@ -54,7 +54,7 @@ export default function ConcertDetailPage() {
     }
   }, [isLoading]);
   return (
-    <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 relative">
+    <div className="text-white flex flex-col min-h-screen bg-black relative pb-20 relative min-h-dvh">
       {isLoading ? (
         <DetailSkeleton />
       ) : !concert ? (
