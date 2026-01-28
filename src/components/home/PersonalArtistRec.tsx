@@ -27,7 +27,7 @@ function GuestArtistCard({ firstImage }: GuestProps): ReactElement {
         fill
         className="object-cover"
       />
-      <div className="absolute inset-0 bg-[#0B0F1499]" />
+      <div className="absolute inset-0 bg-[#0B0 F1499]" />
 
       {/* 텍스트 오버레이 */}
       <div className="absolute inset-0 z-10 flex flex-col justify-end">
@@ -52,6 +52,7 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
     return [...bands].filter((b) => !!b.bandName);
   }, [bands]);
   const isNotOnboarded = isLoggedIn && !isLoading && visibleBands.length === 0;
+
   return (
     <section className="mt-6 gap-3 w-full px-5 bg-black flex flex-col">
       <div className="flex items-center">
@@ -65,21 +66,7 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
             <GuestArtistCard firstImage={false} />
           </div>
         )}
-        {/* 로그인 했지만 온보딩 전일 때: 블러 카드 + 바로 아래 문구 배치 */}
-        {isNotOnboarded && (
-          <div className="flex flex-col items-center justify-center text-center py-4 bg-[#121212] rounded-[12px] border border-[#2A2A2A]">
-            <h3 className="text-white font-bold text-[17px] mb-1">나만의 아티스트를 찾아볼까요?</h3>
-            <p className="text-[#8C8787] text-[13px] mb-5 leading-relaxed">
-              취향 설정을 완료하면 리스너님께 꼭 맞는 <br />
-              아티스트 라인업을 바로 확인하실 수 있어요.
-            </p>
-            <Link href="/onboard/artist">
-              <button className="h-[44px] px-8 bg-[#FF3637] text-white text-[14px] font-bold rounded-[4px] hover:bg-[#D32F2F] transition-colors">
-                취향 설정하러 가기
-              </button>
-            </Link>
-          </div>
-        )}
+
         {isLoggedIn && (
           <>
             {/* 로딩 중: 스켈레톤 */}
