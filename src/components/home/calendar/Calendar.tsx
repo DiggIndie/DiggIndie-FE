@@ -351,7 +351,7 @@ export default function SimpleCalendar({
                   "relative overflow-visible",
                   "w-[30px] h-[35px] flex items-center justify-center cursor-pointer select-none",
                   "font-medium text-[12px]",
-                  isGray ? "text-gray-600" : "text-white",
+                  isGray ? "text-[#736F6F]" : "text-white",
                 ].join(" ")}
               >
                 {isSelected && (
