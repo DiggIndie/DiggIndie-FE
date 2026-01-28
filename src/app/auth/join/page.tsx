@@ -118,9 +118,25 @@ export default function JoinPage() {
       setErrors((prev) => ({ ...prev, id: '서버 통신 중 오류가 발생했습니다.' }));
     }
   };
-
+  const isJoinEnabled =
+    // 필수값 입력 여부
+    form.id.trim() !== '' &&
+    form.password.trim() !== '' &&
+    form.confirmPassword.trim() !== '' &&
+    form.phoneNumber1.trim() !== '' &&
+    form.phoneNumber2.trim() !== '' &&
+    form.phoneNumber3.trim() !== '' &&
+    form.email.trim() !== '' &&
+    form.emailConfirm.trim() !== '' &&
+    // 아이디 중복 확인
+    isIdChecked &&
+    isIdValid &&
+    // 이메일 인증 완료
+    isEmailVerified &&
+    // 비밀번호 일치
+    form.password === form.confirmPassword;
   return (
-    <div className="text-white flex flex-col min-h-screen items-center gap-6 pb-32 ">
+    <div className="text-white flex flex-col min-h-screen items-center gap-5 pb-32 ">
       <JoinHeader />
       {/* 아이디 입력 섹션 */}
       <section className="flex flex-col gap-2 w-full px-5">
@@ -236,7 +252,7 @@ export default function JoinPage() {
       {/* 이메일 입력 섹션 */}
       <section className="flex flex-col gap-2 px-5 w-full">
         <span className="text-xs font-medium  text-gray-300">이메일</span>
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <InputSection
             placeholder="이메일"
             width="w-[237px] h-11"
@@ -256,8 +272,8 @@ export default function JoinPage() {
             {isEmailSent ? '재전송 ' : '인증번호 전송'}
           </button>
         </div>
-        {errors.email && <p className="text-red-400 text-xs px-3">{errors.email}</p>}
-        <div className="flex gap-3">
+        {errors.email && <p className="text-red-400 text-xs px-3 mb-1">{errors.email}</p>}
+        <div className="flex gap-2">
           <InputSection
             placeholder="인증번호"
             width="w-[237px] h-11"
@@ -284,7 +300,7 @@ export default function JoinPage() {
         {errors.emailConfirm && <p className="text-red-400 text-xs px-3">{errors.emailConfirm}</p>}
       </section>
       <div className="w-[375px] px-5 fixed bottom-5">
-        <LinkButton onClick={handleJoin} disabled={false}>
+        <LinkButton onClick={handleJoin} disabled={!isJoinEnabled}>
           가입하기
         </LinkButton>
       </div>
