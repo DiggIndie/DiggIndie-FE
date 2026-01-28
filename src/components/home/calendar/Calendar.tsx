@@ -8,8 +8,6 @@ import nextBtn from "@/assets/common/next.svg";
 import questionBtn from "@/assets/common/questionMark.svg"
 import calendarNotice from "@/assets/common/calendarNotice.svg"
 
-import CalendarNotice from "@/components/home/calendar/CalendarNotice";
-
 import {
   pad2,
   makeKey,
@@ -39,6 +37,9 @@ export default function SimpleCalendar({
                                          onMonthChange,
                                          datesWithConcerts = null,
                                        }: CalendarProps) {
+
+
+
   const [current, setCurrent] = useState(new Date());
 
   useEffect(() => {
@@ -207,6 +208,24 @@ export default function SimpleCalendar({
 
   const [isNoticeOpen, setIsNoticeOpen] = useState(false);
 
+  const noticeWrapRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!isNoticeOpen) return;
+
+    const onDown = (e: MouseEvent) => {
+      const wrap = noticeWrapRef.current;
+      if (!wrap) return;
+
+      // 버튼+팝업 영역 밖 클릭이면 닫기
+      if (!wrap.contains(e.target as Node)) {
+        setIsNoticeOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [isNoticeOpen]);
+
   return (
     <div className={"w-full px-5"}>
       <div
@@ -223,6 +242,7 @@ export default function SimpleCalendar({
       >
         <div className="flex w-full gap-[75px] px-4">
           <div
+            ref={noticeWrapRef}
             className="flex relative"
           >
             <div
@@ -255,8 +275,6 @@ export default function SimpleCalendar({
               </div>
             )}
           </div>
-
-
 
           <div className={"flex ml-auto gap-[13px]"}>
             <button
