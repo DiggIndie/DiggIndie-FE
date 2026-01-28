@@ -75,7 +75,7 @@ export default function ConcertDetailPage() {
           <ConcertStorySection concert={concert} />
           <div className="px-5 pb-5 fixed bottom-0 w-full max-w-94">
             <Button href={concert.bookUrl} isFinished={concert.isFinished}>
-              <span>
+              <span className="font-semibold text-base">
                 {concert.isFinished
                   ? '공연이 종료되었습니다'
                   : concert.bookUrl
