@@ -35,6 +35,7 @@ export default function HomePage() {
         }
       }
     };
+    fetchIdIfNeeded();
   });
   return (
     <div className="text-white min-h-screen bg-black relative">
