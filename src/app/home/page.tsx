@@ -38,10 +38,10 @@ export default function HomePage() {
     fetchIdIfNeeded();
   });
   return (
-    <div className="text-white min-h-screen bg-black relative">
-      <div className="flex flex-col">
-        <main className="flex flex-col items-center bg-black pb-20">
-          <HomeHeader onHamburgerClick={() => setIsSideTabOpen(true)} userId={userId} />
+    <div className="text-white min-h-screen bg-black relative scrollbar-x-hide">
+      <div className="relative w-full max-w-[375px] bg-black text-white min-h-screen ">
+        <HomeHeader onHamburgerClick={() => setIsSideTabOpen(true)} userId={userId} />
+        <main className="mx-auto flex w-full max-w-[375px] flex-col items-center bg-black pb-20 pt-13">
           <IndieStoryRec />
           <div className="px-5 w-full">
             <LoginBanner isLoggedIn={isAuthed} />
@@ -54,7 +54,16 @@ export default function HomePage() {
           <Popular />
         </main>
       </div>
-      {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
+      {/* 사이드탭은 viewport 기준이지만 위치는 앱 기준 */}
+      {isSideTabOpen && (
+        <div className="fixed inset-0 z-[999] flex justify-center">
+          <div className="relative w-full max-w-[375px] h-full">
+            {/* 오버레이 */}
+            <div className="absolute inset-0 bg-black/40" onClick={() => setIsSideTabOpen(false)} />
+            <SideTab onClose={() => setIsSideTabOpen(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

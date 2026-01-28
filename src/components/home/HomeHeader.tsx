@@ -12,8 +12,8 @@ export default function HomeHeader({ onHamburgerClick, userId }: Props) {
   const router = useRouter();
 
   return (
-    <div className="w-full justify-between px-5 py-3 flex h-13 flex-col items-center font-bold">
-      <div className="flex w-full justify-between items-center font-bold">
+    <header className="fixed top-0 left-0 z-50 w-full bg-transparent ">
+      <div className="mx-auto flex h-13 w-full max-w-[375px] items-center justify-between px-5 bg-black">
         {userId ? (
           <span className="text-white text-xl font-semibold">{userId}</span>
         ) : (
@@ -40,6 +40,6 @@ export default function HomeHeader({ onHamburgerClick, userId }: Props) {
           />
         </div>
       </div>
-    </div>
+    </header>
   );
 }

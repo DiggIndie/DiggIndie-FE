@@ -9,7 +9,7 @@ export default function HomeHeader() {
   return (
     <div className="w-full justify-between px-5 h-45 flex flex-col items-center gap-4 mt-9">
       <div className="flex w-full justify-between items-center font-bold">
-        <span className={'font-semibold text-[20px] text-white'}>인기 게시물</span>
+        <span className="font-semibold text-xl text-white">인기 게시물</span>
         <Image
           src={nextBtn}
           alt="next"
@@ -22,19 +22,19 @@ export default function HomeHeader() {
       <div className="flex flex-col w-full items-center justify-center gap-2">
         <div
           className="flex items-center w-full bg-[#550001] border-[#880405] border-[1px]
-          px-3 py-2 rounded-[4px] gap-2"
+          px-3 py-2 rounded-sm gap-2"
         >
           <Image src={fireBtn} alt="most popular" width={24} height={24} />
-          <span className={'font-semibold text-base text-white truncate'}>
+          <span className="font-semibold text-base text-white truncate">
             [머릿글] 잔나비 티켓 양도합니다.상태는 양호합니다.
           </span>
         </div>
         <div
-          className="flex items-center w-full  bg-[#332F2F] border-[#4A4747] border-[1px]
+          className="flex items-center w-full bg-[#332F2F] border-[#4A4747] border-[1px]
           px-3 py-2 rounded-[4px] gap-2"
         >
           <Image src={soundBtn} alt="popular" width={24} height={24} />
-          <span className={'font-semibold text-base text-white truncate '}>
+          <span className="font-semibold text-base text-white truncate ">
             [머릿글] 잔나비 티켓 양도합니다. 상태는 양호합니다.
           </span>
         </div>
