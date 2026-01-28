@@ -96,7 +96,7 @@ export default function MyArtistsWithSearch() {
         : "스크랩순";
 
   return (
-    <section className="relative w-full flex flex-col items-center mt-[12px] px-3">
+    <section className="relative w-full flex flex-col items-center mt-[12px] px-5">
 
       {/* 검색 input */}
       <div className={"relative flex w-full h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white"}>
