@@ -15,14 +15,14 @@ type Props = {
 };
 
 type GuestProps = {
-  firstImage: boolean
-}
+  firstImage: boolean;
+};
 
 function GuestArtistCard({ firstImage }: GuestProps): ReactElement {
   return (
     <div className="relative shrink-0 w-[160px] h-[200px] rounded-[8px] overflow-hidden">
       <Image
-        src={firstImage ? "/mocks/mockArtistImage1.png" : "/mocks/mockArtistImage2.png"}
+        src={firstImage ? '/mocks/mockArtistImage1.png' : '/mocks/mockArtistImage2.png'}
         alt="artist"
         fill
         className="object-cover"
@@ -60,12 +60,12 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
 
       <div className="flex flex-col w-full">
         {!isLoggedIn && (
-          <div className="flex w-full overflow-x-auto gap-4 blur-[6px] opacity-30 pointer-events-none">
-            <GuestArtistCard firstImage={true}/>
-            <GuestArtistCard firstImage={false}/>
+          <div className="flex w-full overflow-x-auto gap-4 blur-[3px] opacity-40 pointer-events-none">
+            <GuestArtistCard firstImage={true} />
+            <GuestArtistCard firstImage={false} />
           </div>
         )}
-        {/* 2. 로그인 했지만 온보딩 전일 때: 블러 카드 + 바로 아래 문구 배치 */}
+        {/* 로그인 했지만 온보딩 전일 때: 블러 카드 + 바로 아래 문구 배치 */}
         {isNotOnboarded && (
           <div className="flex flex-col items-center justify-center text-center py-4 bg-[#121212] rounded-[12px] border border-[#2A2A2A]">
             <h3 className="text-white font-bold text-[17px] mb-1">나만의 아티스트를 찾아볼까요?</h3>
@@ -94,7 +94,9 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
             {/* 로딩 끝 + 온보딩 전 */}
             {!isLoading && isNotOnboarded && (
               <div className="flex flex-col items-center justify-center text-center py-4 bg-[#121212] rounded-[12px] border border-[#2A2A2A]">
-                <h3 className="text-white font-bold text-[17px] mb-1">나만의 아티스트를 찾아볼까요?</h3>
+                <h3 className="text-white font-bold text-[17px] mb-1">
+                  나만의 아티스트를 찾아볼까요?
+                </h3>
                 <p className="text-[#8C8787] text-[13px] mb-5 leading-relaxed">
                   취향 설정을 완료하면 리스너님께 꼭 맞는 <br />
                   아티스트 라인업을 바로 확인하실 수 있어요.
