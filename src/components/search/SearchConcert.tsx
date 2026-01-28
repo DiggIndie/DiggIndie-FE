@@ -76,7 +76,7 @@ export default function SearchConcert() {
   const showSkeleton = isTypingLoading || (isFetching && pageInfo.page === 0);
 
   return (
-    <section className="relative w-full flex flex-col items-center mt-[12px] px-3">
+    <section className="relative w-full flex flex-col items-center mt-[12px] px-5">
 
       {/* 검색 input */}
       <div className={"w-full relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white"}>
@@ -152,7 +152,7 @@ export default function SearchConcert() {
       {error ? <div className="mt-4 text-[#FF6B6B] text-[14px] break-words">{error}</div> : null}
 
       {/* 결과 */}
-      <div className="flex mt-4 justify-center">
+      <div className="flex w-full mt-4 justify-center">
         {showSkeleton ? <SearchCardSkeleton /> : <ConcertGrid concerts={concerts} />}
       </div>
       <div ref={sentinelRef} className="h-[1px]" />

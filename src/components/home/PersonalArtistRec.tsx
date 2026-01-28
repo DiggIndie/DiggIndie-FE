@@ -114,16 +114,20 @@ export default function PersonalArtistRec({ isLoggedIn }: Props) {
 
                 {!error &&
                   visibleBands.map((band) => (
-                    <ArtistCard
+                    <div
                       key={band.bandId}
-                      artist={{
-                        artistId: Number(band.bandId),
-                        artistName: band.bandName,
-                        keywords: band.keywords,
-                        artistImage: band.imageUrl,
-                        topTrack: band.topTrack,
-                      }}
-                    />
+                      className="flex-none w-40"
+                    >
+                      <ArtistCard
+                        artist={{
+                          artistId: Number(band.bandId),
+                          artistName: band.bandName,
+                          keywords: band.keywords,
+                          artistImage: band.imageUrl,
+                          topTrack: band.topTrack,
+                        }}
+                      />
+                    </div>
                   ))}
               </div>
             )}
