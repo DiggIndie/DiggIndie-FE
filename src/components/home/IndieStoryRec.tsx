@@ -24,7 +24,7 @@ export default function IndieStoryRec() {
               <ArtistConcertSkeleton />
             </div>
           ) : (
-            magazines.map((m) => <MagazineCard rounded={false} key={m.magazineId} magazine={m} />)
+            magazines.map((m) => <MagazineCard rounded={true} key={m.magazineId} magazine={m} />)
           )}
         </div>
       </div>
