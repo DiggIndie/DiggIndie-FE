@@ -80,6 +80,7 @@ export default function SearchConcert() {
 
       {/* 검색 input */}
       <div className={"w-full relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] bg-[#4A4747] text-white"}>
+        <Image src={query ? searchGrayBtn : searchBtn} alt="Search" className="absolute left-2 mt-[2px]" />
         {/* 검색 지우기 */}
         {query ? (
           <button
@@ -90,14 +91,14 @@ export default function SearchConcert() {
               setIsTypingLoading(false);
             }}
             aria-label="clear search"
-            className="absolute right-[40px] top-1/2 -translate-y-1/2 cursor-pointer"
+            className="absolute right-[12px] top-1/2 -translate-y-1/2 cursor-pointer"
           >
             <Image src={deleteBtn} alt="삭제" />
           </button>
         ) : null
         }
 
-        <Image src={query ? searchGrayBtn : searchBtn} alt="Search" className="absolute right-2 mt-[2px]" />
+
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -108,7 +109,7 @@ export default function SearchConcert() {
             }
           }}
           placeholder="검색어를 입력하세요"
-          className="placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full"
+          className="ml-6 placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full"
         />
       </div>
 
