@@ -145,7 +145,6 @@ export default function FreeArticleDetailPage() {
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
-
       {/* 2. 본문 영역: 헤더 아래부터 댓글창 위까지 스크롤되는 구간 */}
       <main className="flex-1 overflow-y-auto">
         {!isAuthed ? (
@@ -173,7 +172,6 @@ export default function FreeArticleDetailPage() {
           </div>
         )}
       </main>
-
       {/* 3. 하단 입력창: fixed 속성이므로 화면 맨 아래에 붙어 있습니다. */}
       <div className={'flex justify-center'}>
         <ReplyInputSection
@@ -183,6 +181,7 @@ export default function FreeArticleDetailPage() {
           onCancelReply={() => setReplyTarget(null)}
         />
       </div>
+      랴
     </div>
   );
 }
