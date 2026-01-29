@@ -78,6 +78,20 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'image-cdn-ak.spotifycdn.com', // 스포티파이 추가
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co', // 스포티파이의 또 다른 이미지 도메인 (자주 쓰임)
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com', // 유튜브
+      },
+      { protocol: 'https', hostname: 'namu.wiki' },
+      { protocol: 'https', hostname: 'i2o.scdn.co' },
     ],
   },
 };
