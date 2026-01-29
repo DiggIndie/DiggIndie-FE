@@ -58,7 +58,7 @@ export default function LoginPage() {
     // API 요청 보내기
     try {
       await authService.login(form.id, form.password);
-      router.push('/');
+      router.push('/home');
     } catch (err) {
       setErrors({
         password: '아이디 또는 비밀번호가 잘못 되었습니다.',

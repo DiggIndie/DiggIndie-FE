@@ -147,7 +147,7 @@ export default function OnboardArtistPage() {
           선택완료
         </LinkButton>
         <button
-          className="bg-gray-850 border border-gray-700 p-4 rounded-sm whitespace-nowrap h-14 cursor-pointer"
+          className="bg-gray-850 border border-gray-700 p-4 rounded-sm whitespace-nowrap h-13 cursor-pointer"
           onClick={handleReset}
         >
           초기화
