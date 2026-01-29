@@ -65,9 +65,9 @@ export default function ReplyInputSection({
   };
 
   return (
-    <section className="fixed bottom-0 py-5 z-30">
-      <div className="flex items-center bg-gray-800 px-4 py-4 rounded-sm">
-        <div className="flex items-center min-w-0">
+    <section className="fixed bottom-0 p-5 min-w-[375px] z-30">
+      <div className="flex bg-gray-800 px-4 py-4 rounded-sm justify-between">
+        <div className="flex items-center justify-between">
           <CustomCheckbox checked={isChecked} onChange={setIsChecked} size="sm" />
 
           <span
@@ -90,7 +90,6 @@ export default function ReplyInputSection({
             className="flex-1 min-w-0 bg-transparent text-white text-sm placeholder-gray-600 focus:outline-none"
           />
         </div>
-
         {/* send */}
         <button type="button" disabled={disabled} onClick={handleSend} className="ml-3 shrink-0">
           <Image
