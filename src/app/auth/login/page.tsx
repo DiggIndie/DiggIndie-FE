@@ -70,7 +70,7 @@ export default function LoginPage() {
     window.location.href = authUrl;
   };
   return (
-    <div className="text-white flex flex-col h-screen items-center relative">
+    <div className="text-white flex flex-col h-[100dvh] items-center relative">
       <MyHeader title="로그인" backUrl="/" />
       <Image src={diggindie} alt="diggindie icon" width={235} className="mt-35" />
       <form className="flex flex-col gap-3 mt-17" onSubmit={handleLogin}>
