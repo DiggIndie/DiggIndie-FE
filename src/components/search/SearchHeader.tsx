@@ -22,7 +22,7 @@ export default function SearchHeader({ title, onHamburgerClick }: props) {
             width={24}
             height={24}
             className={'cursor-pointer'}
-            onClick={onHamburgerClick}
+            onClick={()=>router.push('/home')}
           />
           <Image
             src={hamburger}
@@ -30,7 +30,7 @@ export default function SearchHeader({ title, onHamburgerClick }: props) {
             width={24}
             height={24}
             className={'cursor-pointer'}
-            onClick={()=>router.push('/home')}
+            onClick={onHamburgerClick}
           />
         </div>
       </div>
