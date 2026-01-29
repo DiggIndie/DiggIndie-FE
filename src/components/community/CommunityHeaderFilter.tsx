@@ -29,11 +29,11 @@ export default function CommunityHeaderFilter<T extends string>({
   }, []);
 
   return (
-    <div ref={ref} className="relative ml-[20px] w-[min(92px,100%)] z-30">
+    <div ref={ref} className="relative w-full z-30">
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
-        className="border border-[#736F6F] rounded-[4px] w-fit min-w-[68px] max-w-[92px] h-[28px] px-1 py-1
+        className="ml-auto border border-[#736F6F] rounded-[4px] w-fit min-w-[68px] max-w-[92px] h-[28px] px-1 py-1
         text-[14px] flex items-center gap-1 bg-black justify-center"
       >
         {value}
@@ -42,7 +42,7 @@ export default function CommunityHeaderFilter<T extends string>({
 
       {open && (
         <div
-          className="absolute flex flex-col mt-2 border w-[83px] max-w-full border-[#736F6F] justify-between
+          className="ml-auto absolute right-0 flex flex-col mt-2 border w-[83px] border-[#736F6F] justify-between
          bg-black text-[14px] font-normal leading-[140%] tracking-[-0.03em] py-2 rounded-[4px]
          max-h-[236px] overflow-y-auto"
         >

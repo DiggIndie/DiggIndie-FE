@@ -128,7 +128,7 @@ export default function SearchConcert() {
           <div
             className="absolute left-0 mt-[8px] w-[100px] h-[108px] rounded-[4px]
                        border border-[#736F6F] flex flex-col items-start
-                       py-[8px] gap-[4px] bg-black shadow-lg z-50"
+                       py-2 bg-black justify-between shadow-lg z-50"
           >
             {(["recent", "view", "scrap"] as SortKey[]).map((key) => (
               <button
@@ -137,12 +137,17 @@ export default function SearchConcert() {
                   setSortKey(key);
                   setIsOpen(false);
                 }}
-                className={`w-full h-[28px] px-2 text-left text-[14px] ${
-                  sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
-                }`}
+                className="w-full h-[28px] px-2 text-left text-[14px]"
               >
-                {key === "recent" ? "업데이트순" : key === "view" ? "조회수순" : "스크랩순"}
+                <div
+                  className={`px-2 h-[28px] rounded-[4px] pt-[3px] ${
+                    sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
+                  }`}
+                >
+                  {key === "recent" ? "업데이트순" : key === "view" ? "조회수순" : "스크랩순"}
+                </div>
               </button>
+
             ))}
           </div>
         )}

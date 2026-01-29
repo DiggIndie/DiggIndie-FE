@@ -162,11 +162,15 @@ export default function MyArtistsWithSearch() {
                   setSortKey(key);
                   setIsOpen(false);
                 }}
-                className={`w-full h-[28px] px-2 text-left text-[14px] ${
-                  sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
-                }`}
+                className="w-full h-[28px] px-2 text-left text-[14px]"
               >
+                <div
+                  className={`px-2 h-[28px] rounded-[4px] pt-[3px] ${
+                    sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
+                  }`}
+                >
                 {key === "updated" ? "업데이트순" : key === "korean" ? "가나다순" : "스크랩순"}
+                </div>
               </button>
               ))}
           </div>

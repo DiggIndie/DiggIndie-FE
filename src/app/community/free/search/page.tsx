@@ -4,7 +4,6 @@ import { useState } from 'react';
 import CommunityHeader from '@/components/community/CommunityHeader';
 import SideTab from '@/components/sideTabDir/SideTab';
 import SearchFree from '@/components/community/SearchFree';
-import CommunityTab from '@/components/community/CommunityTab'
 
 export default function FreeSearchPage() {
   const [isSideTabOpen, setIsSideTabOpen] = useState(false);

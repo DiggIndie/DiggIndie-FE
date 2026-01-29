@@ -100,7 +100,7 @@ export default function SearchFree() {
   return (
     <section className="relative w-full flex flex-col items-center mt-[12px] min-h-0">
       <div className="flex w-full justify-between px-5 gap-1">
-        <div className="relative flex h-[44px] mb-[12px] px-3 py-2 rounded-[4px] w-full bg-[#4A4747] text-white">
+        <div className="relative flex h-[44px] px-3 py-2 rounded-[4px] w-full bg-[#4A4747] text-white">
           {draft ? (
             <button
               type="button"
@@ -133,14 +133,9 @@ export default function SearchFree() {
         </div>
       </div>
 
-      <CommunityTab />
-
-      <div className="w-full">
-        <CommunityHeaderFilter
-          headers={headerOptions}
-          value={header}
-          onChangeAction={handleHeaderChange}
-        />
+      <div className="w-full flex justify-between shrink-0 px-5 mt-4 items-center">
+        <CommunityTab />
+        <CommunityHeaderFilter headers={headerOptions} value={header} onChangeAction={handleHeaderChange} />
       </div>
 
       {/* 리스트만 스크롤 */}
