@@ -33,7 +33,7 @@ export default function ConcertCard({ concert }: Props) {
 
         {!ended ? (
           <div className="w-full flex flex-col px-2 absolute bottom-3">
-            <span className="flex w-[41px] h-[17px] bg-[#FF3637] items-center justify-center rounded-xs">
+            <span className="flex w-[41px] h-[17px] text-[12px] font-medium bg-[#FF3637] items-center justify-center rounded-xs">
               {dDay}
             </span>
 
