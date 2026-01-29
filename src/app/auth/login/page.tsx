@@ -72,7 +72,7 @@ export default function LoginPage() {
   return (
     <div className="text-white flex flex-col h-screen items-center relative bg-black">
       <MyHeader title="로그인" backUrl="/" />
-      <Image src={diggindie} alt="diggindie icon" width={235} className="mt-35" />
+      <Image src={diggindie} alt="diggindie icon" width={235} className="mt-30" />
       <form className="flex flex-col gap-3 mt-17" onSubmit={handleLogin}>
         <InputSection
           placeholder="아이디를 입력해주세요."

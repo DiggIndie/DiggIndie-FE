@@ -75,7 +75,7 @@ export default function MyPage() {
     };
   }, [isSideTabOpen]);
   return (
-    <div className="text-white flex flex-col bg-black relative">
+    <div className="text-white flex flex-col bg-black relative min-h-screen">
       <div className="relative mx-auto w-full max-w-[375px] bg-black min-h-screen">
         <MyPageHeader onOpenSideTab={() => setIsSideTabOpen(true)} />
         <div className="flex flex-col pb-6 bg-black mt-13">
