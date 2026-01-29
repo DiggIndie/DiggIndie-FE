@@ -14,7 +14,7 @@ export default function ArtistPage() {
   return (
     <div className="text-white bg-black relative">
       {/* 앱 컨테이너 */}
-      <div className="relative mx-auto w-full max-w-[375px] h-screen bg-black overflow-hidden">
+      <div className="relative mx-auto w-full h-screen bg-black overflow-hidden">
         {/* 헤더 */}
         <SearchHeader title="아티스트" onHamburgerClick={() => setIsSideTabOpen(true)} />
 

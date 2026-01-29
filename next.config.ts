@@ -54,6 +54,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'i.namu.wiki',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'i.ytimg.com',
         pathname: '/**',
       },
