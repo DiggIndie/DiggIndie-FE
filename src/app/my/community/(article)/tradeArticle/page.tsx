@@ -47,7 +47,7 @@ export default function MyTradeArticlePage() {
   return (
     <div className="text-white flex flex-col h-screen bg-black relative overflow-hidden">
       <header className="sticky top-0 z-50 h-[52px] bg-black flex items-center shrink-0">
-        <MyHeader title={"MY 게시물"} />
+        <MyHeader title={'MY 게시물'} backUrl="/my/community" />
       </header>
 
       <div className="shrink-0">

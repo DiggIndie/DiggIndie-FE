@@ -16,16 +16,11 @@ interface ArticleHeaderProps {
 
 export default function ArticleHeader({ title, isMine, onEdit, onDelete }: ArticleHeaderProps) {
   const router = useRouter();
-  const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   //현재 url에 따라 자유게시판으로 갈지 거래개시판으로 갈지
   const handleBack = () => {
-    if (pathname.includes('/community/free')) {
-      router.push('/community/free');
-    } else {
-      router.push('/community/trade');
-    }
+    router.back();
   };
 
   return (
