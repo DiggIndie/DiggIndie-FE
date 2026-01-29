@@ -1,11 +1,10 @@
 'use client';
 import Image from 'next/image';
-import searchBtn from '@/assets/common/search.svg';
 import writeBtn from '@/assets/common/write.svg';
 import homeBtn from '@/assets/common/homeBtn.svg'
 import writeGrayBtn from '@/assets/common/writeGray.svg';
 import menuBtn from '@/assets/common/hamburger.svg';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 
 type props = {
@@ -16,7 +15,6 @@ type props = {
 
 export default function CommunityHeader({ title, onHamburgerClick, isLoggedIn }: props) {
   const router = useRouter();
-  const pathname = usePathname();
   const { isAuthed } = useAuthStore();
 
 
@@ -31,16 +29,16 @@ export default function CommunityHeader({ title, onHamburgerClick, isLoggedIn }:
           }}
         >
           <Image
-            src={isLoggedIn ? writeBtn : writeGrayBtn}
+            src={isAuthed ? writeBtn : writeGrayBtn}
             alt={'write'}
             width={24}
             height={24}
-            className={'cursor-pointer'}
+            className={isAuthed ? 'cursor-pointer' : ''}
           />
         </div>
         <div
           onClick={() => {
-            router.push('/');
+            router.push('/home');
           }}
         >
           <Image
