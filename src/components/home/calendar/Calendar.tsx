@@ -261,10 +261,12 @@ export default function SimpleCalendar({
             <button
               className="ml-[2px] cursor-pointer"
               type="button"
-              onClick={() => setIsNoticeOpen((prev) => !prev)}
+              onMouseEnter={() => setIsNoticeOpen(true)}
+              onMouseLeave={() => setIsNoticeOpen(false)}
             >
               <Image src={questionBtn} alt="notice" width={24} height={24} />
             </button>
+
             {isNoticeOpen && (
               <div className="absolute left-19 mt-8 mt-2 z-50 w-[210px]">
                 <Image

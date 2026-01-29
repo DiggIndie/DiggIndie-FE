@@ -130,7 +130,7 @@ export default function MyArtistsWithSearch() {
             }
           }}
           placeholder="검색어를 입력하세요"
-          className="ml-6 placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full"
+          className="ml-7 placeholder:text-[#A6A6A6] font-regular outline-none bg-transparent w-full"
         />
       </div>
 
@@ -165,14 +165,17 @@ export default function MyArtistsWithSearch() {
                 className="w-full h-[28px] px-2 text-left text-[14px]"
               >
                 <div
-                  className={`px-2 h-[28px] rounded-[4px] pt-[3px] ${
-                    sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"
-                  }`}
+                  className={`px-2 h-[28px] rounded-[4px] pt-[3px]
+                    transition-colors
+                    hover:bg-[#332F2F] hover:text-white
+                    ${sortKey === key ? "bg-[#332F2F] text-white" : "text-[#8C8888]"}
+                  `}
                 >
-                {key === "updated" ? "업데이트순" : key === "korean" ? "가나다순" : "스크랩순"}
+                  {key === "updated" ? "업데이트순" : key === "korean" ? "가나다순" : "스크랩순"}
                 </div>
               </button>
-              ))}
+
+            ))}
           </div>
         )}
       </div>

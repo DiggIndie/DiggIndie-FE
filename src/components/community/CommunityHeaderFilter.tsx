@@ -49,8 +49,12 @@ export default function CommunityHeaderFilter<T extends string>({
           {headers.map((h) => (
             <div
               key={h}
-              className={`w-[67px] h-[28px] py-1 cursor-pointer ml-[8px] px-2
-                ${h === value ? 'bg-[#332F2F] rounded-[4px] text-white' : 'text-[#8C8888]'}
+              className={`w-[67px] h-[28px] py-1 cursor-pointer ml-[8px] px-2 rounded-[4px]
+              ${
+                h === value
+                  ? 'bg-[#332F2F] text-white'
+                  : 'text-[#8C8888] hover:bg-[#332F2F] hover:text-white'
+                }
               `}
               onClick={() => {
                 onChangeAction(h);
@@ -59,6 +63,7 @@ export default function CommunityHeaderFilter<T extends string>({
             >
               {h}
             </div>
+
           ))}
         </div>
       )}
