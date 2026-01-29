@@ -20,7 +20,20 @@ export default function FreeArticleDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const boardId = Number(params.id);
   const [board, setBoard] = useState<FreeBoardDetail | null>(null);
+  //스켈레톤 로딩 이후 높이 계산 문제로 스크롤 안되는 버그 해결
+  useEffect(() => {
+    if (!isLoading) {
+      // 1. body와 html의 overflow 설정을 명시적으로 초기화
+      // 스크롤바를 숨겨놨기 때문에 브라우저가 간혹 스크롤 가능 상태를 놓칩니다.
+      document.body.style.overflow = 'unset';
+      document.documentElement.style.overflow = 'unset';
 
+      // 2. 브라우저가 레이아웃을 재계산하도록 아주 미세하게 스크롤 이동
+      // 0에서 1px만 움직여도 브라우저는 스크롤 가능 여부를 다시 체크합니다.
+      window.scrollTo(0, 1);
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
   const [replyTarget, setReplyTarget] = useState<{
     parentCommentId: number;
     nickname: string;
@@ -125,12 +138,14 @@ export default function FreeArticleDetailPage() {
 
   return (
     <div className="min-h-screen bg-black text-white min-w-[375px] relative pb-20">
-      <ArticleHeader
-        title="자유 라운지"
-        isMine={board?.isMine}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      <header className="relative">
+        <ArticleHeader
+          title="자유 라운지"
+          isMine={board?.isMine}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      </header>
 
       {!isAuthed ? (
         <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)] ">

@@ -14,7 +14,12 @@ interface ArticleHeaderProps {
   onDelete?: () => void;
 }
 
-export default function ArticleHeader({ title, isMine, onEdit, onDelete }: ArticleHeaderProps) {
+export default function TradeArticleHeader({
+  title,
+  isMine,
+  onEdit,
+  onDelete,
+}: ArticleHeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -29,7 +34,7 @@ export default function ArticleHeader({ title, isMine, onEdit, onDelete }: Artic
   };
 
   return (
-    <section className="w-full flex flex-col px-5 py-[10px] max-w-[inherit] text-white fixed top-0 z-40 bg-black">
+    <section className="w-full flex flex-col px-5 py-[10px] max-w-[inherit] text-white fixed top-0 z-40 bg-transparent">
       <div className="flex justify-between items-center">
         <Image
           src={backBtn}
