@@ -36,11 +36,7 @@ export default function MyFreeCommentPage() {
       </header>
 
       <main className="flex-1 min-h-0 overflow-y-auto scrollbar flex flex-col bg-black">
-        {isLoading ? (
-          <div className="px-5 py-6 text-sm text-gray-400">불러오는 중...</div>
-        ) : (
           <ArticleList articles={articles} basePath={'/community/free'} variant={'free'} />
-        )}
       </main>
     </div>
   );
