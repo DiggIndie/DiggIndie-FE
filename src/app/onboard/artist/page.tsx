@@ -23,6 +23,9 @@ export default function OnboardArtistPage() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const [isloading, setIsLoading] = useState(true);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const handleReset = () => {
+    setSelectedIds([]);
+  };
   const {
     artists,
     searchTerm,
@@ -106,8 +109,11 @@ export default function OnboardArtistPage() {
             </>
           }
           min="최소 2팀"
+          minClassName="text-main-red-4 text-xs font-medium"
         />
-
+        <span className="font-normal text-sm text-gray-600 px-5">
+          아티스트를 많이 선택할수록 취향 추천의 정확도가 높아져요.
+        </span>
         <div className="px-5 my-5">
           <SearchSection
             searchTerm={searchTerm}
@@ -141,10 +147,16 @@ export default function OnboardArtistPage() {
         )}
       </div>
 
-      <div className="px-5 mb-5">
+      <div className="px-5 pb-5 flex gap-2">
         <LinkButton disabled={selectedIds.length < 2} onClick={handleComplete}>
           선택완료
         </LinkButton>
+        <button
+          className="bg-gray-850 border border-gray-700 p-4 rounded-sm whitespace-nowrap h-14 cursor-pointer"
+          onClick={handleReset}
+        >
+          초기화
+        </button>
       </div>
     </div>
   );
