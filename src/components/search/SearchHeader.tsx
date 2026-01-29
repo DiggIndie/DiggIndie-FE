@@ -15,7 +15,7 @@ export default function SearchHeader({ title, onHamburgerClick }: props) {
     <div className="w-full h-13 items-center font-semibold bg-black px-5 py-3">
       <div className="flex items-center justify-between text-[20px]">
         <span>{title}</span>
-        <div>
+        <div className={'flex gap-[10px]'}>
           <Image
             src={homeBtn}
             alt="menu"
