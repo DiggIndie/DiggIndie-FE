@@ -7,10 +7,8 @@ import ProgressBar from '@/components/onBoard/ProgressBar';
 import OnboardArtistItem from '@/components/onBoard/OnboardArtistItem';
 import NoResult from '@/components/onBoard/NoResult';
 import LinkButton from '@/components/common/LinkButton';
-
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 import type { OnboardArtist } from '@/types/artists';
 import { saveSelectedArtists } from '@/services/artistsService';
 import { useOnboardArtists } from '@/hooks/useOnboardArtists';
@@ -86,11 +84,8 @@ export default function OnboardArtistPage() {
     if (selectedIds.length < 2) return;
 
     //선택 아티스트 저장
-    setIsLoading(true);
-
     await saveSelectedArtists(selectedIds);
     router.push('/onboard/genre');
-    setIsLoading(false);
   };
 
   return (
