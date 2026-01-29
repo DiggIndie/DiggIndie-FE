@@ -188,10 +188,13 @@ export default function HomeSearch() {
 
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
                   {artists.map((artist) => (
-                    <ArtistCard key={artist.artistId} artist={artist} />
+                    <div key={artist.artistId} className="flex-none w-[160px]">
+                      <ArtistCard artist={artist} />
+                    </div>
                   ))}
                 </div>
               </section>
+
 
               <section className="mb-9">
                 <div className="flex gap-1 mb-4 px-5">
@@ -204,7 +207,9 @@ export default function HomeSearch() {
 
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">
                   {concerts.map((concert) => (
-                    <ConcertCard key={concert.concertId} concert={concert} />
+                    <div key={concert.concertId} className="flex-none w-[160px]">
+                      <ConcertCard concert={concert} />
+                    </div>
                   ))}
                 </div>
               </section>
