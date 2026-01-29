@@ -19,12 +19,12 @@ export default function ArtistPage() {
         <SearchHeader title="아티스트" onHamburgerClick={() => setIsSideTabOpen(true)} />
 
         {/* 콘텐츠 스크롤 영역 */}
-        <main className="pt-13 overflow-y-auto h-full">
+        <main className="overflow-y-auto h-full">
           <SearchArtist />
         </main>
       </div>
 
-      {/* 사이드탭 (Home과 동일한 구조) */}
+      {/* 사이드탭은 viewport 기준이지만 위치는 앱 기준 */}
       {isSideTabOpen && (
         <div className="fixed inset-0 z-[999] flex justify-center">
           <div className="relative w-full max-w-[375px] h-full">
