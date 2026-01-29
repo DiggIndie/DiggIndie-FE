@@ -133,7 +133,7 @@ export default function FreeArticleDetailPage() {
       />
 
       {!isAuthed ? (
-        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)]">
+        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)] ">
           <span className="text-base font-normal text-[#A6A6A6]">
             로그인 후 가능한 페이지입니다
           </span>
@@ -147,7 +147,7 @@ export default function FreeArticleDetailPage() {
       ) : (
         <>
           {/* 스크롤 영역 */}
-          <div className="flex-1 overflow-y-auto pb-20">
+          <div className="flex-1 overflow-y-auto pb-20 pt-13">
             <ArticleBody content={board} onToggleLike={handleToggleLike} />
 
             <CommentCard
