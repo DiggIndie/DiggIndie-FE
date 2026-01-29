@@ -15,7 +15,7 @@ export default function Loading() {
     >
       <Lottie loop animationData={loadingAnimation} play style={{ width: 32, height: 32 }} />
       <p style={{ fontSize: '1.25rem', textAlign: 'center', marginTop: '1rem', color: '#666' }}>
-        로그인 중입니다...
+        로딩 중...
       </p>
     </div>
   );
