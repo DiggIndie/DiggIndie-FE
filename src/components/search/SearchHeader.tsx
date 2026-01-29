@@ -12,9 +12,9 @@ export default function SearchHeader({ title, onHamburgerClick }: props) {
   const router = useRouter()
 
   return (
-    <div className="w-full h-13 items-center font-semibold bg-black px-5 py-3">
-      <div className="flex items-center justify-between text-[20px]">
-        <span>{title}</span>
+    <header className="fixed top-0 left-0 z-50 w-full bg-transparent ">
+      <div className="mx-auto flex h-13 py-3 w-full max-w-[375px] items-center justify-between px-5 bg-black">
+        <span className="font-semibold text-white text-xl">{title}</span>
         <div className={'flex gap-[10px]'}>
           <Image
             src={homeBtn}
@@ -34,6 +34,6 @@ export default function SearchHeader({ title, onHamburgerClick }: props) {
           />
         </div>
       </div>
-    </div>
+    </header>
   );
 }

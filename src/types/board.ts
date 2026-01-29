@@ -59,3 +59,9 @@ export interface TradeBoardDetail {
     },
   ];
 }
+export type HotArticle = {
+  id: string;
+  category: string;
+  title: string;
+  views: number;
+};

@@ -13,8 +13,9 @@ import TradingPriceArea from "@/components/community/TradingPriceArea";
 import { postFree, editFree } from "@/api/freeBoard";
 import { postMarket, editMarket } from "@/api/marketBoard";
 
-import { boardDetailService } from "@/services/boardDetail.service";
-import type { MarketCategory } from "@/types/marketBoard";
+import { boardDetailService } from '@/services/boardDetail.service';
+import type { MarketCategory } from '@/types/marketBoard';
+import CustomCheckbox from '@/components/community/Checkbox';
 
 type UiGeneralTag = "없음" | "정보" | "공연 후기" | "추천" | "신보" | "음악 뉴스" | "동행";
 type UiTradeTag = "판매" | "구매";
@@ -119,6 +120,7 @@ export default function Write() {
   const router = useRouter();
   const sp = useSearchParams();
 
+  const [isChecked, setIsChecked] = useState(false);
   const mode = (sp.get("mode") as Mode) ?? "create";
   const board = (sp.get("board") as Board) ?? "free";
   const id = Number(sp.get("id") ?? "0");
@@ -293,50 +295,38 @@ export default function Write() {
   const boardLockClass = isEdit ? "pointer-events-none opacity-60" : "";
 
   return (
-    <div className="h-dvh bg-black text-white flex flex-col">
+    <div className="min-h-dvh bg-black text-white flex flex-col">
       <CommunityWriteHeader
         disabled={!isFormValid || isSubmitting || isPrefilling || isUploadingImages}
         onRightButtonClick={handleSubmit}
       />
 
-      <div className={["flex-1 overflow-y-auto", boardType === "trade" ? "pb-24" : "pb-16"].join(" ")}>
-        <div className="flex justify-between mb-3 px-5">
+      <div
+        className={[
+          'flex-1 overflow-y-auto scrollbar-hide ',
+          boardType === 'trade' ? 'pb-24' : 'pb-16',
+        ].join(' ')}
+      >
+        <div className="flex justify-between mb-3 px-5 ">
           <span className="font-medium text-base text-white">게시판 선택</span>
-
-          <p className="flex gap-2" onClick={handleAnonymousToggle}>
-            <Checkbox
-              checked={annonymous}
-              sx={{
-                width: 20,
-                height: 20,
-                padding: 0,
-                borderRadius: "4px",
-                border: "1px solid #374151",
-                backgroundColor: "transparent",
-                "& .MuiSvgIcon-root": { display: "none" },
-                "&.Mui-checked": {
-                  backgroundColor: "#ef4444",
-                  borderColor: "#dc2626",
-                },
-                "&.Mui-checked::after": {
-                  content: '"✔"',
-                  color: "#fff",
-                  fontSize: 12,
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                },
-              }}
-            />
-            <span className={`text-sm font-medium ${annonymous ? "text-main-red-2" : "text-gray-500"}`}>
+          <span className="flex gap-2" onClick={() => setAnonymous(!annonymous)}>
+            <CustomCheckbox checked={isChecked} onChange={setIsChecked} size="sm" />
+            <span
+              className={`text-sm font-medium ${annonymous ? 'text-main-red-2' : 'text-gray-500'}`}
+            >
               익명
             </span>
-          </p>
+          </span>
         </div>
 
         <div className="flex gap-2 pb-3 px-5">
+          <span
+            onClick={() => handleBoardTypeChange('general')}
+            className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
+            ${boardType === 'general' ? 'border-main-red-1 bg-main-red-4 text-white' : 'border-gray-600 text-gray-600'}`}
+          >
+            일반
+          </span>
           <span
             onClick={() => handleBoardTypeChange("general")}
             className={`border font-medium text-sm px-3 py-1 rounded-xs cursor-pointer ${boardLockClass}
@@ -391,7 +381,12 @@ export default function Write() {
 
         {boardType === "trade" && <TradingPriceArea value={price} onChange={setPrice} />}
 
-        <TextArea title={title} content={content} onChangeTitle={setTitle} onChangeContent={setContent} />
+        <TextArea
+          title={title}
+          content={content}
+          onChangeTitle={setTitle}
+          onChangeContent={setContent}
+        />
 
         {boardType === "trade" && <TradingLinkArea value={chatUrl} onChange={setChatUrl} />}
       </div>

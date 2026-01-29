@@ -52,10 +52,7 @@ export default function HomeSearch() {
     enabled: true,
   });
 
-  const {
-    magazines,
-    isLoading: isMagazineFetching,
-  } = useMagazines({
+  const { magazines, isLoading: isMagazineFetching } = useMagazines({
     order: 'recent',
     query: debouncedTerm.trim() ? debouncedTerm.trim() : undefined,
     size: 20,
@@ -132,7 +129,7 @@ export default function HomeSearch() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-black">
+    <div className="min-h-dvh w-full bg-black">
       <div className="px-5 py-3 w-full flex gap-1">
         <Image
           src={back}
@@ -221,7 +218,9 @@ export default function HomeSearch() {
                 <div className="flex gap-1 mb-4 px-5">
                   <Image src={documentIcon} alt="문서" />
                   <span className="text-xl font-semibold text-white">매거진</span>
-                  <span className="font-medium text-sm text-white px-2 py-1 ml-2">{magazineCount}개</span>
+                  <span className="font-medium text-sm text-white px-2 py-1 ml-2">
+                    {magazineCount}개
+                  </span>
                 </div>
 
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide px-5">

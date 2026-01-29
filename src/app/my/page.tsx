@@ -62,13 +62,24 @@ export default function MyPage() {
     router.push('/');
   };
 
+  //사이드탭 열면 스크롤 막기
+  useEffect(() => {
+    if (isSideTabOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isSideTabOpen]);
   return (
-    <div className="text-white flex flex-col h-screen bg-black relative">
-      <div className="sticky top-0 z-50">
+    <div className="text-white flex flex-col bg-black relative min-h-screen">
+      <div className="relative mx-auto w-full max-w-[375px] bg-black min-h-screen">
         <MyPageHeader onOpenSideTab={() => setIsSideTabOpen(true)} />
-      </div>
-      <div className="flex flex-col pb-6 bg-black mt-13">
-        <ProfileSection userId={userId} />
+        <div className="flex flex-col pb-6 bg-black mt-13">
+          <ProfileSection userId={userId} />
 
         {/* 스크랩한 공연 */}
         <div onClick={() => router.push('/my/concert')}>
@@ -113,39 +124,39 @@ export default function MyPage() {
             )}
           </HorizontalSwipeList>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-3 bg-black py-2">
-        <MenuSection
-          title="MY 디깅 라운지 활동"
-          hasBorder={true}
-          onclick={() => router.push('/my/community')}
-        />
-        {/*데모데이까지 미개발 예정 */}
-        <div className="opacity-50 grayscale pointer-events-none cursor-not-allowed">
-          <MenuSection title="MY 인디스토리 활동" hasBorder={true} />
+        <div className="flex flex-col gap-3 bg-black py-2">
+          <MenuSection
+            title="MY 디깅 라운지 활동"
+            hasBorder={true}
+            onclick={() => router.push('/my/community')}
+          />
+          {/*데모데이까지 미개발 예정 */}
+          <div className="opacity-50 grayscale pointer-events-none cursor-not-allowed">
+            <MenuSection title="MY 인디스토리 활동" hasBorder={true} />
+          </div>
+          <MenuSection
+            title="약관 및 수신동의"
+            hasBorder={true}
+            onclick={() => router.push('/my/agree')}
+          />
+          <MenuSection
+            title="소셜계정 연동하기"
+            hasBorder={true}
+            onclick={() => router.push('/my/social')}
+          />
         </div>
-        <MenuSection
-          title="약관 및 수신동의"
-          hasBorder={true}
-          onclick={() => router.push('/my/agree')}
-        />
-        <MenuSection
-          title="소셜계정 연동하기"
-          hasBorder={true}
-          onclick={() => router.push('/my/social')}
-        />
-      </div>
 
-      <p className="flex justify-center items-center gap-2 pt-37 p-5 text-center bg-black ">
-        <span
-          className="text-sm font-normal text-gray-500 border-r border-gray-500 px-3 cursor-pointer"
-          onClick={handleLogout}
-        >
-          로그아웃
-        </span>
-        <span className="text-sm font-normal text-gray-500 px-3 cursor-pointer">회원탈퇴</span>
-      </p>
+        <p className="flex justify-center items-center gap-2 pt-37 p-5 text-center bg-black ">
+          <span
+            className="text-sm font-normal text-gray-500 border-r border-gray-500 px-3 cursor-pointer"
+            onClick={handleLogout}
+          >
+            로그아웃
+          </span>
+          <span className="text-sm font-normal text-gray-500 px-3 cursor-pointer">회원탈퇴</span>
+        </p>
+      </div>
       {isSideTabOpen && <SideTab onClose={() => setIsSideTabOpen(false)} />}
     </div>
   );
