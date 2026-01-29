@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import nextBtn from '@/assets/common/next.svg';
 import fireBtn from '@/assets/icons/fire.svg';
-import soundBtn from '@/assets/icons/sound.svg';
 import { useRouter } from 'next/navigation';
 import { HotArticle } from '@/types/board';
 

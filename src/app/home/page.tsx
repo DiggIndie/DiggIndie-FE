@@ -45,7 +45,7 @@ export default function HomePage() {
       setHotContent(content);
     };
     fetchHotArticle();
-  });
+  }, []);
   return (
     <div className="text-white bg-black relative">
       <div className="relative mx-auto w-full max-w-[375px] min-h-screen bg-black">
