@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
       },
 
       {
+        protocol: "https",
+        hostname: "i2o.scdn.co",
+        pathname: "/**",
+      },
+      {
         protocol: 'https',
         hostname: 'diggindie-imgs.s3.ap-northeast-2.amazonaws.com',
         pathname: '/**',
@@ -51,6 +56,15 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'diggindie-imgs.s3.ap-northeast-2.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.namu.wiki',
+        pathname: '/**',
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
         pathname: '/**',
       },
       {
