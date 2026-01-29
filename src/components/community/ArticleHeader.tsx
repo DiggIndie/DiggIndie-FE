@@ -29,8 +29,8 @@ export default function ArticleHeader({ title, isMine, onEdit, onDelete }: Artic
   };
 
   return (
-    <section className="w-full flex flex-col px-5 py-[10px] max-w-[inherit] text-white fixed top-0 z-40 bg-black">
-      <div className="flex justify-between items-center">
+    <header className="absolute top-0 z-50 bg-black shrink-0 ">
+      <div className="flex justify-between items-center px-5 py-[10px]">
         <Image
           src={backBtn}
           alt="back"
@@ -57,6 +57,6 @@ export default function ArticleHeader({ title, isMine, onEdit, onDelete }: Artic
       {isMine && isDropdownOpen && (
         <HeaderDrowDown onEdit={onEdit ?? (() => {})} onDelete={onDelete ?? (() => {})} />
       )}
-    </section>
+    </header>
   );
 }

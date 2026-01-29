@@ -138,7 +138,7 @@ export default function FreeArticleDetailPage() {
 
   return (
     <div className="min-h-screen bg-black text-white min-w-[375px] relative pb-20">
-      <header className="relative">
+      <header className="relative mx-auto w-full bg-black">
         <ArticleHeader
           title="자유 라운지"
           isMine={board?.isMine}
@@ -162,7 +162,7 @@ export default function FreeArticleDetailPage() {
       ) : (
         <>
           {/* 스크롤 영역 */}
-          <div className="flex-1 overflow-y-auto pb-20 pt-13">
+          <div className="flex-1 overflow-y-auto pb-20">
             <ArticleBody content={board} onToggleLike={handleToggleLike} />
 
             <CommentCard

@@ -12,11 +12,7 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.pixabay.com',
         pathname: '/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'diggindie-images.s3.ap-northeast-2.amazonaws.com',
-        pathname: '/**',
-      },
+
       {
         protocol: 'https',
         hostname: 'diggindie-imgs.s3.ap-northeast-2.amazonaws.com',
@@ -49,22 +45,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'diggindie-images.s3.ap-northeast-2.amazonaws.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'i.ytimg.com',
         pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'diggindie-imgs.s3.ap-northeast-2.amazonaws.com',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'diggindie-images.s3.ap-northeast-2.amazonaws.com',
         pathname: '/**',
       },
       {
@@ -92,6 +78,12 @@ const nextConfig: NextConfig = {
       },
       { protocol: 'https', hostname: 'namu.wiki' },
       { protocol: 'https', hostname: 'i2o.scdn.co' },
+      {
+        protocol: 'https',
+        hostname: 'diggindie-imgs.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

@@ -34,8 +34,8 @@ export default function TradeArticleHeader({
   };
 
   return (
-    <section className="w-full flex flex-col px-5 py-[10px] max-w-[inherit] text-white fixed top-0 z-40 bg-transparent">
-      <div className="flex justify-between items-center">
+    <header className="sticky top-0 z-50 shrink-0">
+      <section className="w-full flex px-5 py-[10px] text-white bg-transparent mx-auto justify-between absolute">
         <Image
           src={backBtn}
           alt="back"
@@ -57,11 +57,11 @@ export default function TradeArticleHeader({
         ) : (
           <div className="w-6 h-6" />
         )}
-      </div>
+      </section>
 
       {isMine && isDropdownOpen && (
         <HeaderDrowDown onEdit={onEdit ?? (() => {})} onDelete={onDelete ?? (() => {})} />
       )}
-    </section>
+    </header>
   );
 }
