@@ -29,8 +29,8 @@ export default function ArticleHeader({ title, isMine, onEdit, onDelete }: Artic
   };
 
   return (
-    <header className="absolute top-0 z-50 bg-black shrink-0 ">
-      <div className="flex justify-between items-center px-5 py-[10px]">
+    <header className="sticky top-0 z-50 bg-black shrink-0">
+      <div className="mx-auto flex h-13 py-3 w-full items-center justify-between px-5 bg-black">
         <Image
           src={backBtn}
           alt="back"

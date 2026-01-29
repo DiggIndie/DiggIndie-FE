@@ -137,54 +137,52 @@ export default function FreeArticleDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white min-w-[375px] relative pb-20">
-      <header className="relative mx-auto w-full bg-black">
-        <ArticleHeader
-          title="자유 라운지"
-          isMine={board?.isMine}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      </header>
+    <div className="min-h-screen bg-black text-white flex flex-col relative">
+      {/* 1. 상단 헤더: sticky가 있으므로 이 자리에 가만히 고정됩니다. */}
+      <ArticleHeader
+        title="자유 라운지"
+        isMine={board?.isMine}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
 
-      {!isAuthed ? (
-        <div className="flex flex-1 items-center justify-center min-h-[calc(100vh-56px)] ">
-          <span className="text-base font-normal text-[#A6A6A6]">
-            로그인 후 가능한 페이지입니다
-          </span>
-        </div>
-      ) : isLoading ? (
-        <FreeDetailSkeleton />
-      ) : !board ? (
-        <div className="h-screen flex items-center justify-center">
-          <span className="text-gray-300 font-normal text-base">없는 게시글입니다</span>
-        </div>
-      ) : (
-        <>
-          {/* 스크롤 영역 */}
-          <div className="flex-1 overflow-y-auto pb-20">
+      {/* 2. 본문 영역: 헤더 아래부터 댓글창 위까지 스크롤되는 구간 */}
+      <main className="flex-1 overflow-y-auto">
+        {!isAuthed ? (
+          <div className="flex items-center justify-center min-h-[calc(100vh-120px)]">
+            <span className="text-[#A6A6A6]">로그인 후 가능한 페이지입니다</span>
+          </div>
+        ) : isLoading ? (
+          <FreeDetailSkeleton />
+        ) : !board ? (
+          <div className="flex items-center justify-center min-h-[calc(100vh-120px)]">
+            <span className="text-gray-300">없는 게시글입니다</span>
+          </div>
+        ) : (
+          <div className="pb-32">
+            {' '}
+            {/* 하단 입력창에 가려지지 않게 여백 추가 */}
             <ArticleBody content={board} onToggleLike={handleToggleLike} />
-
             <CommentCard
               comments={board.comments}
-              onToggleLike={(commentId) => {
-                if (isCommentLiking) return;
-                toggleCommentLike(commentId);
-              }}
-              onReplyClick={(parentCommentId, nickname, depth) =>
-                setReplyTarget({ parentCommentId, nickname, depth })
+              onToggleLike={toggleCommentLike}
+              onReplyClick={(id, nick, d) =>
+                setReplyTarget({ parentCommentId: id, nickname: nick, depth: d })
               }
             />
           </div>
+        )}
+      </main>
 
-          <ReplyInputSection
-            addReply={addReply}
-            disabled={isCommentSubmitting}
-            replyTarget={replyTarget}
-            onCancelReply={() => setReplyTarget(null)}
-          />
-        </>
-      )}
+      {/* 3. 하단 입력창: fixed 속성이므로 화면 맨 아래에 붙어 있습니다. */}
+      <div className={'flex justify-center'}>
+        <ReplyInputSection
+          addReply={addReply}
+          disabled={isCommentSubmitting}
+          replyTarget={replyTarget}
+          onCancelReply={() => setReplyTarget(null)}
+        />
+      </div>
     </div>
   );
 }
