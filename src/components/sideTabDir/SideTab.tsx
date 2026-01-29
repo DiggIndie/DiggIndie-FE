@@ -31,7 +31,7 @@ export default function SideTab({ onClose }: SideTabProps) {
   };
 
   return (
-    <section className="absolute top-0 right-0 z-50 h-full w-[307px] bg-black flex flex-col gap-5 overflow-y-auto ">
+    <section className="absolute top-0 right-0 z-50 min-h-screen w-[307px] bg-black flex flex-col gap-5 overflow-y-auto ">
       <div className="px-8 py-3 cursor-pointer mt-7" onClick={onClose}>
         <Image src={xIcon} alt="닫기" />
       </div>
