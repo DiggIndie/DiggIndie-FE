@@ -32,7 +32,7 @@ export default function Popular({ content }: PopluarProps) {
             >
               <Image src={fireBtn} alt="most popular" width={24} height={24} />
               <span className="font-semibold text-base text-white truncate">
-                [{c.category}] {c.title}
+                {c.category && `[${c.category}]`} {c.title}
               </span>
             </div>
           );
