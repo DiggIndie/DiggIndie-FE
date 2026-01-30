@@ -49,7 +49,7 @@ export default function HomePage() {
     fetchHotArticle();
   }, []);
   return (
-    <div className="text-white bg-black relative w-full overflow-x-hidden">
+    <div className="text-white bg-black relative w-full">
       <div className="relative mx-auto w-full min-h-screen bg-black">
         <HomeHeader onHamburgerClick={() => setIsSideTabOpen(true)} userId={userId} />
         <main className="mx-auto flex w-full flex-col items-center bg-black pb-20">
