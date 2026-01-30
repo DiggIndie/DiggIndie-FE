@@ -164,7 +164,7 @@ export default function LoginPage() {
             </div>
 
             {/* 카카오 */}
-            <div className="flex flex-col items-center relative">
+            {/* <div className="flex flex-col items-center relative">
               <Image
                 src={kakaoIcon}
                 alt="kakao login"
@@ -178,7 +178,7 @@ export default function LoginPage() {
                   <Image src={recentLogin} alt="최근 로그인" />
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
