@@ -9,8 +9,8 @@ type SortKey = "updated" | "korean" | "scrap";
 
 function mapSortKeyToOrder(sortKey: SortKey): ArtistOrder {
   if (sortKey === "korean") return "alphabet";
-  if (sortKey === "scrap") return "scrap";
-  return "recent";
+  if (sortKey === "updated") return "recent";
+  return "scrap";
 }
 
 function mergeUniqueById(prev: ArtistItem[], next: ArtistItem[]) {
@@ -25,7 +25,7 @@ export function useArtistSearch(defaultSize = 20) {
 
   const [artists, setArtists] = useState<ArtistItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortKey, setSortKey] = useState<SortKey>("updated");
+  const [sortKey, setSortKey] = useState<SortKey>("scrap");
 
   const [pageInfo, setPageInfo] = useState({
     page: 0,
