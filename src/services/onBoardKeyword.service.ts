@@ -12,7 +12,8 @@ export const onBoardKeywordService = {
   },
   async saveSelectedKeywords(keywordIds: number[]) {
     try {
-      await onBoardApi.saveOnboardKeywords(keywordIds);
+      const res = await onBoardApi.saveOnboardKeywords(keywordIds);
+      console.log('키워드 저장 api 호출', res);
     } catch (err) {
       console.error('키워드 저장 중 에러:', err);
     }
