@@ -12,9 +12,12 @@ export const onBoardKeywordService = {
   },
   async saveSelectedKeywords(keywordIds: number[]) {
     try {
-      const res = await onBoardApi.saveOnboardKeywords(keywordIds);
-      console.log('키워드 저장 api 호출', res);
+      await onBoardApi.saveOnboardKeywords(keywordIds);
     } catch (err) {
+      if (err instanceof SyntaxError && err.message.includes('JSON')) {
+        console.log('키워드 저장 성공 (Response Body 없음)');
+        return;
+      }
       console.error('키워드 저장 중 에러:', err);
     }
   },
